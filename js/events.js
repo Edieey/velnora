@@ -1,6 +1,5 @@
 async function loadEvents(containerId, limit = null) {
   const container = document.getElementById(containerId);
-  if (!container) return;
 
   if (!container) return;
 
@@ -15,20 +14,25 @@ async function loadEvents(containerId, limit = null) {
 
     for (const file of files) {
       if (file.name.endsWith(".md")) {
+
         const fileResponse = await fetch(file.download_url);
         const text = await fileResponse.text();
 
-        const titleMatch = text.match(/title:\s*"(.*?)"/);
-        const dateMatch = text.match(/date:\s*"(.*?)"/);
-        const imageMatch = text.match(/image:\s*"(.*?)"/);
+        const titleMatch = text.match(/title:\s(.+)/);
+        const dateMatch = text.match(/date:\s(.+)/);
+        const imageMatch = text.match(/image:\s(.+)/);
 
-        const galleryMatches = [...text.matchAll(/- "(.*?)"/g)];
+        const galleryMatches = [
+          ...text.matchAll(/- \/images\/uploads\/(.+)/g)
+        ];
 
-        const title = titleMatch ? titleMatch[1] : "Event";
-        const date = dateMatch ? dateMatch[1] : "";
-        const image = imageMatch ? imageMatch[1] : "";
+        const title = titleMatch ? titleMatch[1].trim() : "Event";
+        const date = dateMatch ? dateMatch[1].trim() : "";
+        const image = imageMatch ? imageMatch[1].trim() : "";
 
-        const gallery = galleryMatches.map(g => g[1]);
+        const gallery = galleryMatches.map(
+          g => "/images/uploads/" + g[1].trim()
+        );
 
         events.push({
           title,
@@ -45,19 +49,15 @@ async function loadEvents(containerId, limit = null) {
       events = events.slice(0, limit);
     }
 
-    container.innerHTML = events
-      .map(
-        (event, index) => `
+    container.innerHTML = events.map((event, index) => `
       <div class="event-card" onclick="openGallery(${index})">
-      <img src="${event.image.startsWith('/') ? event.image : '/' + event.image}" alt="${event.title}">
+        <img src="${event.image}" alt="${event.title}">
         <div class="event-info">
           <h3>${event.title}</h3>
           <p>${event.date}</p>
         </div>
       </div>
-    `
-      )
-      .join("");
+    `).join("");
 
     window.allEvents = events;
 
@@ -67,19 +67,23 @@ async function loadEvents(containerId, limit = null) {
 }
 
 function openGallery(index) {
+
   const event = window.allEvents[index];
 
-  let galleryHTML = event.gallery
-    .map(img => `<img src="${img}" class="gallery-img">`)
-    .join("");
+  let galleryHTML = event.gallery.map(img => `
+    <img src="${img}" class="gallery-img">
+  `).join("");
 
   const popup = document.createElement("div");
+
   popup.className = "gallery-popup";
 
   popup.innerHTML = `
     <div class="gallery-content">
       <span class="close-popup">&times;</span>
+
       <h2>${event.title}</h2>
+
       <div class="gallery-grid">
         ${galleryHTML}
       </div>
@@ -92,14 +96,6 @@ function openGallery(index) {
     popup.remove();
   };
 }
-document.addEventListener("DOMContentLoaded", () => {
 
-  if (document.getElementById("eventsContainer")) {
-    loadEvents("eventsContainer");
-  }
-
-  if (document.getElementById("events-container")) {
-    loadEvents("events-container", 3);
-  }
-
-});
+loadEvents("eventsContainer");
+loadEvents("homeEvents", 2);
