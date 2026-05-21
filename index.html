@@ -16,6 +16,11 @@
   <title>VELNORA | Official DJ Collective</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="js/events.js"></script>
+<script>
+loadEvents("events-container", 3);
+</script>
 <body>
 
   <!-- Navigation -->
@@ -91,13 +96,7 @@
   <h2>Upcoming Events</h2>
   <p>Join us at our next unforgettable performances.</p>
 
-  <div class="artist-grid">
-   <div class="artist-card" onclick="openLightbox(0)" style="cursor: pointer;">
-      <img src="images/event1.png" alt="Upcoming Event">
-      <h3>Beach Night Festival</h3>
-      <p>June 28, 2026 · Hulhumalé</p>
-    </div>
-
+  <div id="events-container" class="artist-grid"></div>
 </section>
 
 <!-- Booking CTA -->
@@ -249,19 +248,7 @@
   </div>
 </section>
 
-  <!-- Upcoming Events Preview -->
-<section class="about">
-  <h2>Upcoming Events</h2>
-  <p>Join us at our next unforgettable performances.</p>
 
-  <div class="artist-grid">
-   <div class="artist-card" onclick="openLightbox(0)" style="cursor: pointer;">
-      <img src="images/event1.png" alt="Upcoming Event">
-      <h3>Beach Night Festival</h3>
-      <p>June 28, 2026 · Hulhumalé</p>
-    </div>
-
-</section>
 
 <!-- Booking CTA -->
 <section class="booking-cta">

@@ -15,6 +15,8 @@
   <title>Events | VELNORA</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="js/events.js"></script>
 <body>
 
   <header class="navbar">
@@ -74,44 +76,3 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-  <header class="navbar">
-<a href="index.html" class="logo">
-  <img src="images/logo.png" alt="VELNORA Logo">
-  <span>VELNORA</span>
-</a>
-
-  <nav>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="artist.html">Artists</a></li>
-    <li><a href="events.html">Events</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="blog.html">News</a></li>
-    <li><a href="booking.html">Booking</a></li>
-    <li><a href="https://www.instagram.com/velnora.mv/" target="_blank">Instagram</a></li>
-  </ul>
-</nav>
-  </header>
-
-<section class="about" style="padding-top: 180px;">
-  <h2>Upcoming Events</h2>
-  <p>Catch Velnora live at these upcoming shows.</p>
-
-  <div class="artist-grid" id="eventsContainer"></div>
-</section>
-<!-- Event Lightbox -->
-<div id="lightbox" class="lightbox">
-  <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
-
-  <button class="lightbox-btn prev" onclick="changeImage(-1)">❮</button>
-
-  <img id="lightbox-image" src="" alt="Event Image">
-
-  <button class="lightbox-btn next" onclick="changeImage(1)">❯</button>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script type="module" src="js/main.js"></script>
-</body>
-</html>
