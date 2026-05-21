@@ -28,14 +28,21 @@ const lines = text.split("\n");
 
 lines.forEach(line => {
 
-  if (line.includes("gallery_image:")) {
+  if (line.includes("/images/uploads/")) {
 
     const imagePath = line
-      .split("gallery_image:")[1]
+      .replace("-", "")
       .replace(/"/g, "")
       .trim();
 
-    gallery.push(imagePath);
+    if (
+      imagePath.endsWith(".png") ||
+      imagePath.endsWith(".jpg") ||
+      imagePath.endsWith(".jpeg") ||
+      imagePath.endsWith(".webp")
+    ) {
+      gallery.push(imagePath);
+    }
   }
 
 });
