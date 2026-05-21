@@ -48,7 +48,7 @@ async function loadEvents(containerId, limit = null) {
       .map(
         (event, index) => `
       <div class="event-card" onclick="openGallery(${index})">
-        <img src="${event.image}" alt="${event.title}">
+      <img src="${event.image.startsWith('/') ? event.image : '/' + event.image}" alt="${event.title}">
         <div class="event-info">
           <h3>${event.title}</h3>
           <p>${event.date}</p>
@@ -91,3 +91,14 @@ function openGallery(index) {
     popup.remove();
   };
 }
+document.addEventListener("DOMContentLoaded", () => {
+
+  if (document.getElementById("eventsContainer")) {
+    loadEvents("eventsContainer");
+  }
+
+  if (document.getElementById("events-container")) {
+    loadEvents("events-container", 3);
+  }
+
+});
