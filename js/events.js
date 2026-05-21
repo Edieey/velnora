@@ -1,5 +1,6 @@
 async function loadEvents(containerId, limit = null) {
   const container = document.getElementById(containerId);
+  if (!container) return;
 
   if (!container) return;
 
