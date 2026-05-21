@@ -10,9 +10,7 @@ collections:
     label: "Events"
     folder: "content/events"
     create: true
-
-    editor:
-      preview: false
+    slug: "{{slug}}"
 
     fields:
       - label: "Title"
@@ -23,14 +21,18 @@ collections:
         name: "date"
         widget: "string"
 
+      - label: "Cover Image"
+        name: "image"
+        widget: "image"
+
       - label: "Gallery"
         name: "gallery"
         widget: "list"
         field:
-          label: "Image"
-          name: "image"
+          label: "Gallery Image"
+          name: "gallery_image"
           widget: "image"
 
-      - label: "Body"
+      - label: "Description"
         name: "body"
         widget: "markdown"
