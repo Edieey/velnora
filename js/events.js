@@ -22,17 +22,17 @@ async function loadEvents(containerId, limit = null) {
         const dateMatch = text.match(/date:\s(.+)/);
         const imageMatch = text.match(/image:\s(.+)/);
 
-        const galleryMatches = [
-          ...text.matchAll(/- \/images\/uploads\/(.+)/g)
-        ];
+       const galleryMatches = [
+  ...text.matchAll(/gallery_image:\s(.*)/g)
+];
 
         const title = titleMatch ? titleMatch[1].trim() : "Event";
         const date = dateMatch ? dateMatch[1].trim() : "";
         const image = imageMatch ? imageMatch[1].trim() : "";
 
-        const gallery = galleryMatches.map(
-          g => "/images/uploads/" + g[1].trim()
-        );
+       const gallery = galleryMatches.map(
+  g => g[1].trim()
+);
 
     if (image && image !== "undefined") {
   events.push({
