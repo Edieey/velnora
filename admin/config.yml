@@ -14,10 +14,13 @@ collections:
     slug: "{{slug}}"
 
     fields:
-      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Event Title", name: "title", widget: "string" }
+
       - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Body", name: "body", widget: "markdown" }
+
+      - { label: "Event Image", name: "image", widget: "image" }
+
+      - { label: "Description", name: "body", widget: "markdown" }
 
   - name: "gallery"
     label: "Gallery"
