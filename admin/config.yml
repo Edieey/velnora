@@ -1,5 +1,6 @@
-local_backend: falsebackend:
-  branch: main
+local_backend: false
+
+backend:
   name: github
   repo: Ediieey/velnora
   branch: main
