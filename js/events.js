@@ -24,19 +24,17 @@ async function loadEvents(containerId, limit = null) {
 
 const gallery = [];
 
-const lines = text.split("\n");
+const galleryMatches = [
+  ...text.matchAll(/gallery_image:\s*(.*)/g)
+];
 
-lines.forEach(line => {
+galleryMatches.forEach(match => {
 
-  if (line.includes("gallery_image:")) {
+  const imagePath = match[1]
+    .replace(/"/g, "")
+    .trim();
 
-    const imagePath = line
-      .split("gallery_image:")[1]
-      .replace(/"/g, "")
-      .trim();
-
-    gallery.push(imagePath);
-  }
+  gallery.push(imagePath);
 
 });
         const title = titleMatch ? titleMatch[1].trim() : "Event";
