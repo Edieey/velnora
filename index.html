@@ -19,7 +19,9 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="js/events.js"></script>
 <script>
-loadEvents("eventsContainer", 3);
+document.addEventListener("DOMContentLoaded", () => {
+  loadEvents("eventsContainer", 3);
+});
 </script>
 <body>
 
@@ -95,7 +97,7 @@ loadEvents("eventsContainer", 3);
 <section class="about">
   <h2>Upcoming Events</h2>
   <p>Join us at our next unforgettable performances.</p>
-
+<div class="artist-grid" id="eventsContainer"></div>
   <div id="events-container" class="artist-grid"></div>
 </section>
 
