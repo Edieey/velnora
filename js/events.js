@@ -28,25 +28,17 @@ const lines = text.split("\n");
 
 lines.forEach(line => {
 
-  if (line.includes("/images/uploads/")) {
+  if (line.trim().startsWith("-")) {
 
     const imagePath = line
       .replace("-", "")
       .replace(/"/g, "")
       .trim();
 
-    if (
-      imagePath.endsWith(".png") ||
-      imagePath.endsWith(".jpg") ||
-      imagePath.endsWith(".jpeg") ||
-      imagePath.endsWith(".webp")
-    ) {
-      gallery.push(imagePath);
-    }
+    gallery.push(imagePath);
   }
 
 });
-
         const title = titleMatch ? titleMatch[1].trim() : "Event";
         const date = dateMatch ? dateMatch[1].trim() : "";
         const image = imageMatch ? imageMatch[1].trim() : "";
