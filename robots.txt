@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 User-agent: *
 Allow: /
+=======
+User-agent: *
+Allow: /
+>>>>>>> 17f523dce8accf7dce8d3fcad6b1c8c01493b530
 Sitemap: https://velnora.com/sitemap.xml

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 backend:
   name: git-gateway
   branch: main
@@ -22,4 +23,30 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
+=======
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "events"
+    label: "Events"
+    folder: "content/events"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Event Title", name: "title", widget: "string" }
+      - { label: "Date and Location", name: "date_location", widget: "string" }
+      - { label: "Main Image", name: "image", widget: "image" }
+
+  - name: "gallery"
+    label: "Gallery"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+>>>>>>> 17f523dce8accf7dce8d3fcad6b1c8c01493b530
       - { label: "Image", name: "image", widget: "image" }
