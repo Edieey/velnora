@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 * {
   margin: 0;
   padding: 0;
@@ -90,7 +90,6 @@ button:hover {
 .delete-btn {
   background: #ff4d4f;
   margin-top: 10px;
-=======
 * {
   margin: 0;
   padding: 0;
@@ -182,5 +181,5 @@ button:hover {
 .delete-btn {
   background: #ff4d4f;
   margin-top: 10px;
->>>>>>> 17f523dce8accf7dce8d3fcad6b1c8c01493b530
+}
 }

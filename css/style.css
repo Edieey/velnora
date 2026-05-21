@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 * {
   margin: 0;
   padding: 0;
@@ -556,7 +556,7 @@ will-change: transform, opacity;
 
 .next {
   right: 30px;
-=======
+
 * {
   margin: 0;
   padding: 0;
@@ -1113,6 +1113,6 @@ will-change: transform, opacity;
 }
 
 .next {
-  right: 30px;
->>>>>>> 17f523dce8accf7dce8d3fcad6b1c8c01493b530
+   right: 30px;
+}
 }

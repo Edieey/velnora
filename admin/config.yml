@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 backend:
   name: git-gateway
   branch: main
@@ -23,7 +23,6 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-=======
 backend:
   name: git-gateway
   branch: main
@@ -48,5 +47,4 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
->>>>>>> 17f523dce8accf7dce8d3fcad6b1c8c01493b530
       - { label: "Image", name: "image", widget: "image" }
