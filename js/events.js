@@ -40,24 +40,19 @@ async function loadEvents(containerId, limit = null) {
           ? imageMatch[1].replace(/"/g, "").trim()
           : "";
 
-        // GALLERY IMAGES
-        const gallery = [];
+const gallery = [];
 
-        const galleryMatches = text.matchAll(
-          /gallery_image:\s*(.*)/g
-        );
+const galleryMatches = text.matchAll(
+  /-\s*(\/images\/uploads\/.*\.(png|jpg|jpeg|webp))/g
+);
 
-        for (const match of galleryMatches) {
+for (const match of galleryMatches) {
 
-          const img = match[1]
-            .replace(/"/g, "")
-            .trim();
+  const img = match[1].trim();
 
-          if (img) {
-            gallery.push(img);
-          }
-        }
+  gallery.push(img);
 
+}
         events.push({
           title,
           date,
