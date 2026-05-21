@@ -1,8 +1,5 @@
-local_backend: false
-
 backend:
-  name: github
-  repo: Ediieey/velnora
+  name: git-gateway
   branch: main
 
 media_folder: "images/uploads"
@@ -16,19 +13,7 @@ collections:
     slug: "{{slug}}"
 
     fields:
-      - { label: "Event Title", name: "title", widget: "string" }
-
-      - { label: "Date", name: "date", widget: "datetime" }
-
-      - { label: "Event Image", name: "image", widget: "image" }
-
-      - { label: "Description", name: "body", widget: "markdown" }
-
-  - name: "gallery"
-    label: "Gallery"
-    folder: "content/gallery"
-    create: true
-    slug: "{{slug}}"
-
-    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "string" }
       - { label: "Image", name: "image", widget: "image" }
+      - { label: "Body", name: "body", widget: "markdown" }
