@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Hero animation
@@ -199,7 +199,7 @@ if (document.getElementById("galleryContainer")) {
     });
   }
 }
-=======
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Hero animation
@@ -507,4 +507,4 @@ async function loadGalleryFromFirebase() {
 // ==========================================
 loadEventsFromFirebase();
 loadGalleryFromFirebase();
->>>>>>> 17f523dce8accf7dce8d3fcad6b1c8c01493b530
+
