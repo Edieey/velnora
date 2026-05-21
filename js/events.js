@@ -28,10 +28,10 @@ const lines = text.split("\n");
 
 lines.forEach(line => {
 
-  if (line.trim().startsWith("-")) {
+  if (line.includes("gallery_image:")) {
 
     const imagePath = line
-      .replace("-", "")
+      .split("gallery_image:")[1]
       .replace(/"/g, "")
       .trim();
 
