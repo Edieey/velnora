@@ -34,12 +34,14 @@ async function loadEvents(containerId, limit = null) {
           g => "/images/uploads/" + g[1].trim()
         );
 
-        events.push({
-          title,
-          date,
-          image,
-          gallery
-        });
+    if (image && image !== "undefined") {
+  events.push({
+    title,
+    date,
+    image,
+    gallery
+  });
+}
       }
     }
 
