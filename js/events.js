@@ -44,11 +44,7 @@ lines.forEach(line => {
         const date = dateMatch ? dateMatch[1].trim() : "";
         const image = imageMatch ? imageMatch[1].trim() : "";
 
-const gallery = galleryMatches.map(g => {
-  return g[1]
-    .replace(/"/g, "")
-    .trim();
-});
+
 
     if (image && image !== "undefined") {
   events.push({
