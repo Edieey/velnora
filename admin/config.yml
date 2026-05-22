@@ -33,6 +33,41 @@ collections:
           name: "gallery_image"
           widget: "image"
 
+        - label: "Description"
+        name: "body"
+        widget: "markdown"
+
+  - name: "memories"
+    label: "Memories"
+    folder: "content/memories"
+    create: true
+    slug: "{{slug}}"
+
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+
+      - label: "Location"
+        name: "location"
+        widget: "string"
+
+      - label: "Date"
+        name: "date"
+        widget: "string"
+
+      - label: "Cover Image"
+        name: "image"
+        widget: "image"
+
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        field:
+          label: "Gallery Image"
+          name: "gallery_image"
+          widget: "image"
+
       - label: "Description"
         name: "body"
         widget: "markdown"
