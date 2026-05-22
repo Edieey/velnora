@@ -92,27 +92,18 @@ for (const match of galleryMatches) {
   }
 }
 
+let currentGallery = [];
+let currentIndex = 0;
+
 function openGallery(index) {
 
   const event = window.allEvents[index];
 
-  let galleryHTML = "";
+  currentGallery = event.gallery;
+  currentIndex = 0;
 
-  if (event.gallery.length > 0) {
-
-    galleryHTML = event.gallery.map(img => `
-
-      <img src="${img}" class="gallery-img">
-
-    `).join("");
-
-  } else {
-
-    galleryHTML = `
-      <p style="color:white;">
-        No gallery images found.
-      </p>
-    `;
+  if (currentGallery.length === 0) {
+    return;
   }
 
   const popup = document.createElement("div");
@@ -121,17 +112,23 @@ function openGallery(index) {
 
   popup.innerHTML = `
 
-    <div class="gallery-content">
+    <div class="gallery-slider">
 
       <span class="close-popup">&times;</span>
 
-      <h2>${event.title}</h2>
+      <button class="gallery-arrow left-arrow">
+        ❮
+      </button>
 
-      <div class="gallery-grid">
+      <img
+        src="${currentGallery[currentIndex]}"
+        class="slider-image"
+        id="sliderImage"
+      >
 
-        ${galleryHTML}
-
-      </div>
+      <button class="gallery-arrow right-arrow">
+        ❯
+      </button>
 
     </div>
 
@@ -139,8 +136,55 @@ function openGallery(index) {
 
   document.body.appendChild(popup);
 
+  // CLOSE BUTTON
   popup.querySelector(".close-popup").onclick = () => {
     popup.remove();
+  };
+
+  // CLICK OUTSIDE CLOSE
+  popup.onclick = (e) => {
+
+    if (e.target.classList.contains("gallery-popup")) {
+      popup.remove();
+    }
+
+  };
+
+  // LEFT
+  popup.querySelector(".left-arrow").onclick = () => {
+
+    currentIndex--;
+
+    if (currentIndex < 0) {
+      currentIndex = currentGallery.length - 1;
+    }
+
+    document.getElementById("sliderImage").src =
+      currentGallery[currentIndex];
+
+  };
+
+  // RIGHT
+  popup.querySelector(".right-arrow").onclick = () => {
+
+    currentIndex++;
+
+    if (currentIndex >= currentGallery.length) {
+      currentIndex = 0;
+    }
+
+    document.getElementById("sliderImage").src =
+      currentGallery[currentIndex];
+
+  };
+
+  // ESC CLOSE
+  document.onkeydown = (e) => {
+
+    if (e.key === "Escape") {
+      popup.remove();
+    }
+
   };
 }
 
