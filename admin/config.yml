@@ -33,7 +33,7 @@ collections:
           name: "gallery_image"
           widget: "image"
 
-        - label: "Description"
+      - label: "Description"
         name: "body"
         widget: "markdown"
 
