@@ -1122,9 +1122,15 @@ will-change: transform, opacity;
   overflow: hidden;
   cursor: pointer;
   transition: 0.3s ease;
-  max-width: 420px;
+  width: 280px;
   margin: auto;
   box-shadow: 0 0 20px rgba(0,255,255,0.15);
+}
+.event-card img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  display: block;
 }
 
 .event-card:hover {
@@ -1133,7 +1139,7 @@ will-change: transform, opacity;
 
 .event-card img {
   width: 100%;
-  height: 260px;
+  height: 340px;
   object-fit: cover;
   display: block;
 }
