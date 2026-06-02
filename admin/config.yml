@@ -71,3 +71,17 @@ collections:
       - label: "Description"
         name: "body"
         widget: "markdown"
+          - name: "gallery"
+    label: "Gallery"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+
+      - label: "Image"
+        name: "image"
+        widget: "image"
