@@ -71,7 +71,8 @@ collections:
       - label: "Description"
         name: "body"
         widget: "markdown"
-          - name: "gallery"
+
+  - name: "gallery"
     label: "Gallery"
     folder: "content/gallery"
     create: true
