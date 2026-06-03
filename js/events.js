@@ -393,3 +393,80 @@ function openMemoryGallery(index) {
   };
 }
 loadMemories();
+async function loadGalleryPage() {
+
+  const container =
+    document.getElementById("galleryContainer");
+
+  if (!container) return;
+
+  try {
+
+    const response = await fetch(
+      "https://api.github.com/repos/Edieey/velnora/contents/content/gallery"
+    );
+
+    const files = await response.json();
+
+    let galleryItems = [];
+
+    for (const file of files) {
+
+      if (file.name.endsWith(".md")) {
+
+        const fileResponse =
+          await fetch(file.download_url);
+
+        const text =
+          await fileResponse.text();
+
+        const titleMatch =
+          text.match(/title:\s*(.*)/);
+
+        const imageMatch =
+          text.match(/image:\s*(.*)/);
+
+        const title = titleMatch
+          ? titleMatch[1].replace(/"/g, "").trim()
+          : "Gallery";
+
+        const image = imageMatch
+          ? imageMatch[1].replace(/"/g, "").trim()
+          : "";
+
+        galleryItems.push({
+          title,
+          image
+        });
+
+      }
+
+    }
+
+    galleryItems.reverse();
+
+    container.innerHTML = galleryItems.map(item => `
+
+      <div class="artist-card">
+
+        <img
+          src="${item.image}"
+          alt="${item.title}"
+        >
+
+      </div>
+
+    `).join("");
+
+  } catch (error) {
+
+    console.error(
+      "Error loading gallery:",
+      error
+    );
+
+  }
+
+}
+
+loadGalleryPage();
