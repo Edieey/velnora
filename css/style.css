@@ -26,21 +26,25 @@ body {
   z-index: 1000;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  text-decoration: none;
-color: white;
+.logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-decoration:none;
 }
 
-.logo img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
+.logo-icon{
+    width:52px;
+    height:52px;
+    object-fit:contain;
+    flex-shrink:0;
+}
+
+.logo-text{
+    width:180px;
+    height:auto;
+    display:block;
+    object-fit:contain;
 }
 
 nav ul {
@@ -584,21 +588,16 @@ body {
   z-index: 1000;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  text-decoration: none;
-color: white;
+.logo-icon {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
 }
 
-.logo img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
+.logo-text {
+    width: 230px;
+    height: auto;
+    object-fit: contain;
 }
 
 nav ul {

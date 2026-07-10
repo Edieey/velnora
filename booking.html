@@ -19,10 +19,9 @@
 
   <header class="navbar">
 <a href="index.html" class="logo">
-  <img src="images/logo.png" alt="VELNORA Logo">
-  <span>VELNORA</span>
+    <img src="images/logo.png" alt="VELNORA Logo" class="logo-icon">
+    <img src="images/velnora-text.png" alt="VELNORA" class="logo-text">
 </a>
-
   <nav>
   <ul>
     <li><a href="index.html">Home</a></li>
@@ -80,86 +79,3 @@
   </section>
 
 </body>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="description" content="VELNORA is a premium DJ collective from the Maldives delivering unforgettable performances and immersive music experiences.">
-<meta name="keywords" content="Velnora, DJ Maldives, Maldives DJs, EDM, House Music, Booking DJs">
-<meta name="author" content="VELNORA">
-<meta property="og:title" content="VELNORA | Official DJ Collective">
-<meta property="og:description" content="Book Velnora for festivals, weddings, private events, and nightlife.">
-<meta property="og:image" content="images/logo.png">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://velnora.com/">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Booking | VELNORA</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-
-  <header class="navbar">
-<a href="index.html" class="logo">
-  <img src="images/logo.png" alt="VELNORA Logo">
-  <span>VELNORA</span>
-</a>
-
-  <nav>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="artist.html">Artists</a></li>
-    <li><a href="events.html">Events</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="booking.html">Booking</a></li>
-   
-  </ul>
-</nav>
-  </header>
-
-  <section class="about" style="padding-top: 180px;">
-    <h2>Book Velnora</h2>
-    <p>Tell us about your event and we'll get back to you.</p>
-
-   <form class="booking-form" action="https://api.web3forms.com/submit" method="POST">
-
-  <!-- Web3Forms Access Key -->
-  <input type="hidden" name="access_key" value="b8eff5f1-72ae-487f-8ceb-a703e53a1f7a">
-
-  <!-- Email Subject -->
-  <input type="hidden" name="subject" value="New Velnora Booking Request">
-
-  
-  
-
-  <!-- Redirect after successful submission -->
-  <input type="hidden" name="redirect" value="thank-you.html">
-
-  <!-- Form Fields -->
-  <input type="text" name="name" placeholder="Your Name" required>
-
-  <input type="email" name="email" placeholder="Your Email" required>
-
-  <input
-    type="text"
-    name="event_type"
-    placeholder="Event Type (Wedding, Party, Festival)"
-  >
-
-  <input type="text" name="event_date" placeholder="Event Date">
-
-  <textarea
-    name="message"
-    rows="6"
-    placeholder="Tell us more about your event"
-  ></textarea>
-
-  <button type="submit" class="btn">
-    Send Booking Request
-  </button>
-
-</form>
-  </section>
-
-</body>
-</html>
