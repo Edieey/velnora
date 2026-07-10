@@ -4,8 +4,9 @@ location: Male
 date: 21/05/2026
 image: /images/uploads/event1.png
 gallery:
-  - /images/uploads/event1.png
-  - /images/uploads/event14.png
-  - /images/uploads/event12.png
+  - /images/uploads/1000144434.jpg
+  - /images/uploads/1000144436.jpg
+  - /images/uploads/1000144438.jpg
+  - /images/uploads/1000144440.jpg
 ---
 This is just the beginning
