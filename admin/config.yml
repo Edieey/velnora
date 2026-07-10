@@ -86,7 +86,8 @@ collections:
       - label: "Image"
         name: "image"
         widget: "image"
-          - name: "artists"
+
+  - name: "artists"
     label: "Artists"
     folder: "content/artists"
     create: true
