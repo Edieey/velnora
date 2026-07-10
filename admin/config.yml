@@ -86,3 +86,21 @@ collections:
       - label: "Image"
         name: "image"
         widget: "image"
+          - name: "artists"
+    label: "Artists"
+    folder: "content/artists"
+    create: true
+    slug: "{{slug}}"
+
+    fields:
+      - label: "Artist Name"
+        name: "title"
+        widget: "string"
+
+      - label: "Genre"
+        name: "genre"
+        widget: "string"
+
+      - label: "Artist Image"
+        name: "image"
+        widget: "image"
