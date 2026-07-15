@@ -106,7 +106,7 @@ collections:
         name: "image"
         widget: "image"
 
-  - name: "hero"
+   - name: "hero"
     label: "Hero"
     folder: "content/hero"
     create: false
@@ -133,14 +133,15 @@ collections:
 
       - label: "Hero Video"
         name: "video"
-        widget: "media"
+        widget: "file"
         required: false
 
       - label: "Hero Image"
         name: "image"
         widget: "image"
         required: false
-          - name: "settings"
+
+  - name: "settings"
     label: "Site Settings"
     files:
 
