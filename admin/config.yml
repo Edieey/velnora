@@ -140,3 +140,52 @@ collections:
         name: "image"
         widget: "image"
         required: false
+          - name: "settings"
+    label: "Site Settings"
+    files:
+
+      - label: "Website Settings"
+        name: "website"
+        file: "content/settings/website.md"
+
+        fields:
+
+          - label: "About Title"
+            name: "about_title"
+            widget: "string"
+
+          - label: "About Description"
+            name: "about_description"
+            widget: "text"
+
+          - label: "Contact Phone"
+            name: "phone"
+            widget: "string"
+
+          - label: "Contact Email"
+            name: "email"
+            widget: "string"
+
+          - label: "Instagram"
+            name: "instagram"
+            widget: "string"
+
+          - label: "Address"
+            name: "address"
+            widget: "text"
+
+          - label: "Booking Title"
+            name: "booking_title"
+            widget: "string"
+
+          - label: "Booking Description"
+            name: "booking_description"
+            widget: "text"
+
+          - label: "Booking Button"
+            name: "booking_button"
+            widget: "string"
+
+          - label: "Copyright"
+            name: "copyright"
+            widget: "string"

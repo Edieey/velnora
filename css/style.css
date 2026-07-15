@@ -1376,3 +1376,18 @@ will-change: transform, opacity;
 .hero-cta .btn{
     display:inline-block;
 }
+.hero-message{
+    padding:90px 20px;
+    text-align:center;
+    background:#05020d;
+}
+
+.hero-message h2{
+    color:#fff;
+    font-size:2.3rem;
+    margin-bottom:30px;
+}
+
+.hero-message .btn{
+    display:inline-block;
+}
