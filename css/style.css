@@ -1360,3 +1360,19 @@ will-change: transform, opacity;
   }
 
 }
+.hero-cta{
+    text-align:center;
+    padding:80px 20px;
+    background:#05020d;
+}
+
+.hero-cta p{
+    font-size:2rem;
+    font-style:italic;
+    color:#fff;
+    margin-bottom:30px;
+}
+
+.hero-cta .btn{
+    display:inline-block;
+}

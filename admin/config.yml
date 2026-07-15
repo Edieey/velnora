@@ -105,3 +105,37 @@ collections:
       - label: "Artist Image"
         name: "image"
         widget: "image"
+          - name: "hero"
+    label: "Hero"
+    folder: "content/hero"
+    create: false
+
+    fields:
+      - label: "Headline"
+        name: "headline"
+        widget: "string"
+
+      - label: "Button Text"
+        name: "button"
+        widget: "string"
+
+      - label: "Button Link"
+        name: "link"
+        widget: "string"
+
+      - label: "Display Type"
+        name: "type"
+        widget: "select"
+        options:
+          - "video"
+          - "image"
+
+      - label: "Hero Video"
+        name: "video"
+        widget: "file"
+        required: false
+
+      - label: "Hero Image"
+        name: "image"
+        widget: "image"
+        required: false
