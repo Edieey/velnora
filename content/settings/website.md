@@ -1,7 +1,10 @@
 ---
 about_title: About Velnora
-about_description: >-2
-   From intimate beach parties and exclusive private events to massive mainstage performances, our collective has brought together talented DJs, unique sounds, and an unmatched passion for music.
+about_description: >-
+  From intimate beach parties and exclusive private events to massive mainstage
+  performances, our collective has brought together talented DJs, unique sounds,
+  and an unmatched passion for music.
+
   We are more than a DJ group — we are a movement dedicated to creating moments that connect people through rhythm, energy, and emotion.
 phone: +960 974 9937
 email: velnora@mifu.mv
