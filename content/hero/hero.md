@@ -4,5 +4,5 @@ button: Upcoming Event
 link: events.html
 type: video
 video: ""
-image: /images/logo.png
+image: /images/uploads/img_0086.png
 ---
