@@ -1,0 +1,194 @@
+backend:
+  name: git-gateway
+  branch: main
+  
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+  
+collections:
+  - name: "events"
+  label: "Events"
+  folder: "content/events"
+  create: true
+  slug: "{{slug}}"
+  
+  fields:
+    - label: "Title"
+    name: "title"
+    widget: "string"
+    
+    - label: "Date"
+    name: "date"
+    widget: "string"
+    
+    - label: "Cover Image"
+    name: "image"
+    widget: "image"
+    
+    - label: "Gallery"
+    name: "gallery"
+    widget: "list"
+    field:
+      label: "Gallery Image"
+      name: "gallery_image"
+      widget: "image"
+      
+      - label: "Description"
+      name: "body"
+      widget: "markdown"
+      
+      - name: "memories"
+      label: "Memories"
+      folder: "content/memories"
+      create: true
+      slug: "{{slug}}"
+      
+      fields:
+        - label: "Title"
+        name: "title"
+        widget: "string"
+        
+        - label: "Location"
+        name: "location"
+        widget: "string"
+        
+        - label: "Date"
+        name: "date"
+        widget: "string"
+        
+        - label: "Cover Image"
+        name: "image"
+        widget: "image"
+        
+        - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        field:
+          label: "Gallery Image"
+          name: "gallery_image"
+          widget: "image"
+          
+          - label: "Description"
+          name: "body"
+          widget: "markdown"
+          
+          - name: "gallery"
+          label: "Gallery"
+          folder: "content/gallery"
+          create: true
+          slug: "{{slug}}"
+          
+          fields:
+            - label: "Title"
+            name: "title"
+            widget: "string"
+            
+            - label: "Image"
+            name: "image"
+            widget: "image"
+            
+            - name: "artists"
+            label: "Artists"
+            folder: "content/artists"
+            create: true
+            slug: "{{slug}}"
+            
+            fields:
+              - label: "Artist Name"
+              name: "title"
+              widget: "string"
+              
+              - label: "Genre"
+              name: "genre"
+              widget: "string"
+              
+              - label: "Artist Image"
+              name: "image"
+              widget: "image"
+              
+              - name: "hero"
+              label: "Hero"
+              files:
+                - label: "Hero"
+                name: "hero"
+                file: "content/hero/hero.md"
+                
+                fields:
+                  - label: "Headline"
+                  name: "headline"
+                  widget: "string"
+                  
+                  - label: "Button Text"
+                  name: "button"
+                  widget: "string"
+                  
+                  - label: "Button Link"
+                  name: "link"
+                  widget: "string"
+                  
+                  - label: "Display Type"
+                  name: "type"
+                  widget: "select"
+                  options:
+                    - "video"
+                    - "image"
+                    
+                    - label: "Hero Video"
+                    name: "video"
+                    widget: "file"
+                    required: false
+                    
+                    - label: "Hero Image"
+                    name: "image"
+                    widget: "image"
+                    required: false
+                    
+                    - name: "settings"
+                    label: "Site Settings"
+                    files:
+                      
+                      - label: "Website Settings"
+                      name: "website"
+                      file: "content/settings/website.md"
+                      
+                      fields:
+                        
+                        - label: "About Title"
+                        name: "about_title"
+                        widget: "string"
+                        
+                        - label: "About Description"
+                        name: "about_description"
+                        widget: "text"
+                        
+                        - label: "Contact Phone"
+                        name: "phone"
+                        widget: "string"
+                        
+                        - label: "Contact Email"
+                        name: "email"
+                        widget: "string"
+                        
+                        - label: "Instagram"
+                        name: "instagram"
+                        widget: "string"
+                        
+                        - label: "Address"
+                        name: "address"
+                        widget: "text"
+                        
+                        - label: "Booking Title"
+                        name: "booking_title"
+                        widget: "string"
+                        
+                        - label: "Booking Description"
+                        name: "booking_description"
+                        widget: "text"
+                        
+                        - label: "Booking Button"
+                        name: "booking_button"
+                        widget: "string"
+                        
+                        - label: "Copyright"
+                        name: "copyright"
+                        widget: "string"
