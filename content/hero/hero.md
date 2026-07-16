@@ -1,5 +1,5 @@
 ---
-headline: DREAM.GATHER.BELONG
+headline: 𝑫𝒓𝒆𝒂𝒎. 𝑮𝒂𝒕𝒉𝒆𝒓. 𝑩𝒆𝒍𝒐𝒏𝒈
 button: Upcoming Event
 link: events.html
 type: video
