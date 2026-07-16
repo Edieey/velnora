@@ -10,24 +10,30 @@ async function loadSiteSettings() {
         const response = await fetch("content/settings/website.md");
         const text = await response.text();
 
-        const getField = (field) => {
-            const match = text.match(new RegExp(`${field}:\\s*"([^"]*)"`));
-            return match ? match[1] : "";
-        };
+        function getField(field) {
+
+            const match = text.match(
+                new RegExp(`${field}:\\s*(.*)`)
+            );
+
+            return match
+                ? match[1].replace(/"/g, "").trim()
+                : "";
+
+        }
 
         title.textContent = getField("about_title");
 
         const block = text.match(
-            /about_description:\s*\|([\s\S]*?)\nphone:/
+            /about_description:\s*[>|]\s*([\s\S]*?)\nphone:/
         );
 
         if (block) {
 
             const html = block[1]
                 .trim()
-                .split("\n")
-                .filter(line => line.trim())
-                .map(line => `<p>${line.trim()}</p>`)
+                .split(/\n\s*\n/)
+                .map(p => `<p>${p.replace(/\n/g, " ").trim()}</p>`)
                 .join("");
 
             description.innerHTML = html;
@@ -36,7 +42,7 @@ async function loadSiteSettings() {
 
     }
 
-    catch (err) {
+    catch(err){
 
         console.error(err);
 
