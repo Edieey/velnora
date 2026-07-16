@@ -1,57 +1,62 @@
-loadArtists();
 async function loadHero() {
 
     try {
 
-const response = await fetch("content/hero/hero.md");
-
+        const response = await fetch("content/hero/hero.md");
         const text = await response.text();
 
-        const headline =
-            text.match(/headline:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim();
+        const getField = (field) => {
+            const match = text.match(new RegExp(`${field}:\\s*(.*)`));
+            return match ? match[1].replace(/"/g, "").trim() : "";
+        };
 
-        const button =
-            text.match(/button:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim();
+        const headline = getField("headline");
+        const button = getField("button");
+        const link = getField("link");
+        const type = getField("type");
+        const video = getField("video");
+        const image = getField("image");
 
-        const link =
-            text.match(/link:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim();
+        const headlineEl = document.getElementById("heroHeadline");
+        const buttonEl = document.getElementById("heroButton");
+        const heroVideo = document.getElementById("heroVideo");
+        const heroVideoSource = document.getElementById("heroVideoSource");
+        const heroSection = document.querySelector(".hero");
 
-        const video =
-            text.match(/video:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim();
+        if (headlineEl) headlineEl.textContent = headline;
 
-        if (headline)
-            document.getElementById("heroHeadline").textContent = headline;
+        if (buttonEl) {
+            buttonEl.textContent = button;
+            buttonEl.href = link;
+        }
 
-        if (button)
-            document.getElementById("heroButton").textContent = button;
+        if (type === "video") {
 
-        if (link)
-            document.getElementById("heroButton").href = link;
+            heroVideo.style.display = "block";
 
-        if (video) {
+            heroVideoSource.src = video;
+            heroVideo.load();
 
-            document.getElementById("heroVideoSource").src = video;
+            heroSection.style.backgroundImage = "none";
 
-            document.getElementById("heroVideo").load();
+        } else if (type === "image") {
+
+            heroVideo.style.display = "none";
+
+            heroSection.style.backgroundImage = `url('${image}')`;
+            heroSection.style.backgroundSize = "cover";
+            heroSection.style.backgroundPosition = "center";
 
         }
 
     }
 
-    catch(error){
+    catch (error) {
 
-        console.log(error);
+        console.error("Hero CMS Error:", error);
 
     }
 
 }
 
-loadHero();
+document.addEventListener("DOMContentLoaded", loadHero);
