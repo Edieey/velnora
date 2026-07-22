@@ -1,3 +1,7 @@
+const MEMORIES_CACHE_KEY = "velnora-memories-cache-v1";
+const MEMORIES_CACHE_TIME = "velnora-memories-cache-time";
+const CACHE_DURATION = 5 * 60 * 1000;
+
 let allMemories = [];
 let memoryGallery = [];
 let memoryIndex = 0;
@@ -7,6 +11,46 @@ async function loadMemories() {
     const container = document.getElementById("memoriesContainer");
 
     if (!container) return;
+    const cachedMemories = localStorage.getItem(MEMORIES_CACHE_KEY);
+const cacheTime = localStorage.getItem(MEMORIES_CACHE_TIME);
+
+const cacheValid =
+    cachedMemories &&
+    cacheTime &&
+    (Date.now() - Number(cacheTime) < CACHE_DURATION);
+
+if (cacheValid) {
+
+    const memories = JSON.parse(cachedMemories);
+
+    container.innerHTML = memories.map((memory, index) => `
+
+        <div class="event-card fade-in" onclick="openMemoryGallery(${index})">
+
+            <img
+                src="${memory.image}"
+                alt="${memory.title}"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low">
+
+            <div class="event-info">
+
+                <h3>${memory.title}</h3>
+
+                <p>${memory.location}</p>
+
+                <span>${memory.date}</span>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+    allMemories = memories;
+
+}
 
     try {
 
@@ -18,61 +62,77 @@ async function loadMemories() {
 
         let memories = [];
 
-        for (const file of files) {
+const memoryPromises = files
+    .filter(file => file.name.endsWith(".md"))
+    .map(async (file) => {
 
-            if (!file.name.endsWith(".md")) continue;
+        const fileResponse = await fetch(file.download_url);
 
-            const fileResponse = await fetch(file.download_url);
+        const text = await fileResponse.text();
 
-            const text = await fileResponse.text();
+        const title =
+            text.match(/title:\s*(.*)/)?.[1]
+            ?.replace(/"/g, "")
+            ?.trim() || "Memory";
 
-            const title =
-                text.match(/title:\s*(.*)/)?.[1]
-                ?.replace(/"/g, "")
-                ?.trim() || "Memory";
+        const location =
+            text.match(/location:\s*(.*)/)?.[1]
+            ?.replace(/"/g, "")
+            ?.trim() || "";
 
-            const location =
-                text.match(/location:\s*(.*)/)?.[1]
-                ?.replace(/"/g, "")
-                ?.trim() || "";
+        const date =
+            text.match(/date:\s*(.*)/)?.[1]
+            ?.replace(/"/g, "")
+            ?.trim() || "";
 
-            const date =
-                text.match(/date:\s*(.*)/)?.[1]
-                ?.replace(/"/g, "")
-                ?.trim() || "";
+        const image =
+            text.match(/image:\s*(.*)/)?.[1]
+            ?.replace(/"/g, "")
+            ?.trim() || "";
 
-            const image =
-                text.match(/image:\s*(.*)/)?.[1]
-                ?.replace(/"/g, "")
-                ?.trim() || "";
+        const gallery = [];
 
-            const gallery = [];
+        const galleryMatches = text.matchAll(
+            /-\s*(\/images\/uploads\/.*\.(png|jpg|jpeg|webp))/g
+        );
 
-            const galleryMatches = text.matchAll(
-                /-\s*(\/images\/uploads\/.*\.(png|jpg|jpeg|webp))/g
-            );
-
-            for (const match of galleryMatches) {
-                gallery.push(match[1].trim());
-            }
-
-            memories.push({
-                title,
-                location,
-                date,
-                image,
-                gallery
-            });
-
+        for (const match of galleryMatches) {
+            gallery.push(match[1].trim());
         }
 
+        return {
+            title,
+            location,
+            date,
+            image,
+            gallery
+        };
+
+    });
+
+memories = await Promise.all(memoryPromises);
+
         memories.reverse();
+        localStorage.setItem(
+    MEMORIES_CACHE_KEY,
+    JSON.stringify(memories)
+);
+
+localStorage.setItem(
+    MEMORIES_CACHE_TIME,
+    Date.now()
+);
 
         container.innerHTML = memories.map((memory, index) => `
 
             <div class="event-card" onclick="openMemoryGallery(${index})">
 
-                <img src="${memory.image}" alt="${memory.title}">
+                <img
+    src="${memory.image}"
+    alt="${memory.title}"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low">
 
                 <div class="event-info">
 

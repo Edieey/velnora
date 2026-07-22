@@ -135,48 +135,7 @@ window.addEventListener("click", function (e) {
     closeLightbox();
   }
 });
-// Load events from Admin Dashboard into events.html
-if (document.getElementById("eventsContainer")) {
-  const savedEvents =
-    JSON.parse(localStorage.getItem("velnoraEvents")) || [];
 
-  const container = document.getElementById("eventsContainer");
-
-  if (savedEvents.length === 0) {
-    container.innerHTML = "<p>No upcoming events yet. Stay tuned!</p>";
-  } else {
-    // Replace eventImages with all images from admin
-    eventImages.length = 0;
-
-    savedEvents.forEach((event) => {
-      event.images.forEach((img) => {
-        eventImages.push(img);
-      });
-    });
-
-    let imageStartIndex = 0;
-
-    savedEvents.forEach((event) => {
-      const card = document.createElement("div");
-      card.className = "artist-card";
-      card.style.cursor = "pointer";
-      card.setAttribute(
-        "onclick",
-        `openLightbox(${imageStartIndex})`
-      );
-
-      card.innerHTML = `
-        <img src="${event.images[0]}" alt="${event.title}">
-        <h3>${event.title}</h3>
-        <p>${event.date}</p>
-      `;
-
-      container.appendChild(card);
-
-      imageStartIndex += event.images.length;
-    });
-  }
-}
 // Load gallery images from Admin Dashboard into gallery.html
 if (document.getElementById("galleryContainer")) {
   const savedGallery =

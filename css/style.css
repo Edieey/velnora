@@ -1391,3 +1391,58 @@ will-change: transform, opacity;
 .hero-message .btn{
     display:inline-block;
 }
+/* ===========================
+   Premium Skeleton Loader
+=========================== */
+
+.event-skeleton{
+    height:430px;
+    border-radius:22px;
+    overflow:hidden;
+    position:relative;
+
+    background:#161616;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.event-skeleton::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,.08) 50%,
+        transparent 100%
+    );
+
+    transform:translateX(-100%);
+    animation:skeletonLoading 1.4s infinite;
+}
+
+@keyframes skeletonLoading{
+
+0%{
+    transform:translateX(-100%);
+}
+
+100%{
+    transform:translateX(100%);
+}
+
+}
+.fade-in{
+    opacity:0;
+    transform:translateY(20px);
+    animation:fadeUp .5s ease forwards;
+}
+
+@keyframes fadeUp{
+
+to{
+    opacity:1;
+    transform:translateY(0);
+}
+
+}

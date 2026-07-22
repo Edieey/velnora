@@ -34,8 +34,16 @@ async function loadHero() {
 
             heroVideo.style.display = "block";
 
-            heroVideoSource.src = video;
-            heroVideo.load();
+heroVideoSource.src = video;
+heroVideo.load();
+
+heroVideo.addEventListener(
+    "loadeddata",
+    () => {
+        heroVideo.play().catch(() => {});
+    },
+    { once: true }
+);
 
             heroSection.style.backgroundImage = "none";
 

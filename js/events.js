@@ -1,3 +1,6 @@
+const EVENT_CACHE_KEY = "velnora-events-cache-v1";
+const EVENT_CACHE_TIME = "velnora-events-cache-time";
+
 let allEvents = [];
 let currentGallery = [];
 let currentIndex = 0;
@@ -7,6 +10,48 @@ async function loadEvents(containerId, limit = null) {
     const container = document.getElementById(containerId);
 
     if (!container) return;
+    const cachedEvents = localStorage.getItem(EVENT_CACHE_KEY);
+const cacheTime = localStorage.getItem(EVENT_CACHE_TIME);
+
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+const cacheValid =
+    cachedEvents &&
+    cacheTime &&
+    (Date.now() - Number(cacheTime) < CACHE_DURATION);
+
+if (cacheValid) {
+
+    const parsedEvents = JSON.parse(cachedEvents);
+
+    let displayEvents = parsedEvents;
+
+    if (limit) {
+        displayEvents = parsedEvents.slice(0, limit);
+    }
+
+    container.innerHTML = displayEvents.map((event, index) => `
+
+        <div class="event-card fade-in" onclick="openGallery(${index})">
+
+            <img
+                src="${event.image}"
+                alt="${event.title}"
+                loading="lazy"
+                decoding="async">
+
+            <div class="event-info">
+                <h3>${event.title}</h3>
+                <p>${event.date}</p>
+            </div>
+
+        </div>
+
+    `).join("");
+
+    allEvents = parsedEvents;
+
+}
 
     try {
 
@@ -18,47 +63,48 @@ async function loadEvents(containerId, limit = null) {
 
         let events = [];
 
-        for (const file of files) {
+const eventPromises = files
+    .filter(file => file.name.endsWith(".md"))
+    .map(async (file) => {
 
-            if (!file.name.endsWith(".md")) continue;
+        const fileResponse = await fetch(file.download_url);
+        const text = await fileResponse.text();
 
-            const fileResponse = await fetch(file.download_url);
+        const title =
+            text.match(/title:\s*(.*)/)?.[1]
+            ?.replace(/"/g, "")
+            ?.trim() || "Event";
 
-            const text = await fileResponse.text();
+        const date =
+            text.match(/date:\s*(.*)/)?.[1]
+            ?.replace(/"/g, "")
+            ?.trim() || "";
 
-            const title =
-                text.match(/title:\s*(.*)/)?.[1]
-                ?.replace(/"/g, "")
-                ?.trim() || "Event";
+        const image =
+            text.match(/image:\s*(.*)/)?.[1]
+            ?.replace(/"/g, "")
+            ?.trim() || "";
 
-            const date =
-                text.match(/date:\s*(.*)/)?.[1]
-                ?.replace(/"/g, "")
-                ?.trim() || "";
+        const gallery = [];
 
-            const image =
-                text.match(/image:\s*(.*)/)?.[1]
-                ?.replace(/"/g, "")
-                ?.trim() || "";
+        const galleryMatches = text.matchAll(
+            /-\s*(\/images\/uploads\/.*\.(png|jpg|jpeg|webp))/g
+        );
 
-            const gallery = [];
-
-            const galleryMatches = text.matchAll(
-                /-\s*(\/images\/uploads\/.*\.(png|jpg|jpeg|webp))/g
-            );
-
-            for (const match of galleryMatches) {
-                gallery.push(match[1].trim());
-            }
-
-            events.push({
-                title,
-                date,
-                image,
-                gallery
-            });
-
+        for (const match of galleryMatches) {
+            gallery.push(match[1].trim());
         }
+
+        return {
+            title,
+            date,
+            image,
+            gallery
+        };
+
+    });
+
+events = await Promise.all(eventPromises);
 
         events.reverse();
 
@@ -68,9 +114,14 @@ async function loadEvents(containerId, limit = null) {
 
         container.innerHTML = events.map((event, index) => `
 
-            <div class="event-card" onclick="openGallery(${index})">
+            <div class="event-card fade-in" onclick="openGallery(${index})">
 
-                <img src="${event.image}" alt="${event.title}">
+<img
+    src="${event.image}"
+    alt="${event.title}"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low">
 
                 <div class="event-info">
                     <h3>${event.title}</h3>
@@ -82,6 +133,15 @@ async function loadEvents(containerId, limit = null) {
         `).join("");
 
         allEvents = events;
+        localStorage.setItem(
+    EVENT_CACHE_KEY,
+    JSON.stringify(events)
+);
+
+localStorage.setItem(
+    EVENT_CACHE_TIME,
+    Date.now()
+);
 
     }
 
@@ -170,5 +230,13 @@ function openGallery(index) {
 
 }
 
-loadEvents("eventsContainer");
-loadEvents("homeEvents", 2);
+const eventsContainer = document.getElementById("eventsContainer");
+const homeEvents = document.getElementById("homeEvents");
+
+if (eventsContainer) {
+    loadEvents("eventsContainer");
+}
+
+if (homeEvents) {
+    loadEvents("homeEvents", 2);
+}

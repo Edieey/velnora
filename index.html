@@ -47,18 +47,20 @@
 
   <!-- Hero -->
   <section class="hero">
-    <video
+<video
     id="heroVideo"
     autoplay
     muted
     loop
     playsinline
+    preload="metadata"
     class="hero-video">
-      <source
-    id="heroVideoSource"
-    src="videos/hero.mp4"
-    type="video/mp4">
-    </video>
+
+    <source
+        id="heroVideoSource"
+        type="video/mp4">
+
+</video>
 
     <div class="hero-overlay"></div>
 
@@ -174,12 +176,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="js/cms.js"></script>
 
-<script src="js/events.js"></script>
-<script src="js/memories.js"></script>
-<script src="js/hero.js"></script>
+<script defer src="js/events.js"></script>
+<script defer src="js/memories.js"></script>
+<script defer src="js/hero.js"></script>
+<script defer src="js/main.js"></script>
 
-<script src="js/main.js"></script>
-<script src="js/gallery.js"></script>
 
 <!-- Event Lightbox -->
 <div id="lightbox" class="lightbox">
