@@ -32,7 +32,7 @@ if (cacheValid) {
 
     container.innerHTML = displayEvents.map((event, index) => `
 
-        <div class="event-card fade-in" onclick="openGallery(${index})">
+        <div class="event-card fade-in" onclick="openEvent(${index})">
 
             <img
                 src="${event.image}"
@@ -67,23 +67,25 @@ const eventPromises = files
     .filter(file => file.name.endsWith(".md"))
     .map(async (file) => {
 
-        const fileResponse = await fetch(file.download_url);
-        const text = await fileResponse.text();
+const fileResponse = await fetch(file.download_url);
+const text = await fileResponse.text();
 
-        const title =
-            text.match(/title:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim() || "Event";
+const slug = file.name.replace(".md", "");
 
-        const date =
-            text.match(/date:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim() || "";
+const title =
+    text.match(/title:\s*(.*)/)?.[1]
+    ?.replace(/"/g, "")
+    ?.trim() || "Event";
 
-        const image =
-            text.match(/image:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim() || "";
+const date =
+    text.match(/date:\s*(.*)/)?.[1]
+    ?.replace(/"/g, "")
+    ?.trim() || "";
+
+const image =
+    text.match(/image:\s*(.*)/)?.[1]
+    ?.replace(/"/g, "")
+    ?.trim() || "";
 
         const gallery = [];
 
@@ -95,12 +97,13 @@ const eventPromises = files
             gallery.push(match[1].trim());
         }
 
-        return {
-            title,
-            date,
-            image,
-            gallery
-        };
+return {
+    slug,
+    title,
+    date,
+    image,
+    gallery
+};
 
     });
 
@@ -114,7 +117,7 @@ events = await Promise.all(eventPromises);
 
         container.innerHTML = events.map((event, index) => `
 
-            <div class="event-card fade-in" onclick="openGallery(${index})">
+            <div class="event-card fade-in" onclick="openEvent(${index})">
 
 <img
     src="${event.image}"
@@ -239,4 +242,14 @@ if (eventsContainer) {
 
 if (homeEvents) {
     loadEvents("homeEvents", 2);
+}
+function openEvent(index) {
+
+    const event = allEvents[index];
+
+    if (!event) return;
+
+    window.location.href =
+        `eventsnew.html?slug=${event.slug}`;
+
 }

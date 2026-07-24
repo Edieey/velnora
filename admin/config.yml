@@ -6,23 +6,67 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "events"
-    label: "Events"
-    folder: "content/events"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Date", name: "date", widget: "string"}
-      - {label: "Cover Image", name: "image", widget: "image"}
-      - label: "Gallery"
-        name: "gallery"
-        widget: "list"
-        field:
-          label: "Gallery Image"
-          name: "gallery_image"
-          widget: "image"
-      - {label: "Description", name: "body", widget: "markdown"}
+- name: "events"
+  label: "Events"
+  folder: "content/events"
+  create: true
+  slug: "{{slug}}"
+
+  fields:
+    - { label: "Event Title", name: "title", widget: "string" }
+
+    - { label: "Slug", name: "slug", widget: "string", hint: "Example: velnora-alchemy" }
+
+    - { label: "Date", name: "date", widget: "string" }
+
+    - { label: "Time", name: "time", widget: "string" }
+
+    - { label: "Venue", name: "venue", widget: "string" }
+
+    - { label: "Cover Poster", name: "image", widget: "image" }
+
+    - label: "Hero Slideshow Images"
+      name: "hero_images"
+      widget: "list"
+      field:
+        label: "Hero Image"
+        name: "hero_image"
+        widget: "image"
+
+    - label: "Line Up"
+      name: "lineup"
+      widget: "list"
+      field:
+        label: "Artist"
+        name: "artist"
+        widget: "string"
+
+    - { label: "Ticket Button Text", name: "button_text", widget: "string", default: "GET TICKETS" }
+
+    - { label: "Ticket URL", name: "ticket_url", widget: "string", required: false }
+
+    - label: "Gallery"
+      name: "gallery"
+      widget: "list"
+      field:
+        label: "Gallery Image"
+        name: "gallery_image"
+        widget: "image"
+
+    - label: "About Event"
+  name: "body"
+  widget: "markdown"
+  buttons:
+    - bold
+    - italic
+    - heading-one
+    - heading-two
+    - heading-three
+    - bulleted-list
+    - numbered-list
+    - quote
+    - link
+  editor_components: []
 
   - name: "memories"
     label: "Memories"
