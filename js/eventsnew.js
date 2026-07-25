@@ -158,24 +158,19 @@ function getList(yaml, key) {
 
     if (!block) return [];
 
-    const images = [];
-
-    const regex =
-        /-\s*(?:hero_image|gallery_image):\s*(.*)/g;
-
-    let match;
-
-    while ((match = regex.exec(block[1])) !== null) {
-
-        images.push(
-            match[1]
+    return block[1]
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line.startsWith("-"))
+        .map(line =>
+            line
+                .replace(/^-\s*/, "")
+                .replace(/^hero_image:\s*/, "")
+                .replace(/^gallery_image:\s*/, "")
                 .replace(/"/g, "")
                 .trim()
-        );
-
-    }
-
-    return images;
+        )
+        .filter(Boolean);
 
 }
 
@@ -193,24 +188,18 @@ function getSimpleList(yaml, key) {
 
     if (!block) return [];
 
-    const artists = [];
-
-    const regex =
-        /-\s*artist:\s*(.*)/g;
-
-    let match;
-
-    while ((match = regex.exec(block[1])) !== null) {
-
-        artists.push(
-            match[1]
+    return block[1]
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line.startsWith("-"))
+        .map(line =>
+            line
+                .replace(/^-\s*/, "")
+                .replace(/^artist:\s*/, "")
                 .replace(/"/g, "")
                 .trim()
-        );
-
-    }
-
-    return artists;
+        )
+        .filter(Boolean);
 
 }
 
