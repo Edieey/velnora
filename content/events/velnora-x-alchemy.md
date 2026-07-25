@@ -7,6 +7,7 @@ venue: ADAARANVADOO
 image: /images/uploads/1000144722.jpg
 hero_images:
   - /images/uploads/1000147487.jpg
+  - /images/uploads/1000144722.jpg
 lineup:
   - RAID FT AXAM
   - SHIMATTE
