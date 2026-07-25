@@ -1,28 +1,23 @@
 ---
 title: VELNORA X ALCHEMY
-
+slug: velnora-alchemy
 date: 20.8.26
-
-time: 10:00 PM
-
-venue: Crossroads Maldives
-
+time: 09:00
+venue: ADAARANVADOO
 image: /images/uploads/1000144722.jpg
-
 hero_images:
-  - hero_image: /images/uploads/1000144722.jpg
-
+  - /images/uploads/1000147487.jpg
 lineup:
-  - artist: DJ SHAI
-  - artist: DJ XYZ
-
+  - RAID FT AXAM
+  - SHIMATTE
+  - THOTHY
+  - DYD
+  - MIFU
+  - IMBO
 button_text: GET TICKETS
-
 ticket_url: ""
-
 gallery:
-  - gallery_image: /images/uploads/1000145703.jpg
-
+  - /images/uploads/1000147499.jpg
 ---
 
 ## About The Event
