@@ -11,7 +11,7 @@ about_description: >-
   We are more than a DJ group — we are a movement dedicated to creating moments that connect people through rhythm, energy, and emotion.
 phone: +960 974 9937
 email: velnora@mifu.mv
-instagram: https://www.instagram.com/velnora.global/
+instagram: https://www.instagram.com/velnora.mv/
 address: |
   H. Mohamed's Palace
   Raivilla Hingun
