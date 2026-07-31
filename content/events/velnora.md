@@ -5,6 +5,8 @@ date: 10.10.26
 time: 11:00am - 1:00am
 venue: Ibiza Mirissa, Sri Lanka
 image: /images/uploads/img_0086.png
+hero_images:
+  - /images/uploads/1000145706.png
 lineup:
   - ASH
   - DYD
@@ -18,6 +20,8 @@ lineup:
   - IMBO
 button_text: TICKETS
 ticket_url: https://www.spotseeker.lk/event/6a59bc8525be6
+gallery:
+  - /images/uploads/1000145705.png
 ---
 VELNORA – Mirissa Debut marks a historic milestone as the first-ever international music festival created by a Maldivian brand to be hosted in Mirissa, Sri Lanka.
 
