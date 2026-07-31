@@ -2,12 +2,14 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // Hero animation
-gsap.from(".hero-content", {
-  opacity: 0,
-  y: 80,
-  duration: 1.5,
-  ease: "power3.out"
-});
+if (document.querySelector(".hero-content")) {
+    gsap.from(".hero-content", {
+        opacity: 0,
+        y: 80,
+        duration: 1.5,
+        ease: "power3.out"
+    });
+}
 
 // Section headings
 gsap.utils.toArray("h2").forEach((heading) => {
@@ -158,5 +160,47 @@ if (document.getElementById("galleryContainer")) {
     });
   }
 }
+// ===============================
+// MOBILE MENU
+// ===============================
 
+const menuToggle = document.querySelector(".menu-toggle");
+const navMenu = document.querySelector(".nav-menu");
+const menuOverlay = document.querySelector(".menu-overlay");
+
+if (menuToggle && navMenu && menuOverlay) {
+
+    menuToggle.addEventListener("click", () => {
+
+        navMenu.classList.toggle("active");
+        menuOverlay.classList.toggle("active");
+
+        document.body.style.overflow =
+            navMenu.classList.contains("active")
+                ? "hidden"
+                : "";
+
+    });
+
+    menuOverlay.addEventListener("click", () => {
+
+        navMenu.classList.remove("active");
+        menuOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+
+    });
+
+    document.querySelectorAll(".nav-menu a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            navMenu.classList.remove("active");
+            menuOverlay.classList.remove("active");
+            document.body.style.overflow = "";
+
+        });
+
+    });
+
+}
 
