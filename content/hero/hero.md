@@ -4,5 +4,5 @@ button: Upcoming Event
 link: events.html
 type: image
 video: /images/uploads/document-from-dj-shai.mp4
-image: /images/uploads/1000147502.jpg
+image: /images/uploads/1000147484.jpg
 ---
