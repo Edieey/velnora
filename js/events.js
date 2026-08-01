@@ -109,36 +109,49 @@ return {
 
 events = await Promise.all(eventPromises);
 
-        events.reverse();
+events.reverse();
 
-        if (limit) {
-            events = events.slice(0, limit);
-        }
+const allFetchedEvents = [...events];
 
-        container.innerHTML = events.map((event, index) => `
+let displayEvents = events;
 
-            <div class="event-card fade-in" onclick="openEvent(${index})">
+if (limit) {
+    displayEvents = events.slice(0, limit);
+}
 
-<img
-    src="${event.image}"
-    alt="${event.title}"
-    loading="lazy"
-    decoding="async"
-    fetchpriority="low">
+container.innerHTML = displayEvents.map((event, index) => `
 
-                <div class="event-info">
-                    <h3>${event.title}</h3>
-                    <p>${event.date}</p>
-                </div>
+<div class="event-card fade-in" onclick="openEvent(${index})">
 
-            </div>
+    <img
+        src="${event.image}"
+        alt="${event.title}"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low">
 
-        `).join("");
+    <div class="event-info">
 
-        allEvents = events;
-        localStorage.setItem(
+        <h3>${event.title}</h3>
+
+        <p>${event.date}</p>
+
+    </div>
+
+</div>
+
+`).join("");
+
+allEvents = displayEvents;
+
+localStorage.setItem(
     EVENT_CACHE_KEY,
-    JSON.stringify(events)
+    JSON.stringify(allFetchedEvents)
+);
+
+localStorage.setItem(
+    EVENT_CACHE_TIME,
+    Date.now()
 );
 
 localStorage.setItem(
@@ -233,15 +246,12 @@ function openGallery(index) {
 
 }
 
-const eventsContainer = document.getElementById("eventsContainer");
-const homeEvents = document.getElementById("homeEvents");
-
-if (eventsContainer) {
+if (document.getElementById("eventsContainer")) {
     loadEvents("eventsContainer");
 }
 
-if (homeEvents) {
-    loadEvents("homeEvents", 2);
+if (document.getElementById("homeEventsContainer")) {
+    loadEvents("homeEventsContainer", 2);
 }
 function openEvent(index) {
 
