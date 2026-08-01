@@ -22,6 +22,7 @@ async function loadHero() {
         const heroVideo = document.getElementById("heroVideo");
         const heroVideoSource = document.getElementById("heroVideoSource");
         const heroSection = document.querySelector(".hero");
+        if (!heroSection) return;
 
         if (headlineEl) headlineEl.textContent = headline;
 
@@ -30,24 +31,25 @@ async function loadHero() {
             buttonEl.href = link;
         }
 
-        if (type === "video") {
+if (type === "video" && heroVideo && heroVideoSource) {
 
-            heroVideo.style.display = "block";
+    heroVideo.style.display = "block";
 
-heroVideoSource.src = video;
-heroVideo.load();
+    heroVideoSource.src = video;
 
-heroVideo.addEventListener(
-    "loadeddata",
-    () => {
-        heroVideo.play().catch(() => {});
-    },
-    { once: true }
-);
+    heroVideo.load();
 
-            heroSection.style.backgroundImage = "none";
+    heroVideo.addEventListener(
+        "loadeddata",
+        () => {
+            heroVideo.play().catch(() => {});
+        },
+        { once: true }
+    );
 
-        } else if (type === "image") {
+    heroSection.style.backgroundImage = "none";
+
+} else if (type === "image" && heroVideo) {
 
             heroVideo.style.display = "none";
 
