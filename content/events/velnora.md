@@ -4,7 +4,7 @@ slug: velnora-mirissa-debut
 date: 10.10.26
 time: 11:00am - 1:00am
 venue: Ibiza Mirissa, Sri Lanka
-image: /images/uploads/img_0086.png
+image: /images/uploads/1000149233.jpg
 hero_images:
   - /images/uploads/1000145706.png
 lineup:
