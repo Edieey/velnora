@@ -22,6 +22,49 @@ body{
     overflow-x:hidden;
     line-height:1.6;
 }
+/* ==========================================
+   FIXED BACKGROUND ORNAMENTS
+========================================== */
+
+.background-wallpaper{
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:-10;
+    overflow:hidden;
+}
+
+.bg-left{
+    position:absolute;
+    top:50%;
+    left:-5px;
+
+    width:180px;
+
+    transform:translateY(-50%);
+    opacity:.18;
+    pointer-events:none;
+}
+
+.bg-right{
+    position:absolute;
+    top:50%;
+    right:-5px;
+
+    width:180px;
+
+    transform:translateY(-50%);
+    opacity:.18;
+    pointer-events:none;
+}
+
+.page-content{
+
+    position:relative;
+
+    z-index:1;
+
+}
 
 /* LINKS */
 
@@ -37,6 +80,7 @@ img{
 
 section{
     width:100%;
+    background:transparent;
 }
 
 /* BUTTON */
@@ -117,45 +161,38 @@ section{
 .nav-menu{
 
     display:flex;
-    align-items:center;
+    align-items:flex-start;
 
 }
 
-.nav-menu ul{
+.nav-menu a:hover{
 
-    list-style:none;
-    margin:0;
-    padding:0;
+    color:#E8C86E;
 
-    display:flex;
-    align-items:center;
-
-    gap:38px;
-
-}
-
-.nav-menu li{
-
-    list-style:none;
-    display:block;
-
-}
-
-.nav-menu a{
-
-    color:#fff;
-
-    font-size:1rem;
-
-    font-weight:600;
-
-    transition:.3s;
+    padding-left:50px;
 
 }
 
 .nav-menu a:hover{
 
     color:#B78A2E;
+
+}
+.nav-menu li{
+
+    opacity:0;
+
+    transform:translateY(-12px);
+
+    transition:.35s ease;
+
+}
+
+.nav-menu.active li{
+
+    opacity:1;
+
+    transform:translateY(0);
 
 }
 
@@ -181,19 +218,21 @@ section{
 
     position:fixed;
 
-    inset:0;
+    top:0;
+    left:0;
 
-    background:rgba(0,0,0,.12);
+    width:100%;
+    height:100%;
 
-    backdrop-filter:blur(18px);
+    background:rgba(0,0,0,.25);
 
-    -webkit-backdrop-filter:blur(18px);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
 
     opacity:0;
-
     visibility:hidden;
 
-    transition:.4s ease;
+    transition:.35s;
 
     z-index:9998;
 
@@ -232,48 +271,50 @@ section{
 .nav-menu{
 
     position:fixed;
-    top:12px;
-    right:-300px;
 
-    width:280px;
-    height:calc(100vh - 24px);
+    top:0px;
+    left:0;
 
-    border-radius:24px 0 0 24px;
+    width:100%;
+    height:0;
 
-    background: rgba(5,2,13,.68);
+    overflow:hidden;
 
-backdrop-filter: blur(50px) saturate(140%);
--webkit-backdrop-filter: blur(50px) saturate(140%);
+background:rgba(5,2,13,.55);
 
-    border-left:1px solid rgba(232,200,110,.18);
+backdrop-filter:blur(40px) saturate(180%);
+-webkit-backdrop-filter:blur(40px) saturate(180%);
 
-    box-shadow:-25px 0 60px rgba(0,0,0,.45);
+    border-bottom:1px solid rgba(232,200,110,.15);
+
+    transition:
+        height .45s ease,
+        opacity .35s ease;
+
+    opacity:0;
+
+    z-index:10000;
 
     display:flex;
     justify-content:flex-start;
-    align-items:center;
-
-    padding-top:130px;
-
-    transition:.4s;
-
-    z-index:10000;
+    align-items:flex-start;
 
 }
 
 .nav-menu.active{
 
-    right:0;
+    height:420px;
+
+    opacity:1;
 
 }
-
 .nav-menu ul{
 
     list-style:none;
 
     margin:0;
 
-    padding:0;
+    padding:100px 0 25px;
 
     width:100%;
 
@@ -281,21 +322,41 @@ backdrop-filter: blur(50px) saturate(140%);
 
     flex-direction:column;
 
-    align-items:center;
+    align-items:flex-start;
 
-    justify-content:center;
-
-    gap:35px;
+    gap:0;
 
 }
 
 .nav-menu li{
 
-    list-style:none;
+    width:100%;
+
+}
+
+.nav-menu a{
+
+    display:block;
 
     width:100%;
 
-    text-align:center;
+    padding:16px 36px;
+
+    font-size:1.3rem;
+
+    font-weight:700;
+
+    color:#fff;
+
+    transition:.3s;
+
+}
+
+.nav-menu a:hover{
+
+    color:#E8C86E;
+
+    padding-left:50px;
 
 }
 
@@ -331,13 +392,7 @@ backdrop-filter: blur(50px) saturate(140%);
 }
 
 .hero-overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    background:rgba(0,0,0,.55);
-
+    background:transparent;
 }
 
 .hero-content{
@@ -404,7 +459,7 @@ backdrop-filter: blur(50px) saturate(140%);
 
     padding:25px 20px 15px;
 
-    background:#05020d;
+    background:transparent;
 
 }
 
@@ -668,14 +723,12 @@ backdrop-filter: blur(50px) saturate(140%);
 }
 
 #homeEventsContainer .event-card img{
-
     width:100%;
-
-    height:260px;
-
+    height:auto;
+    aspect-ratio:4 / 5;
     object-fit:cover;
-
     object-position:center;
+    display:block;
 }
 
 #homeEventsContainer .event-info{
@@ -706,20 +759,21 @@ backdrop-filter: blur(50px) saturate(140%);
 }
 
 #homeEventsContainer .event-card img{
-
     width:100%;
-
-    height:260px;
-
+    height:auto;
+    aspect-ratio:4 / 5;
     object-fit:cover;
-
     object-position:center;
+    display:block;
 }
 
 #homeEventsContainer .event-card{
-
-    flex:0 0 70%;
-
+    flex:0 0 200px;   /* try 300px */
+    max-width:200px;
+    scroll-snap-align:start;
+    border-radius:22px;
+    overflow:hidden;
+    margin:0 auto;
 }
 
 }   /* <-- media query ends here */
@@ -767,48 +821,63 @@ backdrop-filter: blur(50px) saturate(140%);
 
 #homeEventsContainer .event-card{
 
-    flex:0 0 340px;
+    flex:0 0 380px;
 
     scroll-snap-align:start;
 
 }
 
-.event-card{
-    background:rgba(255,255,255,.05);
-    border-radius:22px;
-    overflow:hidden;
-    transition:.35s;
-    backdrop-filter:blur(10px);
-    cursor:pointer;
-    box-shadow:0 0 20px rgba(0,212,255,.08);
-}
+
 
 .event-card:hover{
     transform:translateY(-8px);
     box-shadow:0 20px 40px rgba(0,212,255,.18);
 }
+/* ==========================================
+   PREMIUM EVENT POSTER CARDS
+========================================== */
+/* HOME EVENT CARDS */
 
-.event-card img{
-    width:100%;
-    height:360px;
-    object-fit:cover;
-    display:block;
+.event-card{
+    background:rgba(255,255,255,.05);
+    border-radius:22px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.35s;
+    backdrop-filter:blur(10px);
 }
 
+.event-card:hover{
+    transform:translateY(-8px);
+}
+
+
+
 .event-info{
-    padding:22px;
+    padding:16px 18px;
     text-align:center;
+    min-height:95px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 }
 
 .event-info h3{
-    font-size:1.6rem;
-    margin-bottom:12px;
+    font-size:1rem;
+    line-height:1.35;
+    font-weight:700;
+    margin:0 0 8px;
+    color:#fff;
 }
 
 .event-info p{
-    color:#d1d5db;
+    font-size:.85rem;
+    font-weight:500;
+    color:#D4AF37;
+    margin:0;
 }
-
 /* ==========================================
    ARTIST CARDS
 ========================================== */
@@ -912,11 +981,7 @@ backdrop-filter: blur(50px) saturate(140%);
 
     text-align:center;
 
-    background:linear-gradient(
-        135deg,
-        rgba(139,92,246,.12),
-        rgba(0,212,255,.08)
-    );
+background:none;
 
 }
 
@@ -1040,11 +1105,7 @@ backdrop-filter: blur(50px) saturate(140%);
 
     }
 
-    .event-card img{
 
-        height:300px;
-
-    }
 
 }
 
@@ -1084,11 +1145,12 @@ backdrop-filter: blur(50px) saturate(140%);
 
     }
 
-    .event-card img{
 
-        height:300px;
+.event-card:hover img{
 
-    }
+    transform:scale(1.05);
+
+}
 
     .gallery-grid{
 
@@ -1122,13 +1184,13 @@ backdrop-filter: blur(50px) saturate(140%);
 
 .footer{
 
-    background:#04010b;
+   background:transparent;
 
     padding:20px 20px 30px;
 
     text-align:center;
 
-    border-top:1px solid rgba(255,255,255,.08);
+    
 
 }
 
@@ -1753,29 +1815,13 @@ section{
 
 header .nav-menu ul,
 header .nav-menu ol,
-header .nav-menu li{
-    list-style: none !important;
-    list-style-type: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
+
 
 header .nav-menu li::marker{
     content: "" !important;
 }
 
-header .nav-menu ul{
-    display: flex !important;
-}
 
-@media (max-width:768px){
-
-header .nav-menu ul{
-    flex-direction: column !important;
-    align-items: center !important;
-}
-
-}
 /* ================================
    MOBILE NAVBAR
 ================================ */
@@ -1827,11 +1873,11 @@ header .nav-menu ul{
 
 }
 
-.menu-toggle{
+  .menu-toggle{
 
-    justify-self:end;
+      justify-self:end;
 
-}
+  }
 
 }
 .desktop-logo{
@@ -2106,7 +2152,7 @@ header .nav-menu ul{
 
 #homeEventsContainer .event-card{
 
-    flex:0 0 340px;
+    flex:0 0 380px;
 
     scroll-snap-align:start;
 
@@ -2119,52 +2165,81 @@ header .nav-menu ul{
     transform:translateY(-8px);
 
 }
-.footer-social{
+  .footer-social{
 
-    display:flex;
+      display:flex;
 
-    justify-content:center;
+      justify-content:center;
 
-    align-items:center;
+      align-items:center;
 
-    gap:30px;
+      gap:30px;
 
-    margin:30px 0 40px;
+      margin:30px 0 40px;
 
+  }
+
+  .footer-social a{
+
+      width:54px;
+
+      height:54px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      border-radius:50%;
+
+      background:rgba(255,255,255,.06);
+
+      color:white;
+
+      font-size:22px;
+
+      text-decoration:none;
+
+      transition:.3s;
+
+  }
+
+  .footer-social a:hover{
+
+      background:#d4af37;
+
+      color:#05020d;
+
+      transform:translateY(-4px);
+
+  }
+  /* ===== HOME EVENT CARD OVERRIDE ===== */
+
+#homeEventsContainer .event-card{
+    flex:0 0 220px !important;
+    max-width:220px !important;
 }
 
-.footer-social a{
-
-    width:54px;
-
-    height:54px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.06);
-
-    color:white;
-
-    font-size:22px;
-
-    text-decoration:none;
-
-    transition:.3s;
-
+#homeEventsContainer .event-info{
+    min-height:70px !important;
+    padding:10px 12px !important;
 }
 
-.footer-social a:hover{
+#homeEventsContainer .event-info h3{
+    font-size:.82rem !important;
+    line-height:1.25 !important;
+    margin-bottom:4px !important;
+}
 
-    background:#d4af37;
+#homeEventsContainer .event-info p{
+    font-size:.72rem !important;
+    margin:0 !important;
+}
 
-    color:#05020d;
-
-    transform:translateY(-4px);
-
+#homeEventsContainer .event-card img{
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:4/5 !important;
+    object-fit:cover !important;
 }

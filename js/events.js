@@ -32,20 +32,32 @@ if (cacheValid) {
 
     container.innerHTML = displayEvents.map((event, index) => `
 
-        <div class="event-card fade-in" onclick="openEvent(${index})">
+<div class="event-card fade-in" onclick="openEvent(${index})">
 
-            <img
-                src="${event.image}"
-                alt="${event.title}"
-                loading="lazy"
-                decoding="async">
+    <div class="event-poster">
+
+        <img
+            src="${event.image}"
+            alt="${event.title}"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="low">
+
+        <div class="event-overlay">
 
             <div class="event-info">
+
                 <h3>${event.title}</h3>
+
                 <p>${event.date}</p>
+
             </div>
 
         </div>
+
+    </div>
+
+</div>
 
     `).join("");
 
@@ -123,18 +135,26 @@ container.innerHTML = displayEvents.map((event, index) => `
 
 <div class="event-card fade-in" onclick="openEvent(${index})">
 
-    <img
-        src="${event.image}"
-        alt="${event.title}"
-        loading="lazy"
-        decoding="async"
-        fetchpriority="low">
+    <div class="event-poster">
 
-    <div class="event-info">
+        <img
+            src="${event.image}"
+            alt="${event.title}"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="low">
 
-        <h3>${event.title}</h3>
+        <div class="event-overlay">
 
-        <p>${event.date}</p>
+            <div class="event-info">
+
+                <h3>${event.title}</h3>
+
+                <p>${event.date}</p>
+
+            </div>
+
+        </div>
 
     </div>
 
