@@ -1,10 +1,10 @@
 ---
 about_title: About Velnora
 about_description: >-
-  About VELNORA
-
-
-  VELNORA is a premium electronic music and lifestyle festival brand created to bring people together through unforgettable experiences. More than just an event, VELNORA is a celebration of music, creativity, and human connection, set in breathtaking destinations that inspire freedom and discovery.
+  VELNORA is a premium electronic music and lifestyle festival brand created to
+  bring people together through unforgettable experiences. More than just an
+  event, VELNORA is a celebration of music, creativity, and human connection,
+  set in breathtaking destinations that inspire freedom and discovery.
 
 
   Founded by MiFu, VELNORA combines world-class production, internationally recognized artists, and carefully curated local talent to create immersive festivals where every detail is designed to leave a lasting impression.
@@ -17,14 +17,15 @@ about_description: >-
 
 
   Dream. Gather. Belong.
-phone: +960 974 9937
+phone: +960 9217237
 email: Events@mifu.mv
 instagram: https://www.instagram.com/velnora.mv/
 address: |
   H. Mohamed's Palace
   Raivilla Hingun
   Malé, Maldives
-booking_title: Ready to Bring Velnora to Your Event?
+  Test
+booking_title: Ready to Bring Velnora to Your Event??
 booking_description: Book our DJs for festivals, weddings, private events, and nightlife.
 booking_button: Book Now
 copyright: © 2026 VELNORA. All Rights Reserved.
