@@ -1,17 +1,17 @@
 // ============================================================
 // VELNORA HERO CMS
-// Supports:
-// video
-// image
-// slideshow
+// Supports: video / image / slideshow
 // ============================================================
 
 async function loadHero() {
 
     try {
 
-        const heroSection =
-            document.querySelector(".hero");
+        // ====================================================
+        // HERO SECTION
+        // ====================================================
+
+        const heroSection = document.querySelector(".hero");
 
         if (!heroSection) {
             console.error("VELNORA: Hero section not found.");
@@ -35,18 +35,12 @@ async function loadHero() {
 
         const text = await response.text();
 
-        console.log(
-            "VELNORA: hero.md loaded successfully"
-        );
-
-        console.log(
-            "VELNORA hero.md:",
-            text
-        );
+        console.log("VELNORA: hero.md loaded.");
+        console.log("VELNORA: hero.md content:", text);
 
 
         // ====================================================
-        // READ SIMPLE FRONTMATTER FIELD
+        // FIELD READER
         // ====================================================
 
         function getField(field) {
@@ -56,8 +50,7 @@ async function loadHero() {
                 "m"
             );
 
-            const match =
-                text.match(regex);
+            const match = text.match(regex);
 
             if (!match) {
                 return "";
@@ -69,99 +62,62 @@ async function loadHero() {
         }
 
 
-        const headline =
-            getField("headline");
+        // ====================================================
+        // READ BASIC CMS FIELDS
+        // ====================================================
 
-        const button =
-            getField("button");
-
-        const link =
-            getField("link");
-
-        const type =
-            getField("type").toLowerCase();
-
-        const video =
-            getField("video");
-
-        const image =
-            getField("image");
+        const headline = getField("headline");
+        const button = getField("button");
+        const link = getField("link");
+        const type = getField("type").toLowerCase();
+        const video = getField("video");
+        const image = getField("image");
 
 
-        console.log(
-            "VELNORA hero type:",
-            type
-        );
+        console.log("VELNORA hero type:", type);
 
 
         // ====================================================
-        // HERO HEADLINE
+        // HEADLINE
         // ====================================================
 
         const headlineEl =
-            document.getElementById(
-                "heroHeadline"
-            );
+            document.getElementById("heroHeadline");
 
         if (headlineEl && headline) {
-
-            headlineEl.textContent =
-                headline;
-
+            headlineEl.textContent = headline;
         }
 
 
         // ====================================================
-        // HERO BUTTON
+        // BUTTON
         // ====================================================
 
         const buttonEl =
-            document.getElementById(
-                "heroButton"
-            );
+            document.getElementById("heroButton");
 
         if (buttonEl) {
 
             if (button) {
-                buttonEl.textContent =
-                    button;
+                buttonEl.textContent = button;
             }
 
             if (link) {
-                buttonEl.href =
-                    link;
+                buttonEl.href = link;
             }
 
         }
 
 
         // ====================================================
-        // FIND HERO ELEMENTS
+        // VIDEO
         // ====================================================
 
         const heroVideo =
-            document.getElementById(
-                "heroVideo"
-            );
+            document.getElementById("heroVideo");
 
         const heroVideoSource =
-            document.getElementById(
-                "heroVideoSource"
-            );
-
-
-        // ====================================================
-        // REMOVE OLD SLIDESHOW
-        // ====================================================
-
-        const oldSlideshow =
-            heroSection.querySelector(
-                ".hero-slideshow"
-            );
-
-        if (oldSlideshow) {
-            oldSlideshow.remove();
-        }
+            document.getElementById("heroVideoSource");
 
 
         // ====================================================
@@ -170,34 +126,25 @@ async function loadHero() {
 
         if (type === "video") {
 
-            console.log(
-                "VELNORA: VIDEO MODE"
-            );
+            console.log("VELNORA: VIDEO MODE");
 
-            if (
-                !heroVideo ||
-                !heroVideoSource
-            ) {
+            if (!heroVideo || !heroVideoSource) {
                 console.error(
-                    "VELNORA: Video elements missing."
+                    "VELNORA: Video elements not found."
                 );
 
                 return;
             }
 
-            heroVideo.style.display =
-                "block";
+            heroVideo.style.display = "block";
 
-            heroVideoSource.src =
-                video;
+            heroVideoSource.src = video;
 
             heroVideo.load();
 
-            heroVideo.play()
-                .catch(() => {});
+            heroVideo.play().catch(() => {});
 
-            heroSection.style.backgroundImage =
-                "none";
+            heroSection.style.backgroundImage = "none";
 
             return;
         }
@@ -209,16 +156,14 @@ async function loadHero() {
 
         if (type === "image") {
 
-            console.log(
-                "VELNORA: IMAGE MODE"
-            );
+            console.log("VELNORA: IMAGE MODE");
 
             if (heroVideo) {
 
                 heroVideo.pause();
 
-                heroVideo.style.display =
-                    "none";
+                heroVideo.style.display = "none";
+
             }
 
             heroSection.style.backgroundImage =
@@ -259,60 +204,68 @@ async function loadHero() {
 
                 heroVideo.pause();
 
-                heroVideo.style.display =
-                    "none";
+                heroVideo.style.display = "none";
+
             }
 
 
             // ------------------------------------------------
-            // FIND SLIDES SECTION
+            // REMOVE OLD SLIDESHOW
             // ------------------------------------------------
+
+            const oldSlideshow =
+                heroSection.querySelector(
+                    ".hero-slideshow"
+                );
+
+            if (oldSlideshow) {
+                oldSlideshow.remove();
+            }
+
+
+            // =================================================
+            // READ SLIDES
+            // =================================================
 
             const slides = [];
 
 
             /*
-                We first isolate everything after:
+             * Find the "slides:" section.
+             *
+             * Example:
+             *
+             * slides:
+             *   - image: /images/uploads/image1.jpg
+             *   - image: /images/uploads/image2.png
+             */
 
-                slides:
+            const slidesStart =
+                text.indexOf("slides:");
 
-                Then we look for:
+            if (slidesStart !== -1) {
 
-                - image: /images/uploads/image.jpg
-            */
-
-            const slidesSection =
-                text.match(
-                    /^slides:\s*([\s\S]*)$/m
-                );
-
-
-            if (slidesSection) {
-
-                const slideText =
-                    slidesSection[1];
+                const slidesText =
+                    text.substring(slidesStart);
 
 
-                const slideMatches =
-                    slideText.matchAll(
+                const matches =
+                    slidesText.matchAll(
                         /^\s*-\s*image:\s*(.+)$/gm
                     );
 
 
-                for (
-                    const match
-                    of slideMatches
-                ) {
+                for (const match of matches) {
 
                     let imagePath =
-                        match[1].trim();
+                        match[1]
+                            .replace(/^["']|["']$/g, "")
+                            .trim();
 
 
+                    // Remove accidental trailing spaces
                     imagePath =
-                        imagePath.replace(
-                            /^["']|["']$/g,
-                            ""
-                        );
+                        imagePath.trim();
 
 
                     if (imagePath) {
@@ -328,9 +281,9 @@ async function loadHero() {
             }
 
 
-            // ------------------------------------------------
-            // LOG RESULTS
-            // ------------------------------------------------
+            // =================================================
+            // DEBUG
+            // =================================================
 
             console.log(
                 "VELNORA slideshow images:",
@@ -338,18 +291,18 @@ async function loadHero() {
             );
 
 
-            // ------------------------------------------------
-            // NO IMAGES
-            // ------------------------------------------------
+            // =================================================
+            // NO SLIDES
+            // =================================================
 
-            if (!slides.length) {
+            if (slides.length === 0) {
 
                 console.error(
                     "VELNORA ERROR: No slideshow images found."
                 );
 
                 console.error(
-                    "Check hero.md → slides:"
+                    "Check hero.md -> slides:"
                 );
 
                 return;
@@ -361,12 +314,14 @@ async function loadHero() {
             // =================================================
 
             const slideshow =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             slideshow.className =
                 "hero-slideshow";
+
+
+            slideshow.id =
+                "heroSlider";
 
 
             heroSection.prepend(
@@ -375,7 +330,7 @@ async function loadHero() {
 
 
             // =================================================
-            // CREATE SLIDES
+            // CREATE EACH SLIDE
             // =================================================
 
             slides.forEach(
@@ -385,6 +340,7 @@ async function loadHero() {
                         document.createElement(
                             "div"
                         );
+
 
                     slide.className =
                         "hero-slide";
@@ -412,7 +368,7 @@ async function loadHero() {
 
 
             // =================================================
-            // GET CREATED SLIDES
+            // GET SLIDES
             // =================================================
 
             const slideElements =
@@ -422,7 +378,7 @@ async function loadHero() {
 
 
             console.log(
-                "VELNORA slides created:",
+                "VELNORA: Created slides:",
                 slideElements.length
             );
 
@@ -448,9 +404,7 @@ async function loadHero() {
 
 
                 slideElements[index]
-                    .classList.add(
-                        "active"
-                    );
+                    .classList.add("active");
 
             }
 
@@ -459,28 +413,29 @@ async function loadHero() {
             // AUTOMATIC SLIDESHOW
             // =================================================
 
-            if (
-                slideElements.length > 1
-            ) {
+            if (slideElements.length > 1) {
 
-                setInterval(() => {
+                setInterval(
+                    () => {
 
-                    currentSlide++;
+                        currentSlide++;
 
-                    if (
-                        currentSlide >=
-                        slideElements.length
-                    ) {
+                        if (
+                            currentSlide >=
+                            slideElements.length
+                        ) {
 
-                        currentSlide = 0;
+                            currentSlide = 0;
 
-                    }
+                        }
 
-                    showSlide(
-                        currentSlide
-                    );
+                        showSlide(
+                            currentSlide
+                        );
 
-                }, 5000);
+                    },
+                    5000
+                );
 
             }
 
