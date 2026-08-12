@@ -1,48 +1,116 @@
+// ============================================================
+// VELNORA CMS HERO
+// Supports:
+// VIDEO
+// IMAGE
+// SLIDESHOW
+// ============================================================
+
 async function loadHero() {
 
     try {
 
-        const response = await fetch("content/hero/hero.md");
+        // ----------------------------------------------------
+        // Find hero section
+        // ----------------------------------------------------
+
+        const heroSection = document.querySelector(".hero");
+
+        if (!heroSection) return;
+
+
+        // ----------------------------------------------------
+        // Fetch latest CMS file
+        // Cache-busting prevents an old hero.md being used
+        // ----------------------------------------------------
+
+        const response = await fetch(
+            `content/hero/hero.md?t=${Date.now()}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Could not load hero.md");
+        }
 
         const text = await response.text();
 
 
-        // =====================================================
-        // READ NORMAL CMS FIELDS
-        // =====================================================
+        // ----------------------------------------------------
+        // Read simple CMS fields
+        // ----------------------------------------------------
 
         const getField = (field) => {
 
-            const match = text.match(
-                new RegExp(`^${field}:\\s*(.*)$`, "m")
+            const regex = new RegExp(
+                `^${field}:\\s*(.*)$`,
+                "m"
             );
+
+            const match = text.match(regex);
 
             return match
                 ? match[1]
-                    .replace(/"/g, "")
+                    .replace(/^["']|["']$/g, "")
                     .trim()
                 : "";
-
         };
 
 
         const headline = getField("headline");
         const button = getField("button");
         const link = getField("link");
-        const type = getField("type");
+        const type = getField("type").toLowerCase();
         const video = getField("video");
         const image = getField("image");
 
 
-        // =====================================================
-        // HERO ELEMENTS
-        // =====================================================
+        // ----------------------------------------------------
+        // Headline
+        // ----------------------------------------------------
 
         const headlineEl =
             document.getElementById("heroHeadline");
 
+        if (headlineEl && headline) {
+            headlineEl.textContent = headline;
+        }
+
+
+        // ----------------------------------------------------
+        // Button
+        // ----------------------------------------------------
+
         const buttonEl =
             document.getElementById("heroButton");
+
+        if (buttonEl) {
+
+            if (button) {
+                buttonEl.textContent = button;
+            }
+
+            if (link) {
+                buttonEl.href = link;
+            }
+
+        }
+
+
+        // ----------------------------------------------------
+        // Remove old slideshow if one exists
+        // ----------------------------------------------------
+
+        const oldSlideshow =
+            heroSection.querySelector(".hero-slideshow");
+
+        if (oldSlideshow) {
+            oldSlideshow.remove();
+        }
+
+
+        // ----------------------------------------------------
+        // VIDEO
+        // ----------------------------------------------------
 
         const heroVideo =
             document.getElementById("heroVideo");
@@ -50,219 +118,10 @@ async function loadHero() {
         const heroVideoSource =
             document.getElementById("heroVideoSource");
 
-        const heroSection =
-            document.querySelector(".hero");
 
+        if (type === "video") {
 
-        if (!heroSection) return;
-
-
-        // =====================================================
-        // HEADLINE
-        // =====================================================
-
-        if (headlineEl) {
-
-            headlineEl.textContent = headline;
-
-        }
-
-
-        // =====================================================
-        // BUTTON
-        // =====================================================
-
-        if (buttonEl) {
-
-            buttonEl.textContent = button;
-
-            buttonEl.href = link;
-
-        }
-
-
-        // =====================================================
-        // SLIDESHOW
-        // =====================================================
-
-        if (type === "slideshow") {
-
-            // Hide old video if it exists
-
-            if (heroVideo) {
-
-                heroVideo.pause();
-
-                heroVideo.style.display = "none";
-
-            }
-
-
-            // -------------------------------------------------
-            // CREATE SLIDESHOW CONTAINER
-            // -------------------------------------------------
-
-            let slider =
-                document.getElementById("heroSlider");
-
-
-            if (!slider) {
-
-                slider =
-                    document.createElement("div");
-
-                slider.id = "heroSlider";
-
-                slider.className =
-                    "hero-slider";
-
-
-                // Put slideshow at the beginning
-                // of the hero section
-
-                heroSection.prepend(slider);
-
-            }
-
-
-            // -------------------------------------------------
-            // READ SLIDES FROM hero.md
-            // -------------------------------------------------
-
-            const slidesSection =
-                text.match(
-                    /slides:\s*([\s\S]*?)(?=\n---|\s*$)/
-                );
-
-
-            if (!slidesSection) {
-
-                console.warn(
-                    "VELNORA Hero: No slideshow images found."
-                );
-
-                return;
-
-            }
-
-
-            const slideImages = [
-                ...slidesSection[1].matchAll(
-                    /^\s*-\s*image:\s*(.+)$/gm
-                )
-            ]
-            .map(match =>
-                match[1]
-                    .replace(/"/g, "")
-                    .trim()
-            )
-            .filter(Boolean);
-
-
-            if (!slideImages.length) {
-
-                console.warn(
-                    "VELNORA Hero: Slideshow is empty."
-                );
-
-                return;
-
-            }
-
-
-            // -------------------------------------------------
-            // CREATE SLIDES
-            // -------------------------------------------------
-
-            slider.innerHTML =
-                slideImages.map(
-                    (slideImage, index) => {
-
-                        return `
-                            <div
-                                class="hero-slide ${
-                                    index === 0
-                                        ? "active"
-                                        : ""
-                                }"
-                                style="
-                                    background-image:
-                                    url('${slideImage}');
-                                ">
-                            </div>
-                        `;
-
-                    }
-                ).join("");
-
-
-            // -------------------------------------------------
-            // MAKE SURE HERO HAS CORRECT LAYERS
-            // -------------------------------------------------
-
-            heroSection.style.backgroundImage = "none";
-
-
-            // -------------------------------------------------
-            // START SLIDESHOW
-            // -------------------------------------------------
-
-            let currentSlide = 0;
-
-
-            if (slideImages.length > 1) {
-
-                setInterval(() => {
-
-                    const slides =
-                        slider.querySelectorAll(
-                            ".hero-slide"
-                        );
-
-
-                    if (!slides.length) return;
-
-
-                    slides[currentSlide]
-                        .classList.remove("active");
-
-
-                    currentSlide++;
-
-
-                    if (
-                        currentSlide >=
-                        slides.length
-                    ) {
-
-                        currentSlide = 0;
-
-                    }
-
-
-                    slides[currentSlide]
-                        .classList.add("active");
-
-
-                }, 5000);
-
-            }
-
-
-            return;
-
-        }
-
-
-        // =====================================================
-        // VIDEO MODE
-        // =====================================================
-
-        if (
-            type === "video" &&
-            heroVideo &&
-            heroVideoSource
-        ) {
+            if (!heroVideo || !heroVideoSource) return;
 
             heroVideo.style.display = "block";
 
@@ -270,61 +129,222 @@ async function loadHero() {
 
             heroVideo.load();
 
-
-            heroVideo.addEventListener(
-                "loadeddata",
-                () => {
-
-                    heroVideo
-                        .play()
-                        .catch(() => {});
-
-                },
-                { once: true }
-            );
+            heroVideo.play().catch(() => {});
 
 
-            heroSection.style.backgroundImage =
-                "none";
-
+            heroSection.style.backgroundImage = "none";
 
             return;
-
         }
 
 
-        // =====================================================
-        // SINGLE IMAGE MODE
-        // =====================================================
+        // ----------------------------------------------------
+        // IMAGE
+        // ----------------------------------------------------
 
-        if (
-            type === "image"
-        ) {
+        if (type === "image") {
 
             if (heroVideo) {
+                heroVideo.pause();
+                heroVideo.style.display = "none";
+            }
 
-                heroVideo.style.display =
-                    "none";
+            heroSection.style.backgroundImage =
+                `url("${image}")`;
+
+            heroSection.style.backgroundSize = "cover";
+
+            heroSection.style.backgroundPosition =
+                "center center";
+
+            heroSection.style.backgroundRepeat =
+                "no-repeat";
+
+            return;
+        }
+
+
+        // ----------------------------------------------------
+        // SLIDESHOW
+        // ----------------------------------------------------
+
+        if (type === "slideshow") {
+
+            if (heroVideo) {
+                heroVideo.pause();
+                heroVideo.style.display = "none";
+            }
+
+
+            // ------------------------------------------------
+            // Read hero_images from YAML
+            // ------------------------------------------------
+
+            const heroImages = [];
+
+            const heroImagesMatch = text.match(
+                /hero_images:\s*\n([\s\S]*?)(?=\n[a-zA-Z_]+:|\n---|\s*$)/
+            );
+
+
+            if (heroImagesMatch) {
+
+                const imageLines =
+                    heroImagesMatch[1].match(
+                        /^\s*-\s*(?:hero_image:\s*)?(.+)$/gm
+                    );
+
+                if (imageLines) {
+
+                    imageLines.forEach(line => {
+
+                        const cleanImage =
+                            line
+                                .replace(
+                                    /^\s*-\s*(?:hero_image:\s*)?/,
+                                    ""
+                                )
+                                .replace(/^["']|["']$/g, "")
+                                .trim();
+
+                        if (cleanImage) {
+                            heroImages.push(cleanImage);
+                        }
+
+                    });
+
+                }
 
             }
 
 
-            heroSection.style.backgroundImage =
-                `url('${image}')`;
+            // ------------------------------------------------
+            // Safety check
+            // ------------------------------------------------
+
+            if (heroImages.length === 0) {
+
+                console.warn(
+                    "Hero slideshow selected, but no hero images were found."
+                );
+
+                heroSection.style.backgroundImage =
+                    image
+                        ? `url("${image}")`
+                        : "none";
+
+                return;
+            }
 
 
-            heroSection.style.backgroundSize =
-                "cover";
+            // ------------------------------------------------
+            // Create slideshow
+            // ------------------------------------------------
+
+            const slideshow =
+                document.createElement("div");
+
+            slideshow.className =
+                "hero-slideshow";
 
 
-            heroSection.style.backgroundPosition =
-                "center";
+            // Put slideshow inside hero
+            heroSection.prepend(slideshow);
 
+
+            // ------------------------------------------------
+            // Create each image slide
+            // ------------------------------------------------
+
+            heroImages.forEach((imagePath, index) => {
+
+                const slide =
+                    document.createElement("div");
+
+                slide.className =
+                    "hero-slide";
+
+
+                if (index === 0) {
+                    slide.classList.add("active");
+                }
+
+
+                slide.style.backgroundImage =
+                    `url("${imagePath}")`;
+
+
+                slideshow.appendChild(slide);
+
+            });
+
+
+            // ------------------------------------------------
+            // Slideshow controls
+            // ------------------------------------------------
+
+            const slides =
+                slideshow.querySelectorAll(".hero-slide");
+
+            let currentSlide = 0;
+
+
+            // ------------------------------------------------
+            // Change slide
+            // ------------------------------------------------
+
+            function showSlide(index) {
+
+                slides.forEach(slide => {
+                    slide.classList.remove("active");
+                });
+
+                slides[index].classList.add("active");
+
+            }
+
+
+            // ------------------------------------------------
+            // Automatic slideshow
+            // 5 seconds per image
+            // ------------------------------------------------
+
+            if (slides.length > 1) {
+
+                setInterval(() => {
+
+                    currentSlide++;
+
+                    if (
+                        currentSlide >= slides.length
+                    ) {
+                        currentSlide = 0;
+                    }
+
+                    showSlide(currentSlide);
+
+                }, 5000);
+
+            }
+
+
+            console.log(
+                "VELNORA Hero Slideshow loaded:",
+                heroImages
+            );
 
             return;
-
         }
 
+
+        // ----------------------------------------------------
+        // Unknown type
+        // ----------------------------------------------------
+
+        console.warn(
+            "Unknown hero type:",
+            type
+        );
 
     }
 
@@ -339,6 +359,10 @@ async function loadHero() {
 
 }
 
+
+// ============================================================
+// START
+// ============================================================
 
 document.addEventListener(
     "DOMContentLoaded",
