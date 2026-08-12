@@ -3704,3 +3704,117 @@ header .nav-menu li::marker {
     }
 
 }
+/* ==========================================================
+   VELNORA — CMS HERO SLIDESHOW
+========================================================== */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* Slideshow fills the hero */
+
+.hero-slider {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    z-index: 0;
+}
+
+
+/* Each CMS image */
+
+.hero-slide {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    opacity: 0;
+
+    transform: scale(1.04);
+
+    transition:
+        opacity 1.4s ease,
+        transform 5.5s ease;
+}
+
+
+/* Current slide */
+
+.hero-slide.active {
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+
+/* Keep dark overlay above images */
+
+.hero .hero-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+
+/* Keep old video hidden unless
+   hero.js switches to video mode */
+
+.hero-video {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: 0;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .hero-slider,
+    .hero-slide {
+
+        width: 100%;
+        height: 100%;
+
+    }
+
+    .hero-slide {
+
+        background-position: center center;
+
+    }
+
+}

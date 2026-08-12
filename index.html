@@ -83,30 +83,46 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </header>
 
   <!-- Hero -->
-  <section class="hero">
-<video
-    id="heroVideo"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-    class="hero-video">
+<section class="hero">
 
-    <source
-        id="heroVideoSource"
-        type="video/mp4">
+    <!-- CMS HERO SLIDESHOW -->
+    <div
+        class="hero-slider"
+        id="heroSlider">
+    </div>
 
-</video>
+    <!-- Existing video kept for CMS video mode -->
+    <video
+        id="heroVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        class="hero-video">
 
+        <source
+            id="heroVideoSource"
+            type="video/mp4">
+
+    </video>
+
+    <!-- Dark overlay -->
     <div class="hero-overlay"></div>
 
-<div class="hero-content">
+    <!-- Hero content -->
+    <div class="hero-content">
+    </div>
 
-</div>
 </section>
 
 <section class="hero-cta">
+
+    <p id="heroHeadline">
+        Dream. Gather. Belong.
+    </p>
+
+</section>
 
     <p id="heroHeadline">
         Dream. Gather. Belong.

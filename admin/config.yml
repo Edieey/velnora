@@ -119,6 +119,7 @@ collections:
             options:
               - "video"
               - "image"
+              - "slideshow"
 
           - label: "Hero Video"
             name: "video"

@@ -1,8 +1,14 @@
 ---
-headline: 𝑫𝒓𝒆𝒂𝒎. 𝑮𝒂𝒕𝒉𝒆𝒓. 𝑩𝒆𝒍𝒐𝒏𝒈
+headline: Dream. Gather. Belong.
 button: Upcoming Event
 link: events.html
-type: image
+type: slideshow
+
 video: /images/uploads/document-from-dj-shai.mp4
+
 image: /images/uploads/whatsapp-image-2026-08-01-at-01.41.05-1-.jpeg
+
+slides:
+  - image: /images/uploads/whatsapp-image-2026-08-01-at-01.41.05-1-.jpeg
+  - image: /images/uploads/event1.png
 ---
