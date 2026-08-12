@@ -3652,3 +3652,55 @@ header .nav-menu li::marker {
 
 }
 /* END OF PART 5 */
+/* ======================================================
+   STORE PAGE — MOBILE NAVBAR SPACING
+====================================================== */
+
+/* ======================================================
+   FINAL STORE MOBILE NAVBAR FIX
+====================================================== */
+
+/* ======================================================
+   FINAL FIX — VELNORA STORE HEADING
+====================================================== */
+
+@media (max-width: 768px) {
+
+    .store-hero {
+        position: relative !important;
+        margin: 0 !important;
+        padding: 110px 20px 40px !important;
+        min-height: 220px !important;
+        overflow: visible !important;
+    }
+
+    .store-hero h2 {
+        display: block !important;
+        position: relative !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+
+        margin: 0 0 20px 0 !important;
+
+        color: #D4AF37 !important;
+        font-size: 2.2rem !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+
+        z-index: 999 !important;
+    }
+
+    .store-hero p {
+        display: block !important;
+        position: relative !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+
+        margin: 0 !important;
+
+        z-index: 999 !important;
+    }
+
+}

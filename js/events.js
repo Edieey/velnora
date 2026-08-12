@@ -4,6 +4,71 @@ const EVENT_CACHE_TIME = "velnora-events-cache-time";
 let allEvents = [];
 let currentGallery = [];
 let currentIndex = 0;
+// ======================================================
+// SORT EVENTS BY ACTUAL EVENT DATE
+// Supports dates like:
+// 10.10.26
+// 18.08.26
+// 21/02/2027
+// 05-09-2026
+// ======================================================
+
+function parseEventDate(dateString) {
+
+    if (!dateString) {
+        return new Date(8640000000000000);
+    }
+
+    const cleanDate = dateString
+        .trim()
+        .replace(/\s+/g, "");
+
+    // DD.MM.YY / DD.MM.YYYY
+    // DD/MM/YY / DD/MM/YYYY
+    // DD-MM-YY / DD-MM-YYYY
+    const match = cleanDate.match(
+        /^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2,4})$/
+    );
+
+    if (match) {
+
+        let day = Number(match[1]);
+        let month = Number(match[2]) - 1;
+        let year = Number(match[3]);
+
+        // Convert 2-digit years to 20xx
+        if (year < 100) {
+            year += 2000;
+        }
+
+        return new Date(year, month, day);
+    }
+
+    // Fallback for other valid date formats
+    const fallbackDate = new Date(dateString);
+
+    if (!isNaN(fallbackDate.getTime())) {
+        return fallbackDate;
+    }
+
+    // Unknown date goes to the end
+    return new Date(8640000000000000);
+}
+
+
+// Sort oldest → newest
+function sortEventsByDate(events) {
+
+    return events.sort((a, b) => {
+
+        return (
+            parseEventDate(a.date).getTime() -
+            parseEventDate(b.date).getTime()
+        );
+
+    });
+
+}
 
 async function loadEvents(containerId, limit = null) {
 
@@ -22,7 +87,9 @@ const cacheValid =
 
 if (cacheValid) {
 
-    const parsedEvents = JSON.parse(cachedEvents);
+    const parsedEvents = sortEventsByDate(
+    JSON.parse(cachedEvents)
+);
 
     let displayEvents = parsedEvents;
 
@@ -121,7 +188,7 @@ return {
 
 events = await Promise.all(eventPromises);
 
-events.reverse();
+events = sortEventsByDate(events);
 
 const allFetchedEvents = [...events];
 
@@ -130,6 +197,8 @@ let displayEvents = events;
 if (limit) {
     displayEvents = events.slice(0, limit);
 }
+
+allEvents = events;
 
 container.innerHTML = displayEvents.map((event, index) => `
 
@@ -162,7 +231,7 @@ container.innerHTML = displayEvents.map((event, index) => `
 
 `).join("");
 
-allEvents = displayEvents;
+allEvents = events;
 
 localStorage.setItem(
     EVENT_CACHE_KEY,
