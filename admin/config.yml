@@ -25,14 +25,6 @@ collections:
 
       - { label: "Cover Poster", name: "image", widget: "image" }
 
-      - label: "Hero Slideshow Images"
-        name: "hero_images"
-        widget: "list"
-        field:
-          label: "Hero Image"
-          name: "hero_image"
-          widget: "image"
-
       - label: "Line Up"
         name: "lineup"
         widget: "list"
@@ -130,6 +122,14 @@ collections:
             name: "image"
             widget: "image"
             required: false
+          - label: "Hero Slideshow Images"
+            name: "slideshow_images"
+            widget: "list"
+            required: false
+            field:
+              label: "Hero Image"
+              name: "hero_image"
+              widget: "image"
 
   - name: "settings"
     label: "Site Settings"
