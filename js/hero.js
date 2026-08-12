@@ -1,15 +1,22 @@
 // ============================================================
 // VELNORA HERO CMS
-// Supports: video / image / slideshow
+// Supports:
+// video
+// image
+// slideshow
 // ============================================================
 
 async function loadHero() {
 
     try {
 
-        const heroSection = document.querySelector(".hero");
+        const heroSection =
+            document.querySelector(".hero");
 
-        if (!heroSection) return;
+        if (!heroSection) {
+            console.error("VELNORA: Hero section not found.");
+            return;
+        }
 
 
         // ====================================================
@@ -21,14 +28,25 @@ async function loadHero() {
         );
 
         if (!response.ok) {
-            throw new Error("Could not load hero.md");
+            throw new Error(
+                `Could not load hero.md (${response.status})`
+            );
         }
 
         const text = await response.text();
 
+        console.log(
+            "VELNORA: hero.md loaded successfully"
+        );
+
+        console.log(
+            "VELNORA hero.md:",
+            text
+        );
+
 
         // ====================================================
-        // SIMPLE FIELD READER
+        // READ SIMPLE FRONTMATTER FIELD
         // ====================================================
 
         function getField(field) {
@@ -38,23 +56,42 @@ async function loadHero() {
                 "m"
             );
 
-            const match = text.match(regex);
+            const match =
+                text.match(regex);
 
-            if (!match) return "";
+            if (!match) {
+                return "";
+            }
 
             return match[1]
                 .replace(/^["']|["']$/g, "")
                 .trim();
-
         }
 
 
-        const headline = getField("headline");
-        const button = getField("button");
-        const link = getField("link");
-        const type = getField("type").toLowerCase();
-        const video = getField("video");
-        const image = getField("image");
+        const headline =
+            getField("headline");
+
+        const button =
+            getField("button");
+
+        const link =
+            getField("link");
+
+        const type =
+            getField("type").toLowerCase();
+
+        const video =
+            getField("video");
+
+        const image =
+            getField("image");
+
+
+        console.log(
+            "VELNORA hero type:",
+            type
+        );
 
 
         // ====================================================
@@ -62,10 +99,15 @@ async function loadHero() {
         // ====================================================
 
         const headlineEl =
-            document.getElementById("heroHeadline");
+            document.getElementById(
+                "heroHeadline"
+            );
 
         if (headlineEl && headline) {
-            headlineEl.textContent = headline;
+
+            headlineEl.textContent =
+                headline;
+
         }
 
 
@@ -74,46 +116,51 @@ async function loadHero() {
         // ====================================================
 
         const buttonEl =
-            document.getElementById("heroButton");
+            document.getElementById(
+                "heroButton"
+            );
 
         if (buttonEl) {
 
             if (button) {
-                buttonEl.textContent = button;
+                buttonEl.textContent =
+                    button;
             }
 
             if (link) {
-                buttonEl.href = link;
+                buttonEl.href =
+                    link;
             }
 
         }
 
 
         // ====================================================
-        // GET HERO SLIDER
-        // ====================================================
-
-        const heroSlider =
-            document.getElementById("heroSlider");
-
-
-        // ====================================================
-        // GET HERO VIDEO
+        // FIND HERO ELEMENTS
         // ====================================================
 
         const heroVideo =
-            document.getElementById("heroVideo");
+            document.getElementById(
+                "heroVideo"
+            );
 
         const heroVideoSource =
-            document.getElementById("heroVideoSource");
+            document.getElementById(
+                "heroVideoSource"
+            );
 
 
         // ====================================================
-        // CLEAR OLD SLIDES
+        // REMOVE OLD SLIDESHOW
         // ====================================================
 
-        if (heroSlider) {
-            heroSlider.innerHTML = "";
+        const oldSlideshow =
+            heroSection.querySelector(
+                ".hero-slideshow"
+            );
+
+        if (oldSlideshow) {
+            oldSlideshow.remove();
         }
 
 
@@ -123,27 +170,34 @@ async function loadHero() {
 
         if (type === "video") {
 
-            console.log("VELNORA: Video mode");
+            console.log(
+                "VELNORA: VIDEO MODE"
+            );
 
+            if (
+                !heroVideo ||
+                !heroVideoSource
+            ) {
+                console.error(
+                    "VELNORA: Video elements missing."
+                );
 
-            if (heroSlider) {
-                heroSlider.style.display = "none";
-            }
-
-
-            if (!heroVideo || !heroVideoSource) {
                 return;
             }
 
+            heroVideo.style.display =
+                "block";
 
-            heroVideo.style.display = "block";
-
-            heroVideoSource.src = video;
+            heroVideoSource.src =
+                video;
 
             heroVideo.load();
 
-            heroVideo.play().catch(() => {});
+            heroVideo.play()
+                .catch(() => {});
 
+            heroSection.style.backgroundImage =
+                "none";
 
             return;
         }
@@ -155,39 +209,32 @@ async function loadHero() {
 
         if (type === "image") {
 
-            console.log("VELNORA: Image mode");
-
+            console.log(
+                "VELNORA: IMAGE MODE"
+            );
 
             if (heroVideo) {
 
                 heroVideo.pause();
 
-                heroVideo.style.display = "none";
-
+                heroVideo.style.display =
+                    "none";
             }
 
-
-            if (!heroSlider) {
-                return;
-            }
-
-
-            heroSlider.style.display = "block";
-
-
-            const slide =
-                document.createElement("div");
-
-            slide.className =
-                "hero-slide active";
-
-
-            slide.style.backgroundImage =
+            heroSection.style.backgroundImage =
                 `url("${image}")`;
 
+            heroSection.style.backgroundSize =
+                "cover";
 
-            heroSlider.appendChild(slide);
+            heroSection.style.backgroundPosition =
+                "center center";
 
+            heroSection.style.backgroundRepeat =
+                "no-repeat";
+
+            heroSection.style.backgroundColor =
+                "#000";
 
             return;
         }
@@ -200,7 +247,7 @@ async function loadHero() {
         if (type === "slideshow") {
 
             console.log(
-                "VELNORA: Slideshow mode"
+                "VELNORA: SLIDESHOW MODE"
             );
 
 
@@ -212,56 +259,78 @@ async function loadHero() {
 
                 heroVideo.pause();
 
-                heroVideo.style.display = "none";
-
+                heroVideo.style.display =
+                    "none";
             }
-
-
-            if (!heroSlider) {
-
-                console.error(
-                    "VELNORA: #heroSlider not found"
-                );
-
-                return;
-
-            }
-
-
-            heroSlider.style.display = "block";
 
 
             // ------------------------------------------------
-            // READ CMS SLIDES
-            //
-            // slides:
-            //   - image: /images/uploads/image1.jpg
-            //   - image: /images/uploads/image2.jpg
+            // FIND SLIDES SECTION
             // ------------------------------------------------
 
             const slides = [];
 
 
-            const slideMatches =
-                text.matchAll(
-                    /^\s*-\s*image:\s*(.+)$/gm
+            /*
+                We first isolate everything after:
+
+                slides:
+
+                Then we look for:
+
+                - image: /images/uploads/image.jpg
+            */
+
+            const slidesSection =
+                text.match(
+                    /^slides:\s*([\s\S]*)$/m
                 );
 
 
-            for (const match of slideMatches) {
+            if (slidesSection) {
 
-                const imagePath =
-                    match[1]
-                        .replace(/^["']|["']$/g, "")
-                        .trim();
+                const slideText =
+                    slidesSection[1];
 
 
-                if (imagePath) {
-                    slides.push(imagePath);
+                const slideMatches =
+                    slideText.matchAll(
+                        /^\s*-\s*image:\s*(.+)$/gm
+                    );
+
+
+                for (
+                    const match
+                    of slideMatches
+                ) {
+
+                    let imagePath =
+                        match[1].trim();
+
+
+                    imagePath =
+                        imagePath.replace(
+                            /^["']|["']$/g,
+                            ""
+                        );
+
+
+                    if (imagePath) {
+
+                        slides.push(
+                            imagePath
+                        );
+
+                    }
+
                 }
 
             }
 
+
+            // ------------------------------------------------
+            // LOG RESULTS
+            // ------------------------------------------------
 
             console.log(
                 "VELNORA slideshow images:",
@@ -270,18 +339,39 @@ async function loadHero() {
 
 
             // ------------------------------------------------
-            // No images
+            // NO IMAGES
             // ------------------------------------------------
 
-            if (slides.length === 0) {
+            if (!slides.length) {
 
                 console.error(
-                    "VELNORA: No slideshow images found"
+                    "VELNORA ERROR: No slideshow images found."
+                );
+
+                console.error(
+                    "Check hero.md → slides:"
                 );
 
                 return;
-
             }
+
+
+            // =================================================
+            // CREATE SLIDESHOW
+            // =================================================
+
+            const slideshow =
+                document.createElement(
+                    "div"
+                );
+
+            slideshow.className =
+                "hero-slideshow";
+
+
+            heroSection.prepend(
+                slideshow
+            );
 
 
             // =================================================
@@ -292,17 +382,20 @@ async function loadHero() {
                 (imagePath, index) => {
 
                     const slide =
-                        document.createElement("div");
-
+                        document.createElement(
+                            "div"
+                        );
 
                     slide.className =
                         "hero-slide";
 
 
                     if (index === 0) {
+
                         slide.classList.add(
                             "active"
                         );
+
                     }
 
 
@@ -310,7 +403,7 @@ async function loadHero() {
                         `url("${imagePath}")`;
 
 
-                    heroSlider.appendChild(
+                    slideshow.appendChild(
                         slide
                     );
 
@@ -323,22 +416,28 @@ async function loadHero() {
             // =================================================
 
             const slideElements =
-                heroSlider.querySelectorAll(
+                slideshow.querySelectorAll(
                     ".hero-slide"
                 );
 
 
+            console.log(
+                "VELNORA slides created:",
+                slideElements.length
+            );
+
+
+            // =================================================
+            // SLIDE CONTROL
+            // =================================================
+
             let currentSlide = 0;
 
-
-            // =================================================
-            // SHOW SLIDE
-            // =================================================
 
             function showSlide(index) {
 
                 slideElements.forEach(
-                    (slide) => {
+                    slide => {
 
                         slide.classList.remove(
                             "active"
@@ -349,7 +448,9 @@ async function loadHero() {
 
 
                 slideElements[index]
-                    .classList.add("active");
+                    .classList.add(
+                        "active"
+                    );
 
             }
 
@@ -358,12 +459,13 @@ async function loadHero() {
             // AUTOMATIC SLIDESHOW
             // =================================================
 
-            if (slideElements.length > 1) {
+            if (
+                slideElements.length > 1
+            ) {
 
                 setInterval(() => {
 
                     currentSlide++;
-
 
                     if (
                         currentSlide >=
@@ -374,16 +476,18 @@ async function loadHero() {
 
                     }
 
-
                     showSlide(
                         currentSlide
                     );
-
 
                 }, 5000);
 
             }
 
+
+            console.log(
+                "VELNORA: Slideshow started."
+            );
 
             return;
         }
@@ -413,7 +517,7 @@ async function loadHero() {
 
 
 // ============================================================
-// START
+// START HERO
 // ============================================================
 
 document.addEventListener(

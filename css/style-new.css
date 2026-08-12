@@ -3704,33 +3704,28 @@ header .nav-menu li::marker {
     }
 
 }
-/* =========================================================
-   VELNORA — FINAL CMS HERO SLIDESHOW
-========================================================= */
+/* ==========================================================
+   VELNORA HERO — CMS VIDEO / IMAGE / SLIDESHOW
+   ========================================================== */
 
 .hero {
     position: relative;
     width: 100%;
-    height: 500px;
-
+    height: 600px;
     margin-top: 0;
-
+    padding: 0;
     overflow: hidden;
     background: #000;
-
     isolation: isolate;
 }
 
-
-/* =========================================================
+/* ==========================================================
    CMS SLIDESHOW
-========================================================= */
+   ========================================================== */
 
-.hero-slider {
+.hero-slideshow {
     position: absolute;
-
-    top: 0;
-    left: 0;
+    inset: 0;
 
     width: 100%;
     height: 100%;
@@ -3740,14 +3735,12 @@ header .nav-menu li::marker {
     z-index: 1;
 }
 
-
-/* =========================================================
-   SLIDES
-========================================================= */
+/* ==========================================================
+   INDIVIDUAL SLIDES
+   ========================================================== */
 
 .hero-slide {
     position: absolute;
-
     inset: 0;
 
     width: 100%;
@@ -3755,15 +3748,8 @@ header .nav-menu li::marker {
 
     background-color: #000;
 
-    /*
-       IMPORTANT:
-       contain prevents portrait posters
-       from being cropped/zoomed.
-    */
-    background-size: contain;
-
+    background-size: cover;
     background-position: center center;
-
     background-repeat: no-repeat;
 
     opacity: 0;
@@ -3773,22 +3759,17 @@ header .nav-menu li::marker {
     z-index: 1;
 }
 
-
-/* Active slide */
-
 .hero-slide.active {
     opacity: 1;
     z-index: 2;
 }
 
-
-/* =========================================================
-   VIDEO MODE
-========================================================= */
+/* ==========================================================
+   HERO VIDEO
+   ========================================================== */
 
 .hero-video {
     position: absolute;
-
     inset: 0;
 
     width: 100%;
@@ -3801,15 +3782,16 @@ header .nav-menu li::marker {
     display: none;
 }
 
-
-/* =========================================================
+/* ==========================================================
    HERO OVERLAY
-========================================================= */
+   ========================================================== */
 
 .hero .hero-overlay {
     position: absolute;
-
     inset: 0;
+
+    width: 100%;
+    height: 100%;
 
     z-index: 5;
 
@@ -3818,27 +3800,24 @@ header .nav-menu li::marker {
     background:
         linear-gradient(
             to bottom,
-            rgba(0, 0, 0, .15),
-            rgba(0, 0, 0, .05) 45%,
-            rgba(0, 0, 0, .70)
+            rgba(0, 0, 0, 0.12),
+            rgba(0, 0, 0, 0.03) 45%,
+            rgba(0, 0, 0, 0.70)
         );
 }
 
-
-/* =========================================================
+/* ==========================================================
    HERO CONTENT
-========================================================= */
+   ========================================================== */
 
 .hero .hero-content {
     position: relative;
-
     z-index: 10;
 }
 
-
-/* =========================================================
+/* ==========================================================
    NAVBAR ABOVE HERO
-========================================================= */
+   ========================================================== */
 
 .navbar {
     position: fixed !important;
@@ -3851,196 +3830,26 @@ header .nav-menu li::marker {
     z-index: 10000 !important;
 }
 
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 768px) {
-
-    .hero {
-
-        /*
-           Mobile navbar is 62px tall.
-           Hero starts underneath it.
-        */
-
-        margin-top: 62px;
-
-        height: calc(100vh - 62px);
-
-        min-height: 500px;
-
-    }
-
-
-    .hero-slide {
-
-        background-size: contain;
-
-        background-position: center center;
-
-    }
-
-}
-
-
-/* =========================================================
-   SMALL PHONES
-========================================================= */
-
-@media (max-width: 480px) {
-
-    .hero {
-
-        margin-top: 62px;
-
-        height: calc(100vh - 62px);
-
-        min-height: 480px;
-
-    }
-
-
-    .hero-slide {
-
-        background-size: contain;
-
-    }
-
-}
 /* ==========================================================
-   VELNORA HERO SLIDESHOW — FINAL MOBILE FIX
+   MOBILE HERO
    ========================================================== */
 
 @media (max-width: 768px) {
 
     .hero {
-        position: relative;
-        width: 100%;
-
-        /* Remove the huge viewport-based height */
-        height: auto;
-        min-height: 0;
-
-        margin-top: 62px;
-
-        background: #000;
-
-        overflow: hidden;
-        isolation: isolate;
-    }
-
-    .hero-slider {
-        position: relative;
-
-        top: auto;
-        left: auto;
-        right: auto;
-        bottom: auto;
-
-        width: 100%;
-
-        /*
-           Your posters are portrait.
-           This gives the slideshow approximately
-           the same 2:3 proportion as the posters.
-        */
-        aspect-ratio: 2 / 3;
-
-        height: auto;
-
-        overflow: hidden;
-
-        z-index: 1;
-    }
-
-    .hero-slide {
-        position: absolute;
-
-        inset: 0;
-
-        width: 100%;
-        height: 100%;
-
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-
-        opacity: 0;
-
-        transform: none;
-
-        transition:
-            opacity 1.2s ease-in-out;
-
-        z-index: 1;
-    }
-
-    .hero-slide.active {
-        opacity: 1;
-
-        z-index: 2;
-    }
-
-    /* Keep the dark overlay over the image */
-    .hero .hero-overlay {
-        position: absolute;
-
-        inset: 0;
-
-        z-index: 5;
-
-        pointer-events: none;
-    }
-
-    /* Video mode */
-    .hero-video {
-        position: absolute;
-
-        inset: 0;
-
-        width: 100%;
-        height: 100%;
-
-        object-fit: cover;
-
-        z-index: 1;
-    }
-
-}
-
-
-/* ==========================================================
-   VERY SMALL PHONES
-   ========================================================== */
-
-@media (max-width: 480px) {
-
-    .hero-slider {
-        aspect-ratio: 2 / 3;
-    }
-
-}
-/* ==========================================================
-   VELNORA HERO — TRUE FULL WIDTH MOBILE
-   ========================================================== */
-
-@media (max-width: 768px) {
-
-    .hero {
-        position: relative !important;
-
         width: 100vw !important;
-        max-width: none !important;
 
         margin-top: 62px !important;
 
-        /* Escape any padding/margin from page-content */
         margin-left: calc(50% - 50vw) !important;
         margin-right: calc(50% - 50vw) !important;
 
-        height: calc(100vw * 1.5) !important;
+        /*
+         * Portrait hero.
+         * 2:3 matches your event posters.
+         */
+        height: 150vw !important;
+
         min-height: 0 !important;
 
         padding: 0 !important;
@@ -4050,28 +3859,19 @@ header .nav-menu li::marker {
         background: #000 !important;
     }
 
-
-    /* Slideshow itself */
-    .hero-slider,
     .hero-slideshow {
         position: absolute !important;
 
-        top: 0 !important;
-        left: 0 !important;
+        inset: 0 !important;
 
-        width: 100vw !important;
+        width: 100% !important;
         height: 100% !important;
-
-        margin: 0 !important;
-        padding: 0 !important;
 
         overflow: hidden !important;
 
         z-index: 1 !important;
     }
 
-
-    /* Individual poster */
     .hero-slide {
         position: absolute !important;
 
@@ -4080,13 +3880,8 @@ header .nav-menu li::marker {
         width: 100% !important;
         height: 100% !important;
 
-        margin: 0 !important;
-        padding: 0 !important;
-
         /*
-         * COVER = fills the entire phone width.
-         * It may crop a tiny amount of the poster,
-         * but there will be NO side gaps.
+         * Fills the entire phone width.
          */
         background-size: cover !important;
 
@@ -4094,16 +3889,21 @@ header .nav-menu li::marker {
 
         background-repeat: no-repeat !important;
 
-        transform: none !important;
-    }
+        opacity: 0;
 
+        transform: none !important;
+
+        transition:
+            opacity 1.2s ease-in-out !important;
+
+        z-index: 1 !important;
+    }
 
     .hero-slide.active {
         opacity: 1 !important;
+        z-index: 2 !important;
     }
 
-
-    /* Overlay */
     .hero .hero-overlay {
         position: absolute !important;
 
@@ -4113,10 +3913,10 @@ header .nav-menu li::marker {
         height: 100% !important;
 
         z-index: 5 !important;
+
+        pointer-events: none !important;
     }
 
-
-    /* Make sure video also fills edge-to-edge */
     .hero-video {
         position: absolute !important;
 
@@ -4127,13 +3927,17 @@ header .nav-menu li::marker {
 
         object-fit: cover !important;
 
-        margin: 0 !important;
+        z-index: 1 !important;
+    }
+
+    .hero .hero-content {
+        position: relative !important;
+        z-index: 10 !important;
     }
 }
 
-
 /* ==========================================================
-   VERY SMALL PHONES
+   SMALL PHONES
    ========================================================== */
 
 @media (max-width: 480px) {
@@ -4141,10 +3945,10 @@ header .nav-menu li::marker {
     .hero {
         width: 100vw !important;
 
+        height: 150vw !important;
+
         margin-left: calc(50% - 50vw) !important;
         margin-right: calc(50% - 50vw) !important;
-
-        height: calc(100vw * 1.5) !important;
     }
 
 }
