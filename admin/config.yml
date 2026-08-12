@@ -123,12 +123,12 @@ collections:
             widget: "image"
             required: false
           - label: "Hero Slideshow Images"
-            name: "hero_images"
+            name: "slides"
             widget: "list"
             required: false
             field:
               label: "Hero Image"
-              name: "hero_image"
+              name: "image"
               widget: "image"
 
   - name: "settings"
