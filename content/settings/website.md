@@ -14,9 +14,6 @@ about_description: >-
 
 
   Whether you’re dancing beneath the stars, discovering new artists, or making memories with friends, VELNORA is where music becomes an experience.
-
-
-  Dream. Gather. Belong.
 phone: +960 9217237
 email: Events@mifu.mv
 instagram: https://www.instagram.com/velnora.mv/
