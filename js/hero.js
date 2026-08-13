@@ -345,86 +345,162 @@ async function loadHero() {
         }
 
 
-        // ====================================================
-        // SINGLE IMAGE MODE
-        // ====================================================
+// ====================================================
+// SINGLE IMAGE MODE
+// ====================================================
 
-        if (type === "image") {
+if (type === "image") {
 
-            console.log(
-                "VELNORA: IMAGE MODE"
-            );
+    console.log("VELNORA: IMAGE MODE");
 
 
-            if (!image) {
+    // ------------------------------------------------
+    // Check that CMS supplied an image
+    // ------------------------------------------------
 
-                console.error(
-                    "VELNORA ERROR: No hero image found."
-                );
+    if (!image) {
 
-                return;
-            }
+        console.error(
+            "VELNORA ERROR: No hero image found."
+        );
 
-
-            const imagePath =
-                cleanAssetPath(image);
-
-
-            console.log(
-                "VELNORA: Image path:",
-                imagePath
-            );
+        return;
+    }
 
 
-            // Make sure video is completely hidden
-            if (heroVideo) {
+    // ------------------------------------------------
+    // Clean CMS image path
+    // ------------------------------------------------
 
-                heroVideo.pause();
-
-                heroVideo.style.display =
-                    "none";
-            }
+    const imagePath =
+        cleanAssetPath(image);
 
 
-            if (heroVideoSource) {
-
-                heroVideoSource.removeAttribute(
-                    "src"
-                );
-            }
+    console.log(
+        "VELNORA: Image path:",
+        imagePath
+    );
 
 
-            // Make sure no slideshow exists
-            removeSlideshow();
+    // ------------------------------------------------
+    // Hide video
+    // ------------------------------------------------
+
+    if (heroVideo) {
+
+        heroVideo.pause();
+
+        heroVideo.style.display = "none";
+        heroVideo.style.visibility = "hidden";
+    }
 
 
-            // Apply image
-            heroSection.style.backgroundImage =
-                `url("${imagePath}")`;
+    // ------------------------------------------------
+    // Remove video source
+    // ------------------------------------------------
 
-            heroSection.style.backgroundSize =
-                "cover";
+    if (heroVideoSource) {
 
-            heroSection.style.backgroundPosition =
-                "center center";
-
-            heroSection.style.backgroundRepeat =
-                "no-repeat";
-
-            heroSection.style.backgroundColor =
-                "#000";
+        heroVideoSource.removeAttribute("src");
+    }
 
 
-            console.log(
-                "VELNORA: Single image applied:",
-                imagePath
-            );
+    // ------------------------------------------------
+    // Remove slideshow
+    // ------------------------------------------------
+
+    removeSlideshow();
 
 
-            return;
-        }
+    // ------------------------------------------------
+    // Remove any old single hero image
+    // ------------------------------------------------
+
+    const oldHeroImage =
+        heroSection.querySelector(
+            ".hero-single-image"
+        );
+
+    if (oldHeroImage) {
+
+        oldHeroImage.remove();
+    }
 
 
+    // ------------------------------------------------
+    // Create the hero image
+    // ------------------------------------------------
+
+    const heroImage =
+        document.createElement("img");
+
+
+    heroImage.className =
+        "hero-single-image";
+
+
+    heroImage.src =
+        imagePath;
+
+
+    heroImage.alt =
+        "VELNORA";
+
+
+    // ------------------------------------------------
+    // Image loaded successfully
+    // ------------------------------------------------
+
+    heroImage.onload = () => {
+
+        console.log(
+            "VELNORA: Single image loaded successfully:",
+            imagePath
+        );
+    };
+
+
+    // ------------------------------------------------
+    // Image failed
+    // ------------------------------------------------
+
+    heroImage.onerror = () => {
+
+        console.error(
+            "VELNORA ERROR: Single image failed to load:",
+            imagePath
+        );
+    };
+
+
+    // ------------------------------------------------
+    // Add image to hero
+    // ------------------------------------------------
+
+    heroSection.appendChild(
+        heroImage
+    );
+
+
+    // ------------------------------------------------
+    // Make sure hero can contain the image
+    // ------------------------------------------------
+
+    heroSection.style.position =
+        "relative";
+
+    heroSection.style.overflow =
+        "hidden";
+
+
+    console.log(
+        "VELNORA: Single image applied:",
+        imagePath
+    );
+
+
+    return;
+}
         // ====================================================
         // SLIDESHOW MODE
         // ====================================================

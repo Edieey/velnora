@@ -4101,3 +4101,25 @@ header .nav-menu li::marker {
     }
 
 }
+/* ==========================================================
+   VELNORA — SINGLE HERO IMAGE
+   ========================================================== */
+
+.hero-single-image {
+    position: absolute !important;
+
+    top: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+
+    display: block !important;
+
+    z-index: 1 !important;
+
+    pointer-events: none;
+}
