@@ -28,17 +28,24 @@ async function loadSiteSettings() {
             /about_description:\s*[>|]\s*([\s\S]*?)\nphone:/
         );
 
-        if (block) {
+if (block) {
 
-            const html = block[1]
+    const html = block[1]
+        .trim()
+        .split(/\n\s*\n/)
+        .map(p => {
+            const cleanText = p
+                .replace(/\n/g, " ")
                 .trim()
-                .split(/\n\s*\n/)
-                .map(p => `<p>${p.replace(/\n/g, " ").trim()}</p>`)
-                .join("");
+                .replace(/^-\s*/, "");
 
-            description.innerHTML = html;
+            return `<p>${cleanText}</p>`;
+        })
+        .join("");
 
-        }
+    description.innerHTML = html;
+
+}
 
     }
 
