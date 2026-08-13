@@ -3952,3 +3952,152 @@ header .nav-menu li::marker {
     }
 
 }
+/* ==========================================================
+   DESKTOP — CENTER HOME EVENTS
+   ========================================================== */
+
+@media (min-width: 769px) {
+
+    #homeEvents {
+        text-align: center;
+    }
+
+    #homeEvents h2 {
+        text-align: center;
+    }
+
+    #homeEvents > p {
+        text-align: center;
+    }
+
+    #homeEventsContainer {
+        justify-content: center;
+        overflow-x: visible;
+    }
+
+}
+@media (min-width: 769px) {
+
+    #homeEvents .events-slider {
+        margin-top: 10px;
+    }
+
+    #homeEventsContainer {
+        padding-top: 0;
+    }
+
+}
+/* ==========================================================
+   DESKTOP NAVBAR FIX
+   ========================================================== */
+
+@media (min-width: 769px) {
+
+    header.navbar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        height: 90px !important;
+        padding: 0 45px !important;
+    }
+
+    header.navbar nav,
+    header.navbar .nav-links {
+        display: flex !important;
+        align-items: center !important;
+        gap: 32px !important;
+    }
+
+    header.navbar a {
+        opacity: 1 !important;
+        visibility: visible !important;
+        filter: none !important;
+        color: #ffffff !important;
+    }
+
+}
+/* ==========================================================
+   DESKTOP NAVBAR LOGO SIZE
+   ========================================================== */
+
+@media (min-width: 769px) {
+
+    header.navbar img {
+        width: 75px !important;
+        height: 75px !important;
+        max-width: 75px !important;
+        max-height: 75px !important;
+        object-fit: contain !important;
+    }
+
+}
+/* ==========================================================
+   DESKTOP NAVBAR — SHOW NAVIGATION
+   ========================================================== */
+
+@media (min-width: 769px) {
+
+    .navbar {
+        height: 82px !important;
+        padding: 0 50px !important;
+    }
+
+    .navbar .logo img {
+        width: 80px !important;
+        height: 80px !important;
+        object-fit: contain !important;
+    }
+
+    .navbar .nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .navbar .nav-menu ul {
+        display: flex !important;
+        align-items: center !important;
+        gap: 38px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .navbar .nav-menu li {
+        display: list-item !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+
+    .navbar .nav-menu li a {
+        display: block !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+    }
+
+    .navbar .nav-menu li a:hover {
+        color: #B78A2E !important;
+    }
+
+    /* Hide mobile-only controls on desktop */
+    .navbar .menu-toggle,
+    .navbar .mobile-home {
+        display: none !important;
+    }
+}
+/* ==========================================================
+   DESKTOP — KEEP PAGE CONTENT BELOW FIXED NAVBAR
+   ========================================================== */
+
+@media (min-width: 769px) {
+
+    .page-content {
+        padding-top: 82px !important;
+    }
+
+}
