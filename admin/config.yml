@@ -57,13 +57,33 @@ collections:
 
     fields:
       - { label: "Title", name: "title", widget: "string" }
+
       - { label: "Location", name: "location", widget: "string" }
+
       - { label: "Date", name: "date", widget: "string" }
+
       - { label: "Cover Image", name: "image", widget: "image" }
+
+      - label: "Card Click Action"
+        name: "click_action"
+        widget: "select"
+        default: "gallery"
+        options:
+          - label: "Gallery Popup"
+            value: "gallery"
+          - label: "External Link"
+            value: "link"
+
+      - label: "External Link"
+        name: "external_link"
+        widget: "string"
+        required: false
+        hint: "Instagram Reel, YouTube video, TikTok, or any other URL"
 
       - label: "Gallery"
         name: "gallery"
         widget: "list"
+        required: false
         field:
           label: "Gallery Image"
           name: "gallery_image"
@@ -71,6 +91,7 @@ collections:
 
       - { label: "Description", name: "body", widget: "markdown" }
 
+            
   - name: "gallery"
     label: "Gallery"
     folder: "content/gallery"
