@@ -3,6 +3,7 @@ title: Barcelo Nasandhura
 location: Male
 date: 21.05.26
 image: /images/uploads/event1.png
+click_action: gallery
 gallery:
   - /images/uploads/1000144434.jpg
   - /images/uploads/1000144436.jpg
