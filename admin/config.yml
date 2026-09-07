@@ -99,9 +99,15 @@ collections:
     slug: "{{slug}}"
 
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Album Title", name: "title", widget: "string" }
 
+      - label: "Images"
+        name: "images"
+        widget: "list"
+        field:
+          label: "Image"
+          name: "image"
+          widget: "image"
   - name: "artists"
     label: "Artists"
     folder: "content/artists"

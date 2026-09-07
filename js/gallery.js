@@ -1,39 +1,58 @@
 const GALLERY_CACHE_KEY = "velnora-gallery-cache-v1";
 const GALLERY_CACHE_TIME = "velnora-gallery-cache-time";
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+
 async function loadGalleryPage() {
 
     const container = document.getElementById("galleryContainer");
 
     if (!container) return;
-    const cachedGallery = localStorage.getItem(GALLERY_CACHE_KEY);
-const cacheTime = localStorage.getItem(GALLERY_CACHE_TIME);
 
-const cacheValid =
-    cachedGallery &&
-    cacheTime &&
-    (Date.now() - Number(cacheTime) < CACHE_DURATION);
 
-if (cacheValid) {
+    /* =========================
+       LOAD CACHE
+    ========================= */
 
-    const galleryItems = JSON.parse(cachedGallery);
+    const cachedGallery =
+        localStorage.getItem(GALLERY_CACHE_KEY);
 
-    container.innerHTML = galleryItems.map(item => `
+    const cacheTime =
+        localStorage.getItem(GALLERY_CACHE_TIME);
 
-        <div class="artist-card fade-in">
+    const cacheValid =
+        cachedGallery &&
+        cacheTime &&
+        (Date.now() - Number(cacheTime) < CACHE_DURATION);
 
-            <img
-                src="${item.image}"
-                alt="${item.title}"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low">
 
-        </div>
+    if (cacheValid) {
 
-    `).join("");
+        const galleryItems =
+            JSON.parse(cachedGallery);
 
-}
+        container.innerHTML =
+            galleryItems.map(item => `
+
+                <div class="artist-card fade-in">
+
+                    <img
+                        src="${item.image}"
+                        alt="${item.title}"
+                        loading="lazy"
+                        decoding="async"
+                        fetchpriority="low">
+
+                </div>
+
+            `).join("");
+
+    }
+
+
+    /* =========================
+       LOAD FROM GITHUB
+    ========================= */
 
     try {
 
@@ -43,68 +62,197 @@ if (cacheValid) {
 
         const files = await response.json();
 
+
+        if (!Array.isArray(files)) {
+            throw new Error("Gallery folder could not be loaded.");
+        }
+
+
+        const galleryPromises = files
+
+            .filter(file =>
+                file.name.endsWith(".md")
+            )
+
+            .map(async (file) => {
+
+                const fileResponse =
+                    await fetch(file.download_url);
+
+                const text =
+                    await fileResponse.text();
+
+
+                /* =========================
+                   ALBUM TITLE
+                ========================= */
+
+                const title =
+                    text
+                        .match(/title:\s*(.*)/)?.[1]
+                        ?.replace(/"/g, "")
+                        ?.trim()
+                    || "Gallery";
+
+
+                /* =========================
+                   NEW MULTI-IMAGE FORMAT
+                ========================= */
+
+                const images = [];
+
+
+                const imageBlock =
+                    text.match(
+                        /images:\s*([\s\S]*?)(?=\n\w|$)/
+                    );
+
+
+                if (imageBlock) {
+
+                    imageBlock[1]
+
+                        .split("\n")
+
+                        .map(line =>
+                            line.trim()
+                        )
+
+                        .filter(line =>
+                            line.startsWith("-")
+                        )
+
+                        .map(line =>
+                            line
+                                .replace(/^-\s*/, "")
+                                .replace(/"/g, "")
+                                .trim()
+                        )
+
+                        .filter(Boolean)
+
+                        .forEach(image => {
+
+                            images.push(image);
+
+                        });
+
+                }
+
+
+                /* =========================
+                   OLD FORMAT SUPPORT
+                   ========================= */
+
+                const oldImage =
+                    text
+                        .match(/image:\s*(.*)/)?.[1]
+                        ?.replace(/"/g, "")
+                        ?.trim();
+
+
+                if (
+                    oldImage &&
+                    !images.includes(oldImage)
+                ) {
+
+                    images.push(oldImage);
+
+                }
+
+
+                return {
+                    title,
+                    images
+                };
+
+            });
+
+
+        const albums =
+            await Promise.all(galleryPromises);
+
+
+        /* =========================
+           TURN ALBUMS INTO
+           INDIVIDUAL GALLERY ITEMS
+        ========================= */
+
         let galleryItems = [];
 
-const galleryPromises = files
-    .filter(file => file.name.endsWith(".md"))
-    .map(async (file) => {
 
-        const fileResponse = await fetch(file.download_url);
-        const text = await fileResponse.text();
+        albums.forEach(album => {
 
-        const title =
-            text.match(/title:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim() || "Gallery";
+            album.images.forEach(image => {
 
-        const image =
-            text.match(/image:\s*(.*)/)?.[1]
-            ?.replace(/"/g, "")
-            ?.trim() || "";
+                galleryItems.push({
 
-        return {
-            title,
-            image
-        };
+                    title: album.title,
 
-    });
+                    image: image
 
-galleryItems = await Promise.all(galleryPromises);
+                });
+
+            });
+
+        });
+
+
+        /* =========================
+           NEWEST ALBUM FIRST
+        ========================= */
 
         galleryItems.reverse();
+
+
+        /* =========================
+           SAVE CACHE
+        ========================= */
+
         localStorage.setItem(
-    GALLERY_CACHE_KEY,
-    JSON.stringify(galleryItems)
-);
+            GALLERY_CACHE_KEY,
+            JSON.stringify(galleryItems)
+        );
 
-localStorage.setItem(
-    GALLERY_CACHE_TIME,
-    Date.now()
-);
+        localStorage.setItem(
+            GALLERY_CACHE_TIME,
+            Date.now()
+        );
 
-        container.innerHTML = galleryItems.map(item => `
 
-            <div class="artist-card">
+        /* =========================
+           DISPLAY GALLERY
+        ========================= */
 
-                <img
-    src="${item.image}"
-    alt="${item.title}"
-    loading="lazy"
-    decoding="async"
-    fetchpriority="low">
+        container.innerHTML =
+            galleryItems.map(item => `
 
-            </div>
+                <div class="artist-card">
 
-        `).join("");
+                    <img
+                        src="${item.image}"
+                        alt="${item.title}"
+                        loading="lazy"
+                        decoding="async"
+                        fetchpriority="low">
+
+                </div>
+
+            `).join("");
+
 
     }
 
     catch (error) {
 
-        console.error("Gallery Error:", error);
+        console.error(
+            "Gallery Error:",
+            error
+        );
 
     }
 
 }
+
 
 loadGalleryPage();
