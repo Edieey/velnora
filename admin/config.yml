@@ -103,11 +103,11 @@ collections:
 
       - label: "Images"
         name: "images"
-        widget: "list"
-        field:
-          label: "Image"
-          name: "image"
-          widget: "image"
+        widget: "image"
+        allow_multiple: true
+        media_library:
+          config:
+            multiple: true
   - name: "artists"
     label: "Artists"
     folder: "content/artists"
