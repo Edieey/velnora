@@ -103,11 +103,7 @@ collections:
 
       - label: "Images"
         name: "images"
-        widget: "image"
-        allow_multiple: true
-        media_library:
-          config:
-            multiple: true
+        widget: "bulk-gallery"
   - name: "artists"
     label: "Artists"
     folder: "content/artists"
