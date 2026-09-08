@@ -38,7 +38,7 @@ async function loadGalleryPage() {
 
                     <img
                         src="${item.image}"
-                        alt="${item.title}"
+                        alt=""
                         loading="lazy"
                         decoding="async"
                         fetchpriority="low">
@@ -231,7 +231,7 @@ async function loadGalleryPage() {
 
                     <img
                         src="${item.image}"
-                        alt="${item.title}"
+                        alt=""
                         loading="lazy"
                         decoding="async"
                         fetchpriority="low">
