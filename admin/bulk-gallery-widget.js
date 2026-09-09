@@ -371,14 +371,75 @@
             }
         );
 
+  }
+
+
+async function waitForWebsite(
+    imagePath,
+    setStatus
+) {
+
+    const maxAttempts = 60;
+    const delay = 5000;
+
+    for (
+        let attempt = 1;
+        attempt <= maxAttempts;
+        attempt++
+    ) {
+
+        setStatus(
+            `Waiting for website deployment... (${attempt}/${maxAttempts})`
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${imagePath}?velnora_check=${Date.now()}`,
+                    {
+                        method: "HEAD",
+                        cache: "no-store"
+                    }
+                );
+
+
+            if (response.ok) {
+
+                return true;
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Website deployment check:",
+                error
+            );
+
+        }
+
+
+        await sleep(delay);
+
     }
 
 
-    /* =========================
-       UPLOAD BATCH
-    ========================= */
+    throw new Error(
+        "The images were uploaded, but the website has not finished deploying yet. Please wait before trying another upload."
+    );
 
-    async function uploadImages(
+}
+
+
+/* =========================
+   UPLOAD BATCH
+========================= */
+
+async function uploadImages(
         files,
         setStatus
     ) {
@@ -552,18 +613,29 @@
         );
 
 
-        await updateMain(
-            token,
-            newCommit.sha
-        );
+await updateMain(
+    token,
+    newCommit.sha
+);
 
 
-        setStatus(
-            `${uploadedPaths.length} image${uploadedPaths.length === 1 ? "" : "s"} uploaded successfully.`
-        );
+setStatus(
+    "Images uploaded. Waiting for VELNORA website deployment..."
+);
 
 
-        return uploadedPaths;
+await waitForWebsite(
+    uploadedPaths[0],
+    setStatus
+);
+
+
+setStatus(
+    `${uploadedPaths.length} image${uploadedPaths.length === 1 ? "" : "s"} are now live on VELNORA.`
+);
+
+
+return uploadedPaths;
 
     }
 
