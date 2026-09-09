@@ -118,10 +118,9 @@ async function loadGalleryPage() {
                             line.trim()
                         )
 
-                        .filter(line =>
-                            line.startsWith("-")
-                        )
-
+.filter(line =>
+    /^-\s+\S/.test(line)
+)
                         .map(line =>
                             line
                                 .replace(/^-\s*/, "")
