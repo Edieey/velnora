@@ -2,7 +2,7 @@
 headline: Dream. Gather. Belong.
 button: Upcoming Event
 link: events.html
-type: slideshow
+type: image
 video: /images/uploads/document-from-dj-shai.mp4
 image: /images/uploads/img_0086.png
 slides:
