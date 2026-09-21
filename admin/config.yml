@@ -173,3 +173,78 @@ collections:
           - { label: "Booking Description", name: "booking_description", widget: "text" }
           - { label: "Booking Button", name: "booking_button", widget: "string" }
           - { label: "Copyright", name: "copyright", widget: "string" }
+  - name: "products"
+    label: "Products"
+    folder: "content/store/products"
+    create: true
+    slug: "{{slug}}"
+
+    fields:
+      - { label: "Product Name", name: "title", widget: "string" }
+
+      - { label: "Price (MVR)", name: "price", widget: "number", value_type: "float", min: 0 }
+
+      - { label: "Main Product Image", name: "image", widget: "image" }
+
+      - { label: "Description", name: "body", widget: "markdown" }
+
+      - label: "Available Sizes"
+        name: "sizes"
+        widget: "list"
+        field:
+          label: "Size"
+          name: "size"
+          widget: "string"
+
+      - label: "Available Colours"
+        name: "colours"
+        widget: "list"
+        fields:
+          - { label: "Colour Name", name: "name", widget: "string" }
+          - { label: "Colour Code", name: "code", widget: "string", hint: "Example: #000000" }
+
+      - label: "Product Status"
+        name: "status"
+        widget: "select"
+        default: "available"
+        options:
+          - label: "Available"
+            value: "available"
+          - label: "Sold Out"
+            value: "sold-out"
+          - label: "Hidden"
+            value: "hidden"
+
+      - { label: "Purchase Button Text", name: "button_text", widget: "string", default: "PURCHASE NOW" }
+
+  - name: "store_settings"
+    label: "Store Settings"
+
+    files:
+      - label: "Store Settings"
+        name: "store"
+        file: "content/store/settings.md"
+
+        fields:
+
+          - { label: "Store Title", name: "store_title", widget: "string", default: "VELNORA Store" }
+
+          - { label: "Store Description", name: "store_description", widget: "text", default: "Premium merchandise crafted for the VELNORA community." }
+
+          - { label: "Bank Name", name: "bank_name", widget: "string" }
+
+          - { label: "Account Name", name: "account_name", widget: "string" }
+
+          - { label: "Account Number", name: "account_number", widget: "string" }
+
+          - { label: "Payment Instructions", name: "payment_instructions", widget: "text" }
+
+          - { label: "Delivery Information", name: "delivery_information", widget: "text", default: "Delivery within 7–10 days within Maldives." }
+
+          - { label: "Order Button Text", name: "order_button_text", widget: "string", default: "PROCESS PURCHASE" }
+
+          - { label: "Customer Confirmation Message", name: "customer_confirmation", widget: "text" }
+
+          - { label: "Order Notification Email", name: "order_email", widget: "string" }
+
+          - { label: "WhatsApp Number", name: "whatsapp_number", widget: "string" }
