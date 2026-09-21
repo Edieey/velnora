@@ -180,17 +180,44 @@ collections:
     slug: "{{slug}}"
 
     fields:
+
       - { label: "Product Name", name: "title", widget: "string" }
+
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        default: "apparel"
+        options:
+          - label: "Apparel"
+            value: "apparel"
+          - label: "Accessories"
+            value: "accessories"
+          - label: "Headwear"
+            value: "headwear"
+          - label: "Jerseys"
+            value: "jerseys"
+          - label: "Limited Edition"
+            value: "limited-edition"
+          - label: "Event Merchandise"
+            value: "event-merchandise"
+          - label: "Other"
+            value: "other"
 
       - { label: "Price (MVR)", name: "price", widget: "number", value_type: "float", min: 0 }
 
       - { label: "Main Product Image", name: "image", widget: "image" }
+
+      - label: "Product Gallery"
+        name: "images"
+        widget: "bulk-gallery"
+        required: false
 
       - { label: "Description", name: "body", widget: "markdown" }
 
       - label: "Available Sizes"
         name: "sizes"
         widget: "list"
+        required: false
         field:
           label: "Size"
           name: "size"
@@ -199,6 +226,7 @@ collections:
       - label: "Available Colours"
         name: "colours"
         widget: "list"
+        required: false
         fields:
           - { label: "Colour Name", name: "name", widget: "string" }
           - { label: "Colour Code", name: "code", widget: "string", hint: "Example: #000000" }
