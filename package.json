@@ -1,0 +1,24 @@
+{
+  "name": "velnora-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Edieey/velnora.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Edieey/velnora/issues"
+  },
+  "homepage": "https://github.com/Edieey/velnora#readme",
+  "dependencies": {
+    "nodemailer": "^10.0.10"
+  }
+}
