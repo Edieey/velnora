@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="VELNORA Official Store"
+    >
+
+    <title>VELNORA | Product</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style-new.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/product.css"
+    >
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+    <meta
+        name="theme-color"
+        content="#05020d"
+    >
+
+    <link
+        rel="icon"
+        href="images/icon-192.png"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="images/icon-192.png"
+    >
+
+</head>
+
+
+<body>
+
+<div class="background-wallpaper">
+
+    <img
+        src="images/left-ornament.png"
+        class="bg-left"
+        alt=""
+    >
+
+    <img
+        src="images/right-ornament.png"
+        class="bg-right"
+        alt=""
+    >
+
+</div>
+
+
+<div class="page-content">
+
+
+<header class="navbar">
+
+    <a
+        href="index.html"
+        class="mobile-home"
+    >
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+
+            <path d="M3 10.5L12 3l9 7.5"/>
+            <path d="M5 9.5V21h14V9.5"/>
+            <path d="M9 21v-6h6v6"/>
+
+        </svg>
+
+    </a>
+
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+
+        <img
+            src="images/logo.png"
+            class="mobile-logo"
+            alt="VELNORA"
+        >
+
+    </a>
+
+
+    <div class="menu-toggle">
+        ☰
+    </div>
+
+
+    <nav class="nav-menu">
+
+        <ul>
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="events.html">
+                    Events
+                </a>
+            </li>
+
+            <li>
+                <a href="gallery.html">
+                    Gallery
+                </a>
+            </li>
+
+            <li>
+                <a href="store.html">
+                    Store
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <div class="menu-overlay"></div>
+
+</header>
+
+
+
+<main class="product-page">
+
+    <a
+        href="store.html"
+        class="product-back"
+    >
+        ← Back to Store
+    </a>
+
+
+    <div
+        id="productLoading"
+        class="product-loading"
+    >
+        Loading product...
+    </div>
+
+
+    <div
+        id="productError"
+        class="product-error"
+        style="display:none;"
+    >
+        Product could not be loaded.
+    </div>
+
+
+    <div
+        id="productContent"
+        class="product-layout"
+        style="display:none;"
+    >
+
+
+        <!-- PRODUCT GALLERY -->
+
+        <section class="product-gallery">
+
+            <div
+                class="product-main-image-wrap"
+            >
+
+                <img
+                    id="productMainImage"
+                    class="product-main-image"
+                    src=""
+                    alt=""
+                >
+
+            </div>
+
+
+            <div
+                id="productThumbnails"
+                class="product-thumbnails"
+            ></div>
+
+        </section>
+
+
+
+        <!-- PRODUCT INFORMATION -->
+
+        <section class="product-information">
+
+            <p
+                id="productCategory"
+                class="product-category"
+            ></p>
+
+
+            <h1
+                id="productTitle"
+                class="product-title"
+            >
+                Product
+            </h1>
+
+
+            <p
+                id="productPrice"
+                class="product-price"
+            ></p>
+
+
+            <div class="product-divider"></div>
+
+
+            <div class="product-description">
+
+                <h2>
+                    Description
+                </h2>
+
+                <div
+                    id="productDescription"
+                ></div>
+
+            </div>
+
+
+            <div
+                id="productSizesSection"
+                class="product-option-section"
+            >
+
+                <h3>
+                    Size
+                </h3>
+
+                <div
+                    id="productSizes"
+                    class="product-options"
+                ></div>
+
+            </div>
+
+
+            <div
+                id="productColoursSection"
+                class="product-option-section"
+            >
+
+                <h3>
+                    Colour
+                </h3>
+
+                <div
+                    id="productColours"
+                    class="product-colours"
+                ></div>
+
+            </div>
+
+
+            <button
+                id="productPurchaseButton"
+                class="product-purchase-button"
+            >
+                PURCHASE NOW
+            </button>
+
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-logo"></div>
+
+    </div>
+
+    <p class="footer-copy">
+        © 2026 VELNORA. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</div>
+
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+</script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+</script>
+
+<script
+    src="js/main.js">
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
+</script>
+
+<script
+    defer
+    src="js/product.js">
+</script>
+
+</body>
+
+</html>

@@ -1,133 +1,475 @@
 const nodemailer = require("nodemailer");
 
 exports.handler = async (event) => {
+    const headers = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS"
+    };
+
     try {
-        // Only allow POST requests
+
+        // =========================================
+        // CORS PREFLIGHT
+        // =========================================
+
+        if (event.httpMethod === "OPTIONS") {
+            return {
+                statusCode: 204,
+                headers,
+                body: ""
+            };
+        }
+
+
+        // =========================================
+        // ONLY POST
+        // =========================================
+
         if (event.httpMethod !== "POST") {
+
             return {
                 statusCode: 405,
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers,
                 body: JSON.stringify({
                     success: false,
                     message: "Method not allowed."
                 })
             };
+
         }
 
-        // Check that the Zoho credentials exist
-        const zohoEmail = process.env.ZOHO_EMAIL;
-        const zohoPassword = process.env.ZOHO_APP_PASSWORD;
+
+        // =========================================
+        // ZOHO CREDENTIALS
+        // =========================================
+
+        const zohoEmail =
+            process.env.ZOHO_EMAIL;
+
+        const zohoPassword =
+            process.env.ZOHO_APP_PASSWORD;
+
 
         if (!zohoEmail || !zohoPassword) {
-            console.error("Zoho environment variables are missing.");
+
+            console.error(
+                "Zoho environment variables are missing."
+            );
 
             return {
                 statusCode: 500,
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers,
                 body: JSON.stringify({
                     success: false,
-                    message: "Zoho email configuration is missing."
+                    message:
+                        "Zoho email configuration is missing."
                 })
             };
+
         }
 
-        // Parse request body
+
+        // =========================================
+        // PARSE REQUEST
+        // =========================================
+
         let data = {};
 
         try {
-            data = JSON.parse(event.body || "{}");
+
+            data =
+                JSON.parse(
+                    event.body || "{}"
+                );
+
         } catch (error) {
+
             return {
                 statusCode: 400,
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers,
                 body: JSON.stringify({
                     success: false,
-                    message: "Invalid request body."
+                    message:
+                        "Invalid request body."
                 })
             };
+
         }
 
-        // TEST MODE ONLY
-        // The recipient is intentionally fixed to the Zoho mailbox.
-        if (data.test !== true) {
+
+        // =========================================
+        // ORDER DATA
+        // =========================================
+
+        const product =
+            String(
+                data.product || ""
+            ).trim();
+
+        const price =
+            String(
+                data.price || ""
+            ).trim();
+
+        const size =
+            String(
+                data.size || ""
+            ).trim();
+
+        const colour =
+            String(
+                data.colour || ""
+            ).trim();
+
+        const quantity =
+            Number(
+                data.quantity || 1
+            );
+
+        const customerName =
+            String(
+                data.customerName || ""
+            ).trim();
+
+        const customerPhone =
+            String(
+                data.customerPhone || ""
+            ).trim();
+
+        const customerEmail =
+            String(
+                data.customerEmail || ""
+            ).trim();
+
+        const deliveryAddress =
+            String(
+                data.deliveryAddress || ""
+            ).trim();
+
+        const paymentConfirmed =
+            data.paymentConfirmed === true;
+
+
+        // =========================================
+        // VALIDATION
+        // =========================================
+
+        if (!product) {
+
             return {
                 statusCode: 400,
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers,
                 body: JSON.stringify({
                     success: false,
-                    message: "This endpoint is currently in test mode."
+                    message:
+                        "Product information is missing."
                 })
             };
+
         }
 
-        // Zoho SMTP configuration
-        const transporter = nodemailer.createTransport({
-            host: "smtppro.zoho.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: zohoEmail,
-                pass: zohoPassword
-            }
-        });
 
-        // Verify the SMTP connection first
+        if (!customerName) {
+
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({
+                    success: false,
+                    message:
+                        "Customer name is required."
+                })
+            };
+
+        }
+
+
+        if (!customerPhone) {
+
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({
+                    success: false,
+                    message:
+                        "Customer phone number is required."
+                })
+            };
+
+        }
+
+
+        if (!deliveryAddress) {
+
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({
+                    success: false,
+                    message:
+                        "Delivery address is required."
+                })
+            };
+
+        }
+
+
+        if (!paymentConfirmed) {
+
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({
+                    success: false,
+                    message:
+                        "Payment confirmation is required."
+                })
+            };
+
+        }
+
+
+        if (
+            !Number.isInteger(quantity) ||
+            quantity < 1
+        ) {
+
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({
+                    success: false,
+                    message:
+                        "Invalid quantity."
+                })
+            };
+
+        }
+
+
+        // =========================================
+        // CALCULATE TOTAL
+        // =========================================
+
+        const numericPrice =
+            Number(
+                String(price)
+                    .replace(
+                        /[^0-9.]/g,
+                        ""
+                    )
+            );
+
+        const total =
+            Number.isFinite(numericPrice)
+                ? numericPrice * quantity
+                : null;
+
+
+        const formattedTotal =
+            total !== null
+                ? `MVR ${total.toFixed(2)}`
+                : "Not specified";
+
+
+        // =========================================
+        // SMTP
+        // =========================================
+
+        const transporter =
+            nodemailer.createTransport({
+
+                host:
+                    "smtppro.zoho.com",
+
+                port:
+                    465,
+
+                secure:
+                    true,
+
+                auth: {
+
+                    user:
+                        zohoEmail,
+
+                    pass:
+                        zohoPassword
+
+                }
+
+            });
+
+
+        // =========================================
+        // VERIFY SMTP
+        // =========================================
+
         await transporter.verify();
 
-        // Send the test email to the Zoho mailbox itself
-        const info = await transporter.sendMail({
-            from: `"VELNORA Store" <${zohoEmail}>`,
-            to: zohoEmail,
-            subject: "VELNORA Store — Email System Test",
-            text: [
-                "VELNORA Store email system test.",
-                "",
-                "This email confirms that the Netlify Function can successfully connect to Zoho SMTP.",
-                "",
-                "Sender:",
-                zohoEmail,
-                "",
-                "SMTP:",
-                "smtppro.zoho.com:465 SSL",
-                "",
-                "The VELNORA purchase system is not connected yet."
-            ].join("\n")
-        });
 
-        console.log("Test email sent:", info.messageId);
+        // =========================================
+        // EMAIL SUBJECT
+        // =========================================
+
+        const subject =
+            `VELNORA Store — New Order — ${product}`;
+
+
+        // =========================================
+        // EMAIL TEXT
+        // =========================================
+
+        const text = [
+
+            "VELNORA STORE — NEW ORDER",
+
+            "",
+
+            "PRODUCT",
+            "────────────────────────",
+            `Product: ${product}`,
+            `Unit Price: ${
+                price
+                    ? `MVR ${price}`
+                    : "Not specified"
+            }`,
+            `Size: ${
+                size || "Not applicable"
+            }`,
+            `Colour: ${
+                colour || "Not applicable"
+            }`,
+            `Quantity: ${quantity}`,
+            `Total: ${formattedTotal}`,
+
+            "",
+
+            "CUSTOMER",
+            "────────────────────────",
+            `Name: ${customerName}`,
+            `Phone / WhatsApp: ${customerPhone}`,
+            `Email: ${
+                customerEmail || "Not provided"
+            }`,
+
+            "",
+
+            "DELIVERY",
+            "────────────────────────",
+            deliveryAddress,
+
+            "",
+
+            "PAYMENT",
+            "────────────────────────",
+            "Payment instructions confirmed: YES",
+
+            "",
+
+            "This order was submitted through",
+            "the VELNORA Store."
+
+        ].join("\n");
+
+
+        // =========================================
+        // SEND EMAIL
+        // =========================================
+
+        const mailOptions = {
+
+            from:
+                `"VELNORA Store" <${zohoEmail}>`,
+
+            to:
+                zohoEmail,
+
+            subject,
+
+            text
+
+        };
+
+
+        // Reply directly to customer if email exists
+        if (customerEmail) {
+
+            mailOptions.replyTo =
+                customerEmail;
+
+        }
+
+
+        const info =
+            await transporter.sendMail(
+                mailOptions
+            );
+
+
+        console.log(
+            "VELNORA order email sent:",
+            info.messageId
+        );
+
+
+        // =========================================
+        // SUCCESS
+        // =========================================
 
         return {
+
             statusCode: 200,
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                success: true,
-                message: "Test email sent successfully."
-            })
+
+            headers,
+
+            body:
+                JSON.stringify({
+
+                    success:
+                        true,
+
+                    message:
+                        "Your order has been submitted successfully.",
+
+                    messageId:
+                        info.messageId
+
+                })
+
         };
 
     } catch (error) {
-        console.error("Email function error:", error);
+
+        console.error(
+            "Order email function error:",
+            error
+        );
+
 
         return {
+
             statusCode: 500,
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                success: false,
-                message: "Unable to send test email.",
-                error: error.message
-            })
+
+            headers,
+
+            body:
+                JSON.stringify({
+
+                    success:
+                        false,
+
+                    message:
+                        "Unable to process your order.",
+
+                    error:
+                        error.message
+
+                })
+
         };
+
     }
 };

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>VELNORA | Purchase</title>
+
+    <link
+        rel="icon"
+        href="images/icon-192.png"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="images/icon-192.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style-new.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/purchase.css"
+    >
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         NAVIGATION
+         ========================================= -->
+
+    <header class="header">
+
+        <a
+            href="index.html"
+            class="mobile-home"
+        >
+            <span>⌂</span>
+        </a>
+
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+            <img
+                src="images/logo.png"
+                class="mobile-logo"
+                alt="VELNORA"
+            >
+        </a>
+
+
+        <div class="menu-toggle">
+            ☰
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="events.html">
+                Events
+            </a>
+
+            <a href="gallery.html">
+                Gallery
+            </a>
+
+            <a href="store.html">
+                Store
+            </a>
+
+        </nav>
+
+
+        <div class="menu-overlay"></div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         PURCHASE PAGE
+         ========================================= -->
+
+    <main class="purchase-page">
+
+
+        <a
+            href="store.html"
+            class="purchase-back"
+        >
+            ← Back to Store
+        </a>
+
+
+        <div
+            id="purchaseLoading"
+            class="purchase-loading"
+        >
+            Loading purchase details...
+        </div>
+
+
+        <div
+            id="purchaseError"
+            class="purchase-error"
+            style="display:none;"
+        >
+            Product could not be loaded.
+        </div>
+
+
+        <section
+            id="purchaseContent"
+            class="purchase-layout"
+            style="display:none;"
+        >
+
+
+            <!-- =====================================
+                 ORDER SUMMARY
+                 ===================================== -->
+
+            <section class="purchase-summary">
+
+                <div class="purchase-image-wrap">
+
+                    <img
+                        id="purchaseProductImage"
+                        class="purchase-product-image"
+                        src=""
+                        alt=""
+                    >
+
+                </div>
+
+
+                <div class="purchase-summary-info">
+
+                    <p
+                        id="purchaseProductCategory"
+                        class="purchase-category"
+                    ></p>
+
+
+                    <h1
+                        id="purchaseProductTitle"
+                        class="purchase-title"
+                    >
+                        Product
+                    </h1>
+
+
+                    <p
+                        id="purchaseProductPrice"
+                        class="purchase-price"
+                    ></p>
+
+
+                    <div class="purchase-summary-line"></div>
+
+
+                    <div class="purchase-selection">
+
+                        <p>
+                            <strong>Size:</strong>
+                            <span id="purchaseSelectedSize">
+                                —
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Colour:</strong>
+                            <span id="purchaseSelectedColour">
+                                —
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Quantity:</strong>
+                            <span id="purchaseSelectedQuantity">
+                                1
+                            </span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 ORDER FORM
+                 ===================================== -->
+
+            <section class="purchase-form-section">
+
+                <div class="purchase-section-heading">
+
+                    <p>
+                        VELNORA STORE
+                    </p>
+
+                    <h2>
+                        Complete Your Order
+                    </h2>
+
+                </div>
+
+
+                <form
+                    id="purchaseForm"
+                    class="purchase-form"
+                >
+
+
+                    <!-- CUSTOMER -->
+
+                    <div class="purchase-form-group">
+
+                        <label for="customerName">
+                            Full Name
+                        </label>
+
+                        <input
+                            id="customerName"
+                            name="customer_name"
+                            type="text"
+                            required
+                            autocomplete="name"
+                            placeholder="Your full name"
+                        >
+
+                    </div>
+
+
+                    <div class="purchase-form-row">
+
+
+                        <div class="purchase-form-group">
+
+                            <label for="customerPhone">
+                                Phone / WhatsApp
+                            </label>
+
+                            <input
+                                id="customerPhone"
+                                name="customer_phone"
+                                type="tel"
+                                required
+                                autocomplete="tel"
+                                placeholder="Your phone number"
+                            >
+
+                        </div>
+
+
+                        <div class="purchase-form-group">
+
+                            <label for="customerEmail">
+                                Email
+                            </label>
+
+                            <input
+                                id="customerEmail"
+                                name="customer_email"
+                                type="email"
+                                autocomplete="email"
+                                placeholder="Optional"
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="purchase-form-group">
+
+                        <label for="purchaseQuantity">
+                            Quantity
+                        </label>
+
+                        <div class="purchase-quantity">
+
+                            <button
+                                type="button"
+                                id="quantityMinus"
+                                aria-label="Decrease quantity"
+                            >
+                                −
+                            </button>
+
+                            <input
+                                id="purchaseQuantity"
+                                name="quantity"
+                                type="number"
+                                min="1"
+                                value="1"
+                                readonly
+                            >
+
+                            <button
+                                type="button"
+                                id="quantityPlus"
+                                aria-label="Increase quantity"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DELIVERY -->
+
+                    <div class="purchase-form-group">
+
+                        <label for="deliveryAddress">
+                            Delivery Address
+                        </label>
+
+                        <textarea
+                            id="deliveryAddress"
+                            name="delivery_address"
+                            rows="4"
+                            required
+                            placeholder="Where should we deliver your order?"
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <!-- PAYMENT INFORMATION -->
+
+                    <div
+                        id="paymentInformation"
+                        class="payment-information"
+                    >
+
+                        <p class="payment-label">
+                            PAYMENT INFORMATION
+                        </p>
+
+
+                        <h3
+                            id="paymentBankName"
+                        >
+                            Bank Payment
+                        </h3>
+
+
+                        <div class="payment-details">
+
+                            <p>
+                                <strong>
+                                    Account Name
+                                </strong>
+
+                                <span
+                                    id="paymentAccountName"
+                                ></span>
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    Account Number
+                                </strong>
+
+                                <span
+                                    id="paymentAccountNumber"
+                                ></span>
+                            </p>
+
+                        </div>
+
+
+                        <p
+                            id="paymentInstructions"
+                            class="payment-instructions"
+                        ></p>
+
+                    </div>
+
+
+
+                    <!-- CONFIRMATION -->
+
+                    <label
+                        class="purchase-confirmation"
+                    >
+
+                        <input
+                            id="paymentConfirmed"
+                            type="checkbox"
+                            required
+                        >
+
+                        <span>
+                            I understand the payment instructions
+                            and confirm that my order details are correct.
+                        </span>
+
+                    </label>
+
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        id="purchaseSubmitButton"
+                        type="submit"
+                        class="purchase-submit-button"
+                    >
+                        PROCESS PURCHASE
+                    </button>
+
+
+                    <p
+                        id="purchaseFormMessage"
+                        class="purchase-form-message"
+                        style="display:none;"
+                    ></p>
+
+
+                </form>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+         ========================================= -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <p>
+                MUSIC BRINGS US TOGETHER
+            </p>
+
+            <span>
+                © VELNORA
+            </span>
+
+        </div>
+
+    </footer>
+
+
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+    ></script>
+
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+    ></script>
+
+
+    <script src="js/main.js"></script>
+
+
+    <script
+        defer
+        src="js/purchase.js"
+    ></script>
+
+
+</body>
+
+</html>
