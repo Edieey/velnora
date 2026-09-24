@@ -168,6 +168,9 @@ return {
     price:
         getValue("price"),
 
+    priceUsd:
+        getValue("price_usd"),
+
     image:
         getValue("image"),
 
@@ -386,10 +389,17 @@ function renderProduct(product) {
         "VELNORA Product";
 
 
-    price.textContent =
-        product.price
-            ? `MVR ${product.price}`
-            : "";
+    const priceParts = [];
+
+    if (product.price) {
+        priceParts.push(`MVR ${product.price}`);
+    }
+
+    if (product.priceUsd) {
+        priceParts.push(`USD ${product.priceUsd}`);
+    }
+
+    price.textContent = priceParts.join(" / ");
 
 
     if (

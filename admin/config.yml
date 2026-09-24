@@ -204,6 +204,7 @@ collections:
             value: "other"
 
       - { label: "Price (MVR)", name: "price", widget: "number", value_type: "float", min: 0 }
+      - { label: "Price (USD)", name: "price_usd", widget: "number", value_type: "float", min: 0 }
 
       - { label: "Main Product Image", name: "image", widget: "image" }
 
@@ -259,11 +260,21 @@ collections:
 
           - { label: "Store Description", name: "store_description", widget: "text", default: "Premium merchandise crafted for the VELNORA community." }
 
-          - { label: "Bank Name", name: "bank_name", widget: "string" }
+          - label: "MVR Payment Account"
+            name: "mvr_payment"
+            widget: "object"
+            fields:
+              - { label: "Bank Name", name: "bank_name", widget: "string" }
+              - { label: "Account Name", name: "account_name", widget: "string" }
+              - { label: "Account Number", name: "account_number", widget: "string" }
 
-          - { label: "Account Name", name: "account_name", widget: "string" }
-
-          - { label: "Account Number", name: "account_number", widget: "string" }
+          - label: "USD Payment Account"
+            name: "usd_payment"
+            widget: "object"
+            fields:
+              - { label: "Bank Name", name: "bank_name", widget: "string" }
+              - { label: "Account Name", name: "account_name", widget: "string" }
+              - { label: "Account Number", name: "account_number", widget: "string" }
 
           - { label: "Payment Instructions", name: "payment_instructions", widget: "text" }
 

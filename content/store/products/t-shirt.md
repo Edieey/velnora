@@ -2,6 +2,7 @@
 title: T-Shirt
 category: apparel
 price: 550
+price_usd: 35
 image: /images/uploads/1000179685.jpg
 images:
   - /images/uploads/1000179685.jpg
