@@ -885,7 +885,7 @@ function setupPurchaseButton(product) {
 
 
             window.location.href =
-                `booking.html?${params.toString()}`;
+  `purchase.html?${params.toString()}`;
 
         };
 }
