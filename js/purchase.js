@@ -157,7 +157,46 @@ function parseFrontMatter(text) {
 
 }
 
+function parseStoreSettings(text) {
+  const settings = {};
 
+  const match = text.match(/^---\s*([\s\S]*?)\s*---/);
+
+  if (!match) {
+    return settings;
+  }
+
+  const lines = match[1].split(/\r?\n/);
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (!trimmed || trimmed.startsWith("#")) {
+      continue;
+    }
+
+    const separator = trimmed.indexOf(":");
+
+    if (separator === -1) {
+      continue;
+    }
+
+    const key = trimmed.slice(0, separator).trim();
+    let value = trimmed.slice(separator + 1).trim();
+
+    if (value.startsWith('"') && value.endsWith('"')) {
+      try {
+        value = JSON.parse(value);
+      } catch {
+        value = value.slice(1, -1);
+      }
+    }
+
+    settings[key] = value;
+  }
+
+  return settings;
+}
 
 /* =========================================
    LOAD STORE SETTINGS
