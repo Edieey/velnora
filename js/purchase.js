@@ -158,44 +158,159 @@ function parseFrontMatter(text) {
 }
 
 function parseStoreSettings(text) {
-  const settings = {};
 
-  const match = text.match(/^---\s*([\s\S]*?)\s*---/);
+    const settings = {};
 
-  if (!match) {
+    const match =
+        text.match(
+            /^---\s*([\s\S]*?)\s*---/
+        );
+
+    if (!match) {
+        return settings;
+    }
+
+    const lines =
+        match[1].split(/\r?\n/);
+
+    let currentObject = null;
+
+    for (const line of lines) {
+
+        if (!line.trim() || line.trim().startsWith("#")) {
+            continue;
+        }
+
+
+        /*
+         * Nested values
+         *
+         * Example:
+         *
+         * mvr_payment:
+         *   bank_name: "BML"
+         *   account_name: "SHAIHAN KHAALID"
+         *   account_number: "123456"
+         */
+
+        const nestedMatch =
+            line.match(
+                /^\s{2,}([A-Za-z0-9_-]+):\s*(.*)$/
+            );
+
+
+        if (nestedMatch && currentObject) {
+
+            const key =
+                nestedMatch[1];
+
+            let value =
+                nestedMatch[2].trim();
+
+
+            if (
+                value.startsWith('"') &&
+                value.endsWith('"')
+            ) {
+
+                try {
+
+                    value =
+                        JSON.parse(value);
+
+                } catch {
+
+                    value =
+                        value.slice(1, -1);
+
+                }
+
+            }
+
+
+            settings[currentObject][key] =
+                value;
+
+            continue;
+        }
+
+
+        /*
+         * Top-level values
+         */
+
+        const topLevelMatch =
+            line.match(
+                /^([A-Za-z0-9_-]+):\s*(.*)$/
+            );
+
+
+        if (!topLevelMatch) {
+            continue;
+        }
+
+
+        const key =
+            topLevelMatch[1];
+
+        let value =
+            topLevelMatch[2].trim();
+
+
+        /*
+         * Empty value means this is
+         * the beginning of a nested object.
+         */
+
+        if (value === "") {
+
+            settings[key] = {};
+
+            currentObject = key;
+
+            continue;
+        }
+
+
+        /*
+         * Normal quoted value
+         */
+
+        if (
+            value.startsWith('"') &&
+            value.endsWith('"')
+        ) {
+
+            try {
+
+                value =
+                    JSON.parse(value);
+
+            } catch {
+
+                value =
+                    value.slice(1, -1);
+
+            }
+
+        }
+
+
+        settings[key] =
+            value;
+
+
+        /*
+         * This is no longer a nested object.
+         */
+
+        currentObject = null;
+
+    }
+
+
     return settings;
-  }
 
-  const lines = match[1].split(/\r?\n/);
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-
-    if (!trimmed || trimmed.startsWith("#")) {
-      continue;
-    }
-
-    const separator = trimmed.indexOf(":");
-
-    if (separator === -1) {
-      continue;
-    }
-
-    const key = trimmed.slice(0, separator).trim();
-    let value = trimmed.slice(separator + 1).trim();
-
-    if (value.startsWith('"') && value.endsWith('"')) {
-      try {
-        value = JSON.parse(value);
-      } catch {
-        value = value.slice(1, -1);
-      }
-    }
-
-    settings[key] = value;
-  }
-
-  return settings;
 }
 
 /* =========================================
