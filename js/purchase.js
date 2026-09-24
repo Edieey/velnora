@@ -1001,47 +1001,70 @@ function setupPurchaseQuantity() {
    RENDER STORE PAYMENT SETTINGS
    ========================================= */
 
-function renderPurchaseSettings(settings) {
+function renderPurchaseSettings(settings, currency = "MVR") {
 
     const bankName =
-        document.getElementById(
-            "paymentBankName"
-        );
+        document.getElementById("paymentBankName");
 
     const accountName =
-        document.getElementById(
-            "paymentAccountName"
-        );
+        document.getElementById("paymentAccountName");
 
     const accountNumber =
-        document.getElementById(
-            "paymentAccountNumber"
-        );
+        document.getElementById("paymentAccountNumber");
 
     const instructions =
-        document.getElementById(
-            "paymentInstructions"
-        );
+        document.getElementById("paymentInstructions");
+
+
+    const paymentAccount =
+        currency === "USD"
+            ? settings.usd_payment
+            : settings.mvr_payment;
 
 
     bankName.textContent =
-        settings.bankName ||
-        "Bank Payment";
+        paymentAccount?.bank_name ||
+        `${currency} Bank Payment`;
 
 
     accountName.textContent =
-        settings.accountName ||
+        paymentAccount?.account_name ||
         "";
 
 
     accountNumber.textContent =
-        settings.accountNumber ||
+        paymentAccount?.account_number ||
         "";
 
 
     instructions.textContent =
-        settings.paymentInstructions ||
+        settings.payment_instructions ||
         "";
+}
+function setupPaymentCurrency(settings) {
+
+    const currencyInputs =
+        document.querySelectorAll(
+            'input[name="paymentCurrency"]'
+        );
+
+    currencyInputs.forEach((input) => {
+
+        input.addEventListener("change", () => {
+
+            if (!input.checked) {
+                return;
+            }
+
+            renderPurchaseSettings(
+                settings,
+                input.value
+            );
+
+        });
+
+    });
+
 }
 /* =========================================
    PURCHASE PAGE INITIALIZATION
@@ -1076,12 +1099,18 @@ async function initializePurchasePage() {
         );
 
 
-        renderPurchaseSettings(
-            settings
-        );
+renderPurchaseSettings(
+    settings,
+    "MVR"
+);
 
 
-        setupPurchaseQuantity();
+setupPaymentCurrency(
+    settings
+);
+
+
+setupPurchaseQuantity();
 
 
         const loading =
