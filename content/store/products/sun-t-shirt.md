@@ -8,8 +8,8 @@ price: 550
 price_usd: 35
 image: /images/uploads/1000179869.jpg
 images:
-  - /images/uploads/1000179869-2.jpg
-  - /images/uploads/c5969c8a-2208-4bfa-909b-a5b6e9f636d5-1_all_52920-2.jpg
+  - /images/uploads/1000179683.jpg
+  - /images/uploads/1000179843.jpg
 sizes:
   - XS
   - S
