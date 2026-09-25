@@ -9,8 +9,7 @@ usd_payment:
   bank_name: BML
   account_name: SHAIHAN  KHAALID
   account_number: "7730000430029"
-payment_instructions: |-
-  Once we confirm the payment we will come back to you 
+payment_instructions: "Once we confirm the payment we will come back to you\nThank You For Your Purchase"
   Thank You For Your Purchase
 delivery_information: Delivery within 7–10 days within Maldives.
 order_button_text: PROCESS PURCHASE

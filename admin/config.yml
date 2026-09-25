@@ -202,7 +202,16 @@ collections:
             value: "event-merchandise"
           - label: "Other"
             value: "other"
-
+      - label: "T-Shirt Type"
+        name: "tshirt_type"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - label: "Normal"
+            value: "normal"
+          - label: "Drop Shoulder"
+            value: "drop-shoulder"
       - { label: "Price (MVR)", name: "price", widget: "number", value_type: "float", min: 0 }
       - { label: "Price (USD)", name: "price_usd", widget: "number", value_type: "float", min: 0 }
 

@@ -188,14 +188,17 @@ return {
     description:
         body,
 
-    images:
-        getList("images"),
+        images:
+            getList("images"),
 
-    sizes:
-        getList("sizes"),
+        sizes:
+            getList("sizes"),
 
-    colours:
-        getColours()
+        tshirtTypes:
+            getList("tshirt_type"),
+
+        colours:
+            getColours()
 
 };
 }

@@ -112,7 +112,14 @@ exports.handler = async (event) => {
             String(
                 data.price || ""
             ).trim();
-
+        const priceUsd =
+            String(
+                data.priceUsd || ""
+            ).trim();
+        const tshirtType =
+            String(
+                data.tshirtType || ""
+            ).trim();
         const size =
             String(
                 data.size || ""
@@ -287,7 +294,7 @@ exports.handler = async (event) => {
         // CALCULATE TOTAL
         // =========================================
 
-        const numericPrice =
+        const numericPriceMvr =
             Number(
                 String(price)
                     .replace(
@@ -296,15 +303,33 @@ exports.handler = async (event) => {
                     )
             );
 
-        const total =
-            Number.isFinite(numericPrice)
-                ? numericPrice * quantity
+        const numericPriceUsd =
+            Number(
+                String(priceUsd)
+                    .replace(
+                        /[^0-9.]/g,
+                        ""
+                    )
+            );
+
+        const totalMvr =
+            Number.isFinite(numericPriceMvr)
+                ? numericPriceMvr * quantity
                 : null;
 
+        const totalUsd =
+            Number.isFinite(numericPriceUsd)
+                ? numericPriceUsd * quantity
+                : null;
 
-        const formattedTotal =
-            total !== null
-                ? `MVR ${total.toFixed(2)}`
+        const formattedTotalMvr =
+            totalMvr !== null
+                ? `MVR ${totalMvr.toFixed(2)}`
+                : "Not specified";
+
+        const formattedTotalUsd =
+            totalUsd !== null
+                ? `USD ${totalUsd.toFixed(2)}`
                 : "Not specified";
 
 
@@ -365,9 +390,23 @@ exports.handler = async (event) => {
             "PRODUCT",
             "────────────────────────",
             `Product: ${product}`,
-            `Unit Price: ${
+            `MVR Price: ${
                 price
                     ? `MVR ${price}`
+                    : "Not specified"
+            }`,
+            `USD Price: ${
+                priceUsd
+                    ? `USD ${priceUsd}`
+                    : "Not specified"
+            }`,
+            `T-Shirt Type: ${
+                tshirtType
+                    ? (
+                        tshirtType === "drop-shoulder"
+                            ? "Drop Shoulder"
+                            : "Normal"
+                    )
                     : "Not specified"
             }`,
             `Size: ${
@@ -377,7 +416,8 @@ exports.handler = async (event) => {
                 colour || "Not applicable"
             }`,
             `Quantity: ${quantity}`,
-            `Total: ${formattedTotal}`,
+            `Total MVR: ${formattedTotalMvr}`,
+            `Total USD: ${formattedTotalUsd}`,
 
             "",
 

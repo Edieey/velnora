@@ -17,6 +17,7 @@ let purchaseProduct = null;
 let purchaseSettings = null;
 
 let selectedSize = "";
+let selectedTshirtType = "";
 let selectedColour = "";
 let quantity = 1;
 
@@ -737,14 +738,17 @@ function parsePurchaseProduct(text) {
         images:
             getList("images"),
 
-sizes:
-    getList("sizes"),
+        sizes:
+            getList("sizes"),
 
-colours:
-    getColours("colours"),
+        tshirtTypes:
+            getList("tshirt_type"),
 
-description:
-    body
+        colours:
+            getColours("colours"),
+
+        description:
+            body
 
     };
 
@@ -1054,6 +1058,197 @@ function renderPurchaseSizes(product) {
     );
 
 }
+function renderPurchaseTshirtTypes(product) {
+
+    const types =
+        Array.isArray(
+            product.tshirtTypes
+        )
+            ? product.tshirtTypes
+            : [];
+
+
+    const form =
+        document.getElementById(
+            "purchaseForm"
+        );
+
+    if (!form) {
+        return;
+    }
+
+
+    const existing =
+        document.getElementById(
+            "purchaseTshirtTypeOptions"
+        );
+
+    if (existing) {
+        existing.remove();
+    }
+
+
+    /*
+       NO TYPE CONFIGURED
+       -------------------
+       Do not show anything.
+    */
+
+    if (!types.length) {
+
+        selectedTshirtType = "";
+
+        return;
+
+    }
+
+
+    /*
+       ONLY ONE TYPE
+       -------------
+       Automatically select it.
+       No unnecessary customer choice.
+    */
+
+    if (types.length === 1) {
+
+        selectedTshirtType =
+            types[0];
+
+        return;
+
+    }
+
+
+    /*
+       MULTIPLE TYPES
+       --------------
+       Show customer selection.
+    */
+
+    selectedTshirtType =
+        types[0];
+
+
+    const section =
+        document.createElement(
+            "div"
+        );
+
+    section.id =
+        "purchaseTshirtTypeOptions";
+
+    section.className =
+        "purchase-option-group";
+
+
+    const label =
+        document.createElement(
+            "label"
+        );
+
+    label.textContent =
+        "T-SHIRT TYPE";
+
+    label.className =
+        "purchase-option-label";
+
+
+    const options =
+        document.createElement(
+            "div"
+        );
+
+    options.className =
+        "purchase-options";
+
+
+    types.forEach(
+        type => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.type =
+                "button";
+
+            button.className =
+                "purchase-option";
+
+            button.textContent =
+                type === "drop-shoulder"
+                    ? "DROP SHOULDER"
+                    : "NORMAL";
+
+
+            if (
+                type ===
+                selectedTshirtType
+            ) {
+
+                button.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    selectedTshirtType =
+                        type;
+
+
+                    options
+                        .querySelectorAll(
+                            ".purchase-option"
+                        )
+                        .forEach(
+                            option => {
+
+                                option.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            options.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    section.appendChild(
+        label
+    );
+
+    section.appendChild(
+        options
+    );
+
+
+    form.insertBefore(
+        section,
+        form.firstElementChild
+    );
+
+}
 /* =========================================
    COLOUR OPTIONS
    ========================================= */
@@ -1270,6 +1465,9 @@ async function initializePurchasePage() {
             product
         );
 
+        renderPurchaseTshirtTypes(
+            product
+        );
 
         renderPurchaseColours(
             product
@@ -1600,13 +1798,21 @@ const orderData = {
                     purchaseProduct.title ||
                     "VELNORA Product",
 
-                price:
-                    purchaseProduct.price ||
-                    "",
+price:
+    purchaseProduct.price ||
+    "",
 
-                size:
-                    selectedSize ||
-                    "",
+priceUsd:
+    purchaseProduct.priceUsd ||
+    "",
+
+tshirtType:
+    selectedTshirtType ||
+    "",
+
+size:
+    selectedSize ||
+    "",
 
                 colour:
                     selectedColour ||

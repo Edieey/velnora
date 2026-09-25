@@ -60,7 +60,7 @@
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .purchase-summary-info {
@@ -543,19 +543,22 @@
 }
 
 .payment-account p {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    margin: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 30px;
+    margin: 14px 0;
     color: rgba(255, 255, 255, 0.78);
 }
 
 .payment-account p strong {
+    flex: 0 0 auto;
     color: rgba(255, 255, 255, 0.55);
     font-weight: 400;
 }
 
 .payment-account p span {
+    flex: 0 0 auto;
     color: #ffffff;
     text-align: right;
 }

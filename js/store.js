@@ -71,7 +71,8 @@ return {
             getValue("button_text") ||
             "VIEW PRODUCT",
         images: getList("images"),
-        sizes: getList("sizes")
+        sizes: getList("sizes"),
+        tshirtTypes: getList("tshirt_type")
     };
 }
 
