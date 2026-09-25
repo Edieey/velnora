@@ -1116,69 +1116,72 @@ function setupPurchaseQuantity() {
    RENDER STORE PAYMENT SETTINGS
    ========================================= */
 
-function renderPurchaseSettings(settings, currency = "MVR") {
+function renderPurchaseSettings(settings) {
 
-    const bankName =
-        document.getElementById("paymentBankName");
+    const mvrPayment =
+        settings.mvr_payment || {};
 
-    const accountName =
-        document.getElementById("paymentAccountName");
+    const usdPayment =
+        settings.usd_payment || {};
 
-    const accountNumber =
-        document.getElementById("paymentAccountNumber");
+    const mvrBankName =
+        document.getElementById(
+            "mvrPaymentBankName"
+        );
+
+    const mvrAccountName =
+        document.getElementById(
+            "mvrPaymentAccountName"
+        );
+
+    const mvrAccountNumber =
+        document.getElementById(
+            "mvrPaymentAccountNumber"
+        );
+
+    const usdBankName =
+        document.getElementById(
+            "usdPaymentBankName"
+        );
+
+    const usdAccountName =
+        document.getElementById(
+            "usdPaymentAccountName"
+        );
+
+    const usdAccountNumber =
+        document.getElementById(
+            "usdPaymentAccountNumber"
+        );
 
     const instructions =
-        document.getElementById("paymentInstructions");
+        document.getElementById(
+            "paymentInstructions"
+        );
 
 
-    const paymentAccount =
-        currency === "USD"
-            ? settings.usd_payment
-            : settings.mvr_payment;
+    mvrBankName.textContent =
+        mvrPayment.bank_name || "";
+
+    mvrAccountName.textContent =
+        mvrPayment.account_name || "";
+
+    mvrAccountNumber.textContent =
+        mvrPayment.account_number || "";
 
 
-    bankName.textContent =
-        paymentAccount?.bank_name ||
-        `${currency} Bank Payment`;
+    usdBankName.textContent =
+        usdPayment.bank_name || "";
 
+    usdAccountName.textContent =
+        usdPayment.account_name || "";
 
-    accountName.textContent =
-        paymentAccount?.account_name ||
-        "";
-
-
-    accountNumber.textContent =
-        paymentAccount?.account_number ||
-        "";
+    usdAccountNumber.textContent =
+        usdPayment.account_number || "";
 
 
     instructions.textContent =
-        settings.payment_instructions ||
-        "";
-}
-function setupPaymentCurrency(settings) {
-
-    const currencyInputs =
-        document.querySelectorAll(
-            'input[name="paymentCurrency"]'
-        );
-
-    currencyInputs.forEach((input) => {
-
-        input.addEventListener("change", () => {
-
-            if (!input.checked) {
-                return;
-            }
-
-            renderPurchaseSettings(
-                settings,
-                input.value
-            );
-
-        });
-
-    });
+        settings.payment_instructions || "";
 
 }
 /* =========================================
@@ -1215,12 +1218,6 @@ async function initializePurchasePage() {
 
 
 renderPurchaseSettings(
-    settings,
-    "MVR"
-);
-
-
-setupPaymentCurrency(
     settings
 );
 

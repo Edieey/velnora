@@ -521,3 +521,45 @@
     background: #d4a93a;
     color: #050505;
 }
+/* =========================================
+   PAYMENT ACCOUNT DETAILS
+   ========================================= */
+
+.payment-account {
+    padding: 18px 0;
+}
+
+.payment-account + .payment-account {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin-top: 8px;
+}
+
+.payment-account h3 {
+    margin: 0 0 16px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+}
+
+.payment-account p {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 10px 0;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.payment-account p strong {
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 400;
+}
+
+.payment-account p span {
+    color: #ffffff;
+    text-align: right;
+}
+
+.payment-instructions {
+    margin-top: 20px;
+}
