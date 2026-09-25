@@ -1,15 +1,15 @@
 ---
-title: Flower Black T
+title: "Flower Black T-shirt "
 category: apparel
 tshirt_type:
   - normal
   - drop-shoulder
 price: 550
 price_usd: 35
-image: /images/uploads/1000179853.jpg
+image: /images/uploads/1000179855.jpg
 images:
-  - /images/uploads/1000179855.jpg
-  - /images/uploads/1000179853.jpg
+  - /images/uploads/1000179877-2.jpg
+  - /images/uploads/1000179875-2.jpg
 sizes:
   - XS
   - S
