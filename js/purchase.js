@@ -806,10 +806,18 @@ function renderPurchaseProduct(product) {
         "VELNORA Product";
 
 
-    price.textContent =
-        product.price
-            ? `MVR ${product.price}`
-            : "";
+const priceParts = [];
+
+if (product.price) {
+    priceParts.push(`MVR ${product.price}`);
+}
+
+if (product.priceUsd) {
+    priceParts.push(`USD ${product.priceUsd}`);
+}
+
+price.textContent =
+    priceParts.join(" / ");
 
 
     document.title =

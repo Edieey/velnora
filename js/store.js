@@ -60,10 +60,11 @@ function parseFrontMatter(text) {
             .filter(Boolean);
     };
 
-    return {
-        title: getValue("title"),
-        price: getValue("price"),
-        image: getValue("image"),
+return {
+    title: getValue("title"),
+    price: getValue("price"),
+    priceUsd: getValue("price_usd"),
+    image: getValue("image"),
         category: getValue("category"),
         status: getValue("status") || "available",
         buttonText:
@@ -132,15 +133,29 @@ card.className =
                     : ""
             }
 
-            ${
-                product.price
-                    ? `
-                        <p class="store-product-price">
-                            MVR ${product.price}
-                        </p>
-                    `
-                    : ""
-            }
+${
+    product.price || product.priceUsd
+        ? `
+            <p class="store-product-price">
+                ${
+                    product.price
+                        ? `MVR ${product.price}`
+                        : ""
+                }
+                ${
+                    product.price && product.priceUsd
+                        ? " / "
+                        : ""
+                }
+                ${
+                    product.priceUsd
+                        ? `USD ${product.priceUsd}`
+                        : ""
+                }
+            </p>
+        `
+        : ""
+}
 
 <a
     class="btn home-events-btn store-product-button"
