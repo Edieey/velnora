@@ -22,6 +22,54 @@ let quantity = 1;
 
 
 /* =========================================
+   PAYMENT SLIP FILE READER
+   ========================================= */
+
+function fileToBase64(file) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                () => {
+
+                    const result =
+                        reader.result;
+
+                    const base64 =
+                        result.split(",")[1];
+
+                    resolve(base64);
+
+                };
+
+            reader.onerror =
+                () => {
+
+                    reject(
+                        new Error(
+                            "Unable to read the payment slip."
+                        )
+                    );
+
+                };
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   URL
+   ========================================= */
+
+/* =========================================
    URL
    ========================================= */
 
@@ -669,6 +717,9 @@ function parsePurchaseProduct(text) {
         price:
             getValue("price"),
 
+        priceUsd:
+            getValue("price_usd"),
+
         image:
             getValue("image"),
 
@@ -1305,6 +1356,43 @@ function setupPurchaseForm() {
         return;
     }
 
+    const paymentSlipInput =
+        document.getElementById("paymentSlip");
+
+    const paymentSlipName =
+        document.getElementById("paymentSlipName");
+
+
+    if (
+        paymentSlipInput &&
+        paymentSlipName
+    ) {
+
+        paymentSlipInput.addEventListener(
+            "change",
+            () => {
+
+                const file =
+                    paymentSlipInput.files?.[0];
+
+
+                if (file) {
+
+                    paymentSlipName.textContent =
+                        `Payment slip attached: ${file.name} ✓`;
+
+                } else {
+
+                    paymentSlipName.textContent =
+                        "No file selected.";
+
+                }
+
+            }
+        );
+
+    }
+
 
     form.addEventListener(
         "submit",
@@ -1421,6 +1509,44 @@ function setupPurchaseForm() {
                 return;
 
             }
+            const paymentSlipInput =
+    document.getElementById("paymentSlip");
+
+
+const paymentSlipFile =
+    paymentSlipInput?.files?.[0];
+    const maxPaymentSlipSize =
+    4 * 1024 * 1024;
+
+
+if (
+    paymentSlipFile &&
+    paymentSlipFile.size >
+        maxPaymentSlipSize
+) {
+
+    message.textContent =
+        "Payment slip must be 4 MB or smaller.";
+
+    message.style.display =
+        "";
+
+    return;
+
+}
+
+
+if (!paymentSlipFile) {
+
+    message.textContent =
+        "Please attach your payment slip before submitting your order.";
+
+    message.style.display =
+        "";
+
+    return;
+
+}
 
 
             if (
@@ -1454,11 +1580,21 @@ function setupPurchaseForm() {
             }
 
 
-            // =========================================
-            // PREPARE ORDER
-            // =========================================
+// =========================================
+// PREPARE PAYMENT SLIP
+// =========================================
 
-            const orderData = {
+const paymentSlipBase64 =
+    await fileToBase64(
+        paymentSlipFile
+    );
+
+
+// =========================================
+// PREPARE ORDER
+// =========================================
+
+const orderData = {
 
                 product:
                     purchaseProduct.title ||
@@ -1492,7 +1628,21 @@ function setupPurchaseForm() {
                     address,
 
                 paymentConfirmed:
-                    true
+                    true,
+
+                paymentSlip: {
+
+                    fileName:
+                        paymentSlipFile.name,
+
+                    contentType:
+                        paymentSlipFile.type ||
+                        "application/octet-stream",
+
+                    content:
+                        paymentSlipBase64
+
+                }
 
             };
 

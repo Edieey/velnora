@@ -150,6 +150,23 @@ exports.handler = async (event) => {
 
         const paymentConfirmed =
             data.paymentConfirmed === true;
+                const paymentSlip =
+            data.paymentSlip || null;
+
+        const paymentSlipFileName =
+            String(
+                paymentSlip?.fileName || ""
+            ).trim();
+
+        const paymentSlipContentType =
+            String(
+                paymentSlip?.contentType || ""
+            ).trim();
+
+        const paymentSlipContent =
+            String(
+                paymentSlip?.content || ""
+            ).trim();
 
 
         // =========================================
@@ -230,6 +247,23 @@ exports.handler = async (event) => {
 
         }
 
+        if (
+    !paymentSlipFileName ||
+    !paymentSlipContentType ||
+    !paymentSlipContent
+) {
+
+    return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+            success: false,
+            message:
+                "Payment slip attachment is required."
+        })
+    };
+
+}
 
         if (
             !Number.isInteger(quantity) ||
@@ -379,19 +413,35 @@ exports.handler = async (event) => {
         // SEND EMAIL
         // =========================================
 
-        const mailOptions = {
+const mailOptions = {
 
-            from:
-                `"VELNORA Store" <${zohoEmail}>`,
+    from:
+        `"VELNORA Store" <${zohoEmail}>`,
 
-            to:
-                zohoEmail,
+    to:
+        zohoEmail,
 
-            subject,
+    subject,
 
-            text
+    text,
 
-        };
+    attachments: [
+        {
+            filename:
+                paymentSlipFileName,
+
+            content:
+                Buffer.from(
+                    paymentSlipContent,
+                    "base64"
+                ),
+
+            contentType:
+                paymentSlipContentType
+        }
+    ]
+
+};
 
 
         // Reply directly to customer if email exists
