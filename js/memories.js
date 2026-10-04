@@ -203,7 +203,23 @@ async function loadMemories() {
            NEWEST FIRST
         ================================================== */
 
-        memories.reverse();
+memories.sort((a, b) => {
+
+    const parseDate = (date) => {
+
+        const [day, month, year] = date.split(".");
+
+        return new Date(
+            Number(year),
+            Number(month) - 1,
+            Number(day)
+        );
+
+    };
+
+    return parseDate(b.date) - parseDate(a.date);
+
+});
 
 
         /* ==================================================
