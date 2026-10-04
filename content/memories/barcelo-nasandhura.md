@@ -10,4 +10,4 @@ gallery:
   - /images/uploads/1000144438.jpg
   - /images/uploads/1000144440.jpg
 ---
-This is just the beginning
+This is just the beginning.
