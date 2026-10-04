@@ -1,7 +1,7 @@
 ---
 title: VELNORA - CROSSROAD
 location: CROSSROADS
-date: 18.6.26
+date: 18.06.2026
 image: /images/uploads/1000177461.jpg
 click_action: gallery
 external_link: https://www.instagram.com/reel/Dbc8fV7Izf0/?igsh=MWZqMDd1bWVzcWU0Zg==&igsi=MWZqMDd1bWVzcWU0Zg==
