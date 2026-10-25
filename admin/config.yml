@@ -101,9 +101,16 @@ collections:
     fields:
       - { label: "Album Title", name: "title", widget: "string" }
 
+      - label: "Cover Image"
+        name: "image"
+        widget: "image"
+        required: false
+        hint: "This image appears on the Gallery event card."
+
       - label: "Images"
         name: "images"
         widget: "bulk-gallery"
+
   - name: "artists"
     label: "Artists"
     folder: "content/artists"
