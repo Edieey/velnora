@@ -1,5 +1,5 @@
 ---
-title: Sri Lanka
+title: Velnora - Mirissa Debut
 images:
   - /images/uploads/dsc01243.jpg
   - /images/uploads/dsc01114.jpg
